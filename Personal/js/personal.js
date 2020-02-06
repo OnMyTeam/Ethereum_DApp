@@ -1,4 +1,4 @@
-let contractAddress = '0x692a70D2e424a56D2C6C27aA97D1a86395877b3A';
+let contractAddress = '0x9D8375c1ddcD272e60989174C614a551BFAa70A8';
 let abi =
 [
 	{
@@ -246,8 +246,10 @@ window.addEventListener('load', function() {
 	// Checking if Web3 has been injected by the browser (Mist/MetaMask)
   if (typeof web3 !== 'undefined') {
     // Use Mist/MetaMask's provider
+	this.alert(111);
 	window.web3 = new Web3(web3.currentProvider);
   } else {
+	  this.alert(222);
     console.log('No web3? You should consider trying MetaMask!')
     // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
     window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
@@ -257,73 +259,81 @@ window.addEventListener('load', function() {
 });
 
 function startApp() {
-  personalContract = web3.eth.contract(abi);
-  personal = personalContract.at(contractAddress);
+  simpleVoteContract = web3.eth.contract(abi);
+  simpleVote = simpleVoteContract.at(contractAddress);
   document.getElementById('contractAddr').innerHTML = getLink(contractAddress);
 
-  web3.eth.getAccounts(function(e,r){
-  document.getElementById('accountAddr').innerHTML = getLink(r[0]);
-  accountAddress = r[0];
-  alert(accountAddress);
-  getValue();
-  });
+//   web3.eth.getAccounts(function(e,r){
+//   document.getElementById('accountAddr').innerHTML = getLink(r[0]);
+//   accountAddress = r[0];
+//   alert(accountAddress);
+// //   getValue();
+//   });
 }
 
 function getLink(addr) {
-  return '<a target="_blank" href=https://testnet.etherscan.io/address/' + addr + '>' + addr +'</a>';
+  return '<a target="_blank" href=https://ropsten.etherscan.io/address/' + addr + '>' + addr +'</a>';
 }
 
-function getValue() {
-  getEther();
-  getToken();
-  getTokenInfo();
-  getCandidateInfo();
-}
+// function getValue() {
+//   getEther();
+//   getToken();
+//   getTokenInfo();
+//   getCandidateInfo();
+// }
 
 
 
 
-function getCandidateInfo() {
-  simpleVote.getVotesReceivedFor(function(e,r){
-    for(let i=1;i<=r.length;i++)
-    {
-      document.getElementById('day_votes_' + i).innerHTML = r[i-1].toString();
-    }
-  });
-}
+// function getCandidateInfo() {
+//   simpleVote.getVotesReceivedFor(function(e,r){
+//     for(let i=1;i<=r.length;i++)
+//     {
+//       document.getElementById('day_votes_' + i).innerHTML = r[i-1].toString();
+//     }
+//   });
+// }
 
-function voteForCandidate() {
-  let candidateName = $("#candidate").val();
-  let voteTokens = $("#vote-tokens").val();
-  $("#msg").html("Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait.")
-  $("#candidate").val("");
-  $("#vote-tokens").val("");
+// function voteForCandidate() {
+//   let candidateName = $("#candidate").val();
+//   let voteTokens = $("#vote-tokens").val();
+//   $("#msg").html("Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait.")
+//   $("#candidate").val("");
+//   $("#vote-tokens").val("");
 
-  simpleVote.vote(candidateName, voteTokens, function (e, r){
-    getCandidateInfo();
-  });
-}
+//   simpleVote.vote(candidateName, voteTokens, function (e, r){
+//     getCandidateInfo();
+//   });
+// }
 
-function buyTokens() {
-  let tokensToBuy = $("#buy").val();
-  let price = tokensToBuy * tokenPrice;
-  $("#buy-msg").html("Purchase order has been submitted. Please wait.");
+// function buyTokens() {
+//   let tokensToBuy = $("#buy").val();
+//   let price = tokensToBuy * tokenPrice;
+//   $("#buy-msg").html("Purchase order has been submitted. Please wait.");
 
-  simpleVote.buy({value: web3.toWei(price, 'ether'), from: web3.eth.accounts[0]}, function(v) {
-    web3.eth.getBalance(simpleVote.address, function(e, r) {
-    $("#contract-balance").html(web3.fromWei(r.toString()) + " ETH");
-   });
-  });
-}
+//   simpleVote.buy({value: web3.toWei(price, 'ether'), from: web3.eth.accounts[0]}, function(v) {
+//     web3.eth.getBalance(simpleVote.address, function(e, r) {
+//     $("#contract-balance").html(web3.fromWei(r.toString()) + " ETH");
+//    });
+//   });
+// }
 
 function pushStatus(){
-
+	alert(111);
 	var name = $('#name').val();
 	var times = $('#times').val();
 	var sum = $('#sum').val();
 	var rate = $('#rate').val();
 
-	personal.pushStatus(times, times, sum, rate, function (e, r){
+	simpleVote.pushStatus(name, times, sum, rate, function (e, r){
+		alert("성공");
+	});	
+}
+function setCoin(){
+	
+	var setCoin = $('#setCoin').val();
+
+	simpleVote.setCoin(setCoin, function (e, r){
 		alert("성공");
 	});	
 }
