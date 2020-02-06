@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Personal</title>
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+ <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+ <style>
+   </style>
+</head>
+<body class="row">
+ <h1 class="text-center banner">Personal Application (Ropsten Testnet)</h1>
+ <div class="container">
+  <div class="row margin-top-3">
+   <div class="col-sm-12">
+    <ul>
+      <li>Contract Address : <span id="contractAddr"></span></li>
+      <p>
+      <li>Account Address : <span id="accountAddr"></span></li>
+      </p>
+      <li>Holding ETH Count : <span id="ethValue"></span></li>
+      <p></p>
+      <li>Holding Token Count : <span id="tokenValue"></span></li>
+    </ul>
+   </div>
+  </div>
+  <div class="row margin-top-3">
+   <div class="col-sm-7">
+    <h2>TEST</h2>
+    <div class="table-responsive">
+		<h3>토큰 주소 설정</h3>
+		<input type="text" id="name" class="col-sm-8" placeholder="Enter the name"><br>		
+
+	<hr>
+		<br>
+		<h3>회원등급추가</h3>
+		<input type="text" id="name" class="col-sm-8" placeholder="Enter the name"><br>
+		<input type="text" id="times" class="col-sm-8" placeholder="Enter the times"><br>
+		<input type="text" id="sum" class="col-sm-8" placeholder="Enter the sum"><br>
+		<input type="text" id="rate" class="col-sm-8" placeholder="Enter the rate"><br><br><br>
+		<a href="#" onclick="pushStatus();" class="btn btn-primary">click</a><br>
+    </div>
+   </div>
+
+  </div>
+  <hr>
+
+ </div>
+</body>
+<script src="https://cdn.rawgit.com/ethereum/web3.js/develop/dist/web3.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+<script src="js/personal.js"></script>
+</html>
