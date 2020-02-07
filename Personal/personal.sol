@@ -55,6 +55,7 @@ contract Members is Owned {
     }
      
     // (6) 토큰 주소 설정
+    // 
     function setCoin(address _addr) public onlyOwner {
         coin = _addr;
     }
@@ -144,8 +145,9 @@ contract OreOreCoin is Owned{
     }
  
     // 회원 관리 계약 설정
-    function setMembers(Members _members) public {
+    function setMembers(address _members) public {
         members[msg.sender] = Members(_members);
+
     }
  
     // 송금

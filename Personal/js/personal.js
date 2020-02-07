@@ -1,6 +1,38 @@
-let contractAddress = '0x9D8375c1ddcD272e60989174C614a551BFAa70A8';
-let abi =
+var contractAddress = '0x5D4df16Ab22305CBb370901706994f14c4CB1F17';
+var abi =
 [
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "oldaddr",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "newaddr",
+				"type": "address"
+			}
+		],
+		"name": "TransferOwnership",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "coin",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
 	{
 		"inputs": [
 			{
@@ -32,6 +64,38 @@ let abi =
 		"name": "editStatus",
 		"outputs": [],
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_member",
+				"type": "address"
+			}
+		],
+		"name": "getCashbackRate",
+		"outputs": [
+			{
+				"internalType": "int8",
+				"name": "rate",
+				"type": "int8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -73,101 +137,6 @@ let abi =
 		"name": "setCoin",
 		"outputs": [],
 		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_new",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "oldaddr",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "address",
-				"name": "newaddr",
-				"type": "address"
-			}
-		],
-		"name": "TransferOwnership",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_member",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "updateHistory",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "coin",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_member",
-				"type": "address"
-			}
-		],
-		"name": "getCashbackRate",
-		"outputs": [
-			{
-				"internalType": "int8",
-				"name": "rate",
-				"type": "int8"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "owner",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"stateMutability": "view",
 		"type": "function"
 	},
 	{
@@ -232,11 +201,42 @@ let abi =
 		],
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_new",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_member",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "updateHistory",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ];
 
-let simpleVoteContract;
-let simpleVote;
+let MemberContract;
+let Member;
 let accountAddress;
 let currentEtherBalance;
 let currentTokenBalance;
@@ -244,35 +244,34 @@ let tokenPrice;
 
 window.addEventListener('load', function() {
 	// Checking if Web3 has been injected by the browser (Mist/MetaMask)
-  if (typeof web3 !== 'undefined') {
-    // Use Mist/MetaMask's provider
-	this.alert(111);
-	window.web3 = new Web3(web3.currentProvider);
-  } else {
-	  this.alert(222);
-    console.log('No web3? You should consider trying MetaMask!')
-    // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
-    window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
-  }
-  // Now you can start your app & access web3 freely:
-  startApp();
+  	if (typeof web3 !== 'undefined') {
+    	// Use Mist/MetaMask's provider
+		window.web3 = new Web3(web3.currentProvider);
+  	} else {
+    	console.log('No web3? You should consider trying MetaMask!')
+    	// fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+    	window.web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
+  	}
+  	// Now you can start your app & access web3 freely:
+  	startApp();
 });
 
 function startApp() {
-  simpleVoteContract = web3.eth.contract(abi);
-  simpleVote = simpleVoteContract.at(contractAddress);
-  document.getElementById('contractAddr').innerHTML = getLink(contractAddress);
+	MemberContract = web3.eth.contract(abi);
+	Member = MemberContract.at(contractAddress);
+	document.getElementById('contractAddr').innerHTML = getLink(contractAddress);
 
-//   web3.eth.getAccounts(function(e,r){
-//   document.getElementById('accountAddr').innerHTML = getLink(r[0]);
-//   accountAddress = r[0];
-//   alert(accountAddress);
-// //   getValue();
-//   });
+	web3.eth.getAccounts(function(e,r){
+		
+		document.getElementById('accountAddr').innerHTML = getLink(r[0]);
+		accountAddress = r[0];
+	
+	//   getValue();
+  	});
 }
 
 function getLink(addr) {
-  return '<a target="_blank" href=https://ropsten.etherscan.io/address/' + addr + '>' + addr +'</a>';
+	return '<a target="_blank" href=https://ropsten.etherscan.io/address/' + addr + '>' + addr +'</a>';
 }
 
 // function getValue() {
@@ -319,21 +318,20 @@ function getLink(addr) {
 // }
 
 function pushStatus(){
-	alert(111);
 	var name = $('#name').val();
 	var times = $('#times').val();
 	var sum = $('#sum').val();
 	var rate = $('#rate').val();
 
-	simpleVote.pushStatus(name, times, sum, rate, function (e, r){
-		alert("靹标车");
+	Member.pushStatus(name, times, sum, rate, function (e, r){
+		alert("己傍");
 	});	
 }
 function setCoin(){
 	
 	var setCoin = $('#setCoin').val();
 
-	simpleVote.setCoin(setCoin, function (e, r){
-		alert("靹标车");
+	Member.setCoin(setCoin, function (e, r){
+		alert("己傍");
 	});	
 }
