@@ -10,7 +10,7 @@ contract Owned {
 
     // 소유자 한정 메서드용 수식자
     modifier onlyOwner() { 
-        require(msg.sender != owner);
+        require(msg.sender == owner);
         _; 
     }
 
@@ -111,8 +111,9 @@ contract OreOreCoin is Owned{
     string public symbol; // 토큰 단위
     uint8 public decimals; // 소수점 이하 자릿수
     uint256 public totalSupply; // 토큰 총량
-    mapping (address => uint256) public balanceOf; // 각 주소의 잔고
+    mapping (address => uint256) balanceOf; // 각 주소의 잔고
     mapping (address => int8) public blackList; // 블랙리스트
+    address[] internal blackListKey;
     mapping (address => Members) public members; // 각 주소의 회원 정보
      
     // 이벤트 알림
@@ -125,24 +126,39 @@ contract OreOreCoin is Owned{
      
     // 생성자
     constructor (uint256 _supply, string memory _name, string memory _symbol, uint8 _decimals) public{
-        balanceOf[msg.sender] = _supply;
-        name = _name;
-        symbol = _symbol;
-        decimals = _decimals;
-        totalSupply = _supply;
+        balanceOf[msg.sender] = 10000;
+        name = "OSDC";
+        symbol = "OS";
+        decimals = 18;
+        totalSupply = 10000;
     }
  
     // 주소를 블랙리스트에 등록
     function blacklisting(address _addr) public onlyOwner {
         blackList[_addr] = 1;
+        blackListKey.push(_addr);
+        
         emit Blacklisted(_addr);
     }
  
     // 주소를 블랙리스트에서 해제
     function deleteFromBlacklist(address _addr) public onlyOwner {
+        
         blackList[_addr] = -1;
+        for(uint i = 0; i <blackListKey.length; i++ ){
+            if(blackListKey[i] == _addr){
+                delete blackListKey[i];
+                break;
+            }
+        }
         emit DeleteFromBlacklist(_addr);
     }
+    function getBlacklist() view public onlyOwner returns (address[] memory) {
+
+        return blackListKey;
+        
+    }
+
  
     // 회원 관리 계약 설정
     function setMembers(address _members) public {
@@ -161,7 +177,7 @@ contract OreOreCoin is Owned{
         
         // 블랙리스트에 존재하는 계정은 입출금 불가
         if(blackListCheck){
-                    // (12) 캐시백 금액을 계산(각 대상의 비율을 사용)
+            // (12) 캐시백 금액을 계산(각 대상의 비율을 사용)
             uint256 cashback = 0;
             if(_to > address(0)) {
                 cashback = _value / 100 * uint256(members[_to].getCashbackRate(msg.sender));
@@ -178,7 +194,7 @@ contract OreOreCoin is Owned{
 
     }
     // 블랙리스트 체크
-    function blackListCheck(address _to, uint256 _value) public returns (bool){
+    function blackListCheck(address _to, uint256 _value) private returns (bool){
     
         if (blackList[msg.sender] > 0) {
             emit RejectedPaymentFromBlacklistedAddr(msg.sender, _to, _value);

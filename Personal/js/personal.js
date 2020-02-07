@@ -1,6 +1,228 @@
-var contractAddress = '0x5D4df16Ab22305CBb370901706994f14c4CB1F17';
+var contractAddress = '0x0ED89E1b1e89C52678CBFAd32c8514390C90A659';
 var abi =
 [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_supply",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "_name",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_symbol",
+				"type": "string"
+			},
+			{
+				"internalType": "uint8",
+				"name": "_decimals",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "target",
+				"type": "address"
+			}
+		],
+		"name": "Blacklisted",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "blacklisting",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Cashback",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "deleteFromBlacklist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "target",
+				"type": "address"
+			}
+		],
+		"name": "DeleteFromBlacklist",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "RejectedPaymentFromBlacklistedAddr",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "RejectedPaymentToBlacklistedAddr",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_members",
+				"type": "address"
+			}
+		],
+		"name": "setMembers",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "Transfer",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_new",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"anonymous": false,
 		"inputs": [
@@ -21,13 +243,45 @@ var abi =
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "coin",
-		"outputs": [
+		"inputs": [
 			{
 				"internalType": "address",
 				"name": "",
 				"type": "address"
+			}
+		],
+		"name": "blackList",
+		"outputs": [
+			{
+				"internalType": "int8",
+				"name": "",
+				"type": "int8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "decimals",
+		"outputs": [
+			{
+				"internalType": "uint8",
+				"name": "",
+				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBlacklist",
+		"outputs": [
+			{
+				"internalType": "address[]",
+				"name": "",
+				"type": "address[]"
 			}
 		],
 		"stateMutability": "view",
@@ -36,50 +290,30 @@ var abi =
 	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "_index",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_times",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_sum",
-				"type": "uint256"
-			},
-			{
-				"internalType": "int8",
-				"name": "_rate",
-				"type": "int8"
-			}
-		],
-		"name": "editStatus",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
-				"name": "_member",
+				"name": "",
 				"type": "address"
 			}
 		],
-		"name": "getCashbackRate",
+		"name": "members",
 		"outputs": [
 			{
-				"internalType": "int8",
-				"name": "rate",
-				"type": "int8"
+				"internalType": "contract Members",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "name",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
 			}
 		],
 		"stateMutability": "view",
@@ -99,138 +333,29 @@ var abi =
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_name",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_times",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_sum",
-				"type": "uint256"
-			},
-			{
-				"internalType": "int8",
-				"name": "_rate",
-				"type": "int8"
-			}
-		],
-		"name": "pushStatus",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "setCoin",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "status",
+		"inputs": [],
+		"name": "symbol",
 		"outputs": [
 			{
 				"internalType": "string",
-				"name": "name",
+				"name": "",
 				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "times",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "sum",
-				"type": "uint256"
-			},
-			{
-				"internalType": "int8",
-				"name": "rate",
-				"type": "int8"
 			}
 		],
 		"stateMutability": "view",
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "",
-				"type": "address"
-			}
-		],
-		"name": "tradingHistory",
+		"inputs": [],
+		"name": "totalSupply",
 		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "times",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "sum",
-				"type": "uint256"
-			},
-			{
-				"internalType": "uint256",
-				"name": "statusIndex",
+				"name": "",
 				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_new",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_member",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "updateHistory",
-		"outputs": [],
-		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ];
@@ -266,7 +391,7 @@ function startApp() {
 		document.getElementById('accountAddr').innerHTML = getLink(r[0]);
 		accountAddress = r[0];
 	
-	//   getValue();
+		getValue();
   	});
 }
 
@@ -274,49 +399,9 @@ function getLink(addr) {
 	return '<a target="_blank" href=https://ropsten.etherscan.io/address/' + addr + '>' + addr +'</a>';
 }
 
-// function getValue() {
-//   getEther();
-//   getToken();
-//   getTokenInfo();
-//   getCandidateInfo();
-// }
-
-
-
-
-// function getCandidateInfo() {
-//   simpleVote.getVotesReceivedFor(function(e,r){
-//     for(let i=1;i<=r.length;i++)
-//     {
-//       document.getElementById('day_votes_' + i).innerHTML = r[i-1].toString();
-//     }
-//   });
-// }
-
-// function voteForCandidate() {
-//   let candidateName = $("#candidate").val();
-//   let voteTokens = $("#vote-tokens").val();
-//   $("#msg").html("Vote has been submitted. The vote count will increment as soon as the vote is recorded on the blockchain. Please wait.")
-//   $("#candidate").val("");
-//   $("#vote-tokens").val("");
-
-//   simpleVote.vote(candidateName, voteTokens, function (e, r){
-//     getCandidateInfo();
-//   });
-// }
-
-// function buyTokens() {
-//   let tokensToBuy = $("#buy").val();
-//   let price = tokensToBuy * tokenPrice;
-//   $("#buy-msg").html("Purchase order has been submitted. Please wait.");
-
-//   simpleVote.buy({value: web3.toWei(price, 'ether'), from: web3.eth.accounts[0]}, function(v) {
-//     web3.eth.getBalance(simpleVote.address, function(e, r) {
-//     $("#contract-balance").html(web3.fromWei(r.toString()) + " ETH");
-//    });
-//   });
-// }
-
+function getValue(){
+	getBlacklist();
+}
 function pushStatus(){
 	var name = $('#name').val();
 	var times = $('#times').val();
@@ -324,7 +409,7 @@ function pushStatus(){
 	var rate = $('#rate').val();
 
 	Member.pushStatus(name, times, sum, rate, function (e, r){
-		alert("성공");
+		alert("Success");
 	});	
 }
 function setCoin(){
@@ -332,6 +417,56 @@ function setCoin(){
 	var setCoin = $('#setCoin').val();
 
 	Member.setCoin(setCoin, function (e, r){
-		alert("성공");
+		alert("Success");
+	});	
+}
+function setMembers(){
+	
+	var setMembers = $('#setMembers').val();
+
+	Member.setMembers(setMembers, function (e, r){
+		alert("Success");
+	});	
+}
+function blacklisting(){
+	
+	var blacklisting = $('#blacklisting').val();
+
+	Member.blacklisting(blacklisting, function (e, r){
+		alert("Success");
+		getBlacklist();
+		$('#blacklisting').val('');
+		
+	});	
+}
+function deleteFromBlacklist(){
+	
+	var deleteFromBlacklist = $('#deleteFromBlacklist').val();
+
+	Member.deleteFromBlacklist(deleteFromBlacklist, function (e, r){
+		alert("Success");
+		getBlacklist();
+		$('#blacklisting').val('');
+		
+	});	
+}
+
+function getBlacklist(){
+	
+	var html = '';
+
+	Member.getBlacklist(function (e, r){
+		var html = '';
+		for(let i=1;i<=r.length;i++)
+		{
+			if(r[i-1] != '0x0000000000000000000000000000000000000000'){
+				html +='<tr>';
+				html +='<td>' + r[i-1].toString() + '</td>';
+				html +='</tr>';
+			}
+
+		}
+		$('#content').html(html);
+
 	});	
 }
