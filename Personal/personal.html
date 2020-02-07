@@ -17,9 +17,7 @@
       <p>
       <li>Account Address : <span id="accountAddr"></span></li>
       </p>
-      <li>Holding ETH Count : <span id="ethValue"></span></li>
-      <p></p>
-      <li>Holding Token Count : <span id="tokenValue"></span></li>
+
     </ul>
    </div>
   </div>
@@ -42,7 +40,21 @@
 		<a href="#" onclick="deleteFromBlacklist();" class="btn btn-primary">click</a><br>
 
 		<h3>블랙리스트 목록</h3>
-
+     <table class="table table-bordered">
+      <thead>
+       <tr>
+        <th>Name</th>
+        <th>Y/N</th>
+       </tr>
+      </thead>
+      <!--tbody id="candidate-rows"-->
+      <tbody>
+        <tr>
+         <th>0x59d0Ee1d91901f911C86576a96F858f0c9D71812</th>
+         <th id="day_votes_1"> Y </th>
+        </tr>
+      </tbody>
+     </table>
 
     <hr>
 		<h3>송금</h3>
