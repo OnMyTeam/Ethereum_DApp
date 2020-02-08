@@ -1,4 +1,4 @@
-var contractAddress = '0x0ED89E1b1e89C52678CBFAd32c8514390C90A659';
+var contractAddress = '0xa0Fc1fC4Cd5A161d7A1877E929ea02F1C180364d';
 var abi =
 [
 	{
@@ -41,19 +41,6 @@ var abi =
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "blacklisting",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -77,19 +64,6 @@ var abi =
 		],
 		"name": "Cashback",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_addr",
-				"type": "address"
-			}
-		],
-		"name": "deleteFromBlacklist",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -155,37 +129,6 @@ var abi =
 		"type": "event"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_members",
-				"type": "address"
-			}
-		],
-		"name": "setMembers",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_to",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_value",
-				"type": "uint256"
-			}
-		],
-		"name": "transfer",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -209,19 +152,6 @@ var abi =
 		],
 		"name": "Transfer",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_new",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -262,6 +192,19 @@ var abi =
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "blacklisting",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "decimals",
 		"outputs": [
@@ -269,6 +212,32 @@ var abi =
 				"internalType": "uint8",
 				"name": "",
 				"type": "uint8"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_addr",
+				"type": "address"
+			}
+		],
+		"name": "deleteFromBlacklist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "getBalanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",
@@ -333,6 +302,19 @@ var abi =
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_members",
+				"type": "address"
+			}
+		],
+		"name": "setMembers",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "symbol",
 		"outputs": [
@@ -356,6 +338,37 @@ var abi =
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "_value",
+				"type": "uint256"
+			}
+		],
+		"name": "transfer",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_new",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ];
@@ -401,6 +414,12 @@ function getLink(addr) {
 
 function getValue(){
 	getBlacklist();
+	getToken();
+}
+function getToken() {
+  	Member.getBalanceOf(function(e,r){
+    document.getElementById('HoldingToken').innerHTML = r.toString();
+  });
 }
 function pushStatus(){
 	var name = $('#name').val();
@@ -426,6 +445,7 @@ function setMembers(){
 
 	Member.setMembers(setMembers, function (e, r){
 		alert("Success");
+		$('#setMembers').val('');
 	});	
 }
 function blacklisting(){
@@ -468,5 +488,18 @@ function getBlacklist(){
 		}
 		$('#content').html(html);
 
+	});	
+}
+function transfer(){
+	
+	var AddressTo = $('#AddressTo').val();
+	var tokenValue = $('#tokenValue').val();
+
+	Member.transfer(AddressTo, Number(tokenValue), function (e, r){
+		alert("Success");
+		$('#AddressTo').val('');
+		$('#tokenValue').val(0);
+		getToken();
+		
 	});	
 }
