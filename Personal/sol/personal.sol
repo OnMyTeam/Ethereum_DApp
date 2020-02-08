@@ -1,31 +1,6 @@
-pragma solidity ^0.6.2;
+pragma solidity >=0.4.24 <0.6.2;
+import "./ERC20.sol";
 
-// 소유자 관리용 계약
-contract Owned {
-    // 상태 변수
-    address public owner; // 소유자 주소
-
-    // 소유자 변경 시 이벤트
-    event TransferOwnership(address oldaddr, address newaddr);
-
-    // 소유자 한정 메서드용 수식자
-    modifier onlyOwner() { 
-        require(msg.sender == owner);
-        _; 
-    }
-
-    // 생성자
-    constructor() public{
-        owner = msg.sender; // 처음에 계약을 생성한 주소를 소유자로 한다
-    }
-    
-    // (1) 소유자 변경
-    function transferOwnership(address _new) public onlyOwner {
-        address oldaddr = owner;
-        owner = _new;
-        emit TransferOwnership(oldaddr, owner);
-    }
-}
 
 // (2) 회원 관리용 계약
 contract Members is Owned {
@@ -105,13 +80,9 @@ contract Members is Owned {
 }
      
 // (11) 회원 관리 기능이 구현된 가상 화폐
-contract OreOreCoin is Owned{
+contract OreOreCoin is FixedSupplyToken{
     // 상태 변수 선언
-    string public name; // 토큰 이름
-    string public symbol; // 토큰 단위
-    uint8 public decimals; // 소수점 이하 자릿수
-    uint256 public totalSupply; // 토큰 총량
-    mapping (address => uint256) balanceOf; // 각 주소의 잔고
+
     mapping (address => int8) public blackList; // 블랙리스트
     address[] internal blackListKey;
     mapping (address => Members) public members; // 각 주소의 회원 정보
@@ -125,14 +96,12 @@ contract OreOreCoin is Owned{
     event Cashback(address indexed from, address indexed to, uint256 value);
      
     // 생성자
-    constructor (uint256 _supply, string memory _name, string memory _symbol, uint8 _decimals) public{
-        balanceOf[msg.sender] = 10000;
-        name = "OSDC";
-        symbol = "OS";
-        decimals = 18;
-        totalSupply = 10000;
-    }
- 
+    constructor () public FixedSupplyToken(10000, "OSDC", "OS", 0){}
+    
+    // 토큰 잔액 조회
+     function getBalanceOf() view public returns (uint256){
+        return balances[msg.sender];
+    }   
     // 주소를 블랙리스트에 등록
     function blacklisting(address _addr) public onlyOwner {
         blackList[_addr] = 1;
@@ -153,6 +122,7 @@ contract OreOreCoin is Owned{
         }
         emit DeleteFromBlacklist(_addr);
     }
+    // 블랙리스트 조회
     function getBlacklist() view public onlyOwner returns (address[] memory) {
 
         return blackListKey;
@@ -167,28 +137,29 @@ contract OreOreCoin is Owned{
     }
  
     // 송금
-    function transfer(address _to, uint256 _value) public {
+    function transferToken(address _to, uint256 _value) public {
+        
+        require(balances[msg.sender] >= _value);
+        require((balances[_to] + _value) > balances[_to]);
+        
+        
         // 부정 송금 확인
-
-        require(balanceOf[msg.sender] < _value);
-        require(balanceOf[_to] + _value < balanceOf[_to]);
-        
-        bool blackListCheck = blackListCheck(_to, _value);
-        
         // 블랙리스트에 존재하는 계정은 입출금 불가
-        if(blackListCheck){
+        if(blackListCheck(_to, _value)){
             // (12) 캐시백 금액을 계산(각 대상의 비율을 사용)
-            uint256 cashback = 0;
-            if(_to > address(0)) {
-                cashback = _value / 100 * uint256(members[_to].getCashbackRate(msg.sender));
-                members[_to].updateHistory(msg.sender, _value);
-            }
+            // uint256 cashback = 0;
+            //if(_to > address(0)) {
+            //    cashback = _value / 100 * uint256(members[_to].getCashbackRate(msg.sender));
+            //    members[_to].updateHistory(msg.sender, _value);
+            //}
  
-            balanceOf[msg.sender] -= (_value - cashback);
-            balanceOf[_to] += (_value - cashback);
- 
-            emit Transfer(msg.sender, _to, _value);
-            emit Cashback(_to, msg.sender, cashback);
+            //balanceOf[msg.sender] -= (_value - cashback);
+            //balanceOf[_to] += (_value - cashback);
+            // balances[msg.sender] -= (_value);
+            //balances[_to] += (_value);
+            // emit Transfer(msg.sender, _to, _value);
+            transfer(_to, _value);
+            //emit Cashback(_to, msg.sender, cashback);
         }
 
 
