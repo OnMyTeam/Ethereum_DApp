@@ -1,0 +1,110 @@
+<!Doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="./lib/bignumber.min.js"></script>
+<script type="text/javascript" src="./lib/web3-light.js"></script>
+<script type="text/javascript">
+   
+
+	window.addEventListener('load', function() {
+			// Checking if Web3 has been injected by the browser (Mist/MetaMask)
+		// if (typeof web3 !== 'undefined') {
+		// 	// Use Mist/MetaMask's provider
+		// 	console.log("success connection");
+		// 	window.web3 = new Web3(web3.currentProvider);
+		// } else {
+			console.log('No web3? You should consider trying MetaMask!')
+			// fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+			window.web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:7545"));
+		//}
+		
+
+		web3.eth.getAccounts(function(e,r){
+			refreshBalance(r);
+		 });
+		 makeSelect();
+		
+	});
+	
+	
+	
+	// 잔고를 출력합니다.
+    function refreshBalance() { 
+		// tablePlace를 초기화하고 계좌수 만큼 테이블의 행을 생성합니다.
+		document.getElementById("tablePlace").innerText = " ";
+		var idiv = document.createElement('div');
+		document.getElementById("tablePlace").appendChild(idiv);
+		var list = web3.eth.accounts;
+		var total = 0;
+		var input ="<table>";
+		for(var i = 0; i<list.length; i++){
+			var tempB= parseFloat(web3.fromWei(web3.eth.getBalance(list[i]),"finney"));
+			input +="<tr><td>"+ list[i] + "</td><td>" + tempB +" FINNEY</td></tr>";
+			total+=tempB;
+		}
+		input +="<tr><td><strong> TOTAL </strong></td><td><strong>" + total +" FINNEY</strong></td></tr></table>";
+		idiv.innerHTML = input;	
+		web3.eth.filter('latest').watch(function() { 
+			refreshBalance(); 	
+			document.getElementById("hashrate").innerText = web3.eth.hashrate; });	
+	}
+
+	// 사용자의 계좌들을 select로 만듭니다.
+	function makeSelect() { 
+		var list = web3.eth.accounts;
+		var select =  document.getElementById('accounts');
+		for(var i = 0; i<list.length; i++){
+			var opt=document.createElement('option');
+			opt.value = list[i];
+			opt.innerHTML = list[i];
+			select.appendChild(opt);
+		}
+	}
+	function send(){ 
+	var address = document.getElementById('accounts').value;
+	var toAddress = document.getElementById('toaddr').value;
+	var amount = web3.toWei(document.getElementById('amount').value,"finney");
+	//web3.eth.defaultAccount = address;
+	if(web3.personal.unlockAccount(address,document.getElementById('pass').value)){
+		web3.eth.sendTransaction({from: address, to:toAddress, value:amount},function(err,result){
+			if(!err){
+				console.log('Transaction is sent Successful!('+result+')');
+				location.reload(true);
+			}
+			else
+				console.log(err);
+		});}
+	}
+</script>
+<style>
+table {    border-collapse: collapse;    border: 4px solid #bbb;	width: 100%;}
+tr:nth-child(even){background-color: #ccc}
+td, h1 {	padding: 8px;    text-align: left;}
+input, select {
+    padding: 6px 10px;
+    margin: 4px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+button:hover {  background-color: gold;}
+</style>
+</head>
+
+<body>
+    <h1>ETHER Wallet </h1>
+	<div id="tablePlace"></div>
+	<h4>송신처  <select id="accounts"></select> </h4>
+	<h4>수신처  <input type="text" id="toaddr" size="40" value=""></h4>
+    <h4>금액  <input id="amount" type="number"/> FINNEY</h4>
+	<h4>password <input id="pass" type="password"/>
+	<button onClick="javascript:send()">Send</button></h4>
+	<h4> Hashrate <span id="hashrate"> </span> </h4>
+	<script>
+	refreshBalance();
+	makeSelect();
+	</script>
+</body>
+</html>
