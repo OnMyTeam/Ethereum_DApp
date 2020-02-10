@@ -161,7 +161,7 @@ contract OreOreCoin is FixedSupplyToken{
             transfer(_to, _value);
             //emit Cashback(_to, msg.sender, cashback);
         }
-
+ 
 
     }
     // 블랙리스트 체크
