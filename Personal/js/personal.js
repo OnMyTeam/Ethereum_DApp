@@ -624,11 +624,31 @@ function getLink(addr) {
 function getValue(){
 	getBlacklist();
 	getToken();
+	getAccounts();
 }
 function getToken() {
   	Member.getBalanceOf(function(e,r){
-    document.getElementById('HoldingToken').innerHTML = r.toString();
+		  alert(r);
+    	document.getElementById('tokenValue').innerHTML = r.toString();
   });
+}
+function getAccounts() {
+    web3.eth.getAccounts(function(e,r){
+        for(let i=1;i<=r.length;i++){
+            document.getElementById('AccountAddr_'+i).innerHTML=r[i-1].toString();
+        }
+        getTokenBalance(r);
+    });
+}
+function getTokenBalance(){
+    for(let i=1;i<=10;i++){
+        let account= document.getElementById('AccountAddr_'+i).innerHTML;
+        // console.log("acc:"+account);
+        FixedSupplyToken.balanceOf(account,function(e,r){
+            //console.log("balance: "+r);
+            document.getElementById('token_'+i).innerHTML = r.toString();
+        });
+    }
 }
 function pushStatus(){
 	var name = $('#name').val();
