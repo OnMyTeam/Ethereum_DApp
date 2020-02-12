@@ -628,7 +628,7 @@ function getValue(){
 }
 function getToken() {
   	Member.getBalanceOf(function(e,r){
-		  alert(r);
+	
     	document.getElementById('tokenValue').innerHTML = r.toString();
   });
 }
