@@ -127,46 +127,47 @@
         <input type="text" id="transfer-tokens" class="form-control" placeholder="Total no. of tokens to transfer" />
         <br>
         <a href="#" onclick="transferToken(); return false;" class="btn btn-primary">Transfer</a>
+        <br><br><br>
       </div>
       <div class="col-sm-offset-1 col-sm-4">
-        <div class="col-sm-12 form">
-          <h2>Purchase Tokens</h2>
-          <div id="buy-msg"></div>
-          <input type="text" id="buy_addr" class="form-control" placeholder="Address to buy tokens " />
-          <br>
-          <input type="text" id="buy" class="form-control" placeholder="Number of Ether to buy" />
-          <br>
-          <a href="#" onclick="buyTokens(); return false;" class="btn btn-primary">Buy</a>
-        </div>
+   
+        <h2>Purchase Tokens</h2>
+        <div id="buy-msg"></div>
+        <input type="text" id="buy_addr" class="form-control" placeholder="Address to buy tokens " />
+        <br>
+        <input type="text" id="buy" class="form-control" placeholder="Number of Ether to buy" />
+        <br>
+        <a href="#" onclick="buyTokens(); return false;" class="btn btn-primary">Buy</a>
+        
       </div>
-      <!-- <div class="col-sm-offset-1 col-sm-4">
-    <h2>Token Info</h2>
-    <div class="table-responsive">
-     <table class="table table-bordered">
-      <tr>
-       <th>Tokens Info</th>
-       <th>Value</th>
-      </tr>
-      <tr>
-       <td>Total Token Count</td>
-       <td id="token-total"></td>
-      </tr>
-      <tr>
-       <td>tokens amount</td>
-       <td id="token-amount"></td>
-      </tr>
-      <tr>
-    <td>decimals</td>
-       <td id="token-decimals"></td>
-      </tr>
-      <tr>
-       <td>Symbol</td>
-       <td id="token-symbol"></td>
-      </tr>
-     </table>
-    </div>
-   </div>        -->
-
+      
+      <hr style="width:98%; color:#BDBDBD; border: thin solid #BDBDBD;">
+      <div class="col-sm-7 form">
+        <h2>회원등급생성</h2>
+        <div id="msg"></div>
+        <input type="text" id="transfer_from" class="form-control" placeholder="Enter the token sender" />
+        <br>
+        <input type="text" id="transfer_to" class="form-control" placeholder="Enter the token receiver" />
+        <br>
+        <input type="text" id="transfer-tokens" class="form-control" placeholder="Total no. of tokens to transfer" />
+        <br>
+        <a href="#" onclick="transferToken(); return false;" class="btn btn-primary">Register</a>
+      </div>
+      <div class="col-sm-offset-1 col-sm-4">
+    
+        <h2>회원등급수정</h2>
+        <div id="buy-msg"></div>
+        <input type="text" id="buy_addr" class="form-control" placeholder="Address to buy tokens " />
+        <br>
+        <input type="text" id="buy" class="form-control" placeholder="Number of Ether to buy" />
+        <br>
+        <input type="text" id="buy" class="form-control" placeholder="Number of Ether to buy" />
+        <br>          
+        <a href="#" onclick="buyTokens(); return false;" class="btn btn-primary">Buy</a>
+        <br><br><br>
+      </div>
+      
+      <hr style="width:98%; color:#BDBDBD; border: thin solid #BDBDBD;">
       <div class="col-sm-12">
         <h2>BlackList Info</h2>
         <div class="table-responsive">
@@ -187,12 +188,12 @@
         <h2>BlackList Register</h2>
         <div id="msg"></div>
         <input type="text" id="blacklisting" class="form-control" placeholder="Enter the address"><br>
-        <a href="#" onclick="blacklisting();" class="btn btn-primary">click</a>
+        <a href="#" onclick="blacklisting();" class="btn btn-primary">Register</a>
         <br>
         <br>
         <h2>BlackList Delete</h2>
         <input type="text" id="deleteFromBlacklist" class="form-control" placeholder="Enter the address"><br>
-        <a href="#" onclick="deleteFromBlacklist();" class="btn btn-primary">click</a><br>
+        <a href="#" onclick="deleteFromBlacklist();" class="btn btn-primary">Delete</a><br>
         <br>
         <br>
       </div>
