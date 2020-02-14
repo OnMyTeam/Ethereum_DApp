@@ -131,8 +131,9 @@ contract OreOreCoin is FixedSupplyToken{
 
  
     // 회원 관리 계약 설정
-    function setMembers(address _members) public {
-        members[msg.sender] = Members(_members);
+    function setMembers(address _members) public onlyOwner{
+        Members nmembers = Members(_members);
+        members[_members] = nmembers;
 
     }
  
@@ -161,7 +162,7 @@ contract OreOreCoin is FixedSupplyToken{
             transfer(_to, _value);
             //emit Cashback(_to, msg.sender, cashback);
         }
- 
+
 
     }
     // 블랙리스트 체크
