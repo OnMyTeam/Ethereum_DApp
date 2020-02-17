@@ -624,12 +624,19 @@ function getLink(addr) {
 function getValue(){
 	getBlacklist();
 	getToken();
+	getEther();
 	getAccounts();
 }
 function getToken() {
   	Member.getBalanceOf(function(e,r){
-		  alert(r);
-    	document.getElementById('tokenValue').innerHTML = r.toString();
+	   	document.getElementById('tokenValue').innerHTML = r.toString();
+  });
+}
+function getEther() {
+
+  	web3.eth.getBalance(accountAddress, function(e,r){
+		// alert(r);
+    	document.getElementById('ethValue').innerHTML =web3.fromWei(r.toString()) + "ETH";
   });
 }
 function getAccounts() {
@@ -644,7 +651,7 @@ function getTokenBalance(){
     for(let i=1;i<=10;i++){
         let account= document.getElementById('AccountAddr_'+i).innerHTML;
         // console.log("acc:"+account);
-        FixedSupplyToken.balanceOf(account,function(e,r){
+        	FixedSupplyToken.balanceOf(account,function(e,r){
             //console.log("balance: "+r);
             document.getElementById('token_'+i).innerHTML = r.toString();
         });
