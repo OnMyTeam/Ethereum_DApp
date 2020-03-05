@@ -1,0 +1,1755 @@
+{
+  "contractName": "Personal",
+  "abi": [
+    {
+      "inputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "register",
+      "outputs": [
+        {
+          "name": "success",
+          "type": "string"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [],
+      "name": "getMemberInfo",
+      "outputs": [
+        {
+          "name": "addr",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "metadata": "{\"compiler\":{\"version\":\"0.4.24+commit.e67f0147\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"constant\":false,\"inputs\":[],\"name\":\"register\",\"outputs\":[{\"name\":\"success\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"getMemberInfo\",\"outputs\":[{\"name\":\"addr\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/D/BlockChainDApp/Store_Dapp/contracts/Personal.sol\":\"Personal\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/D/BlockChainDApp/Store_Dapp/contracts/Personal.sol\":{\"keccak256\":\"0x308d32b85ad6dcc723d36d2daec0bcf95b6eb2667bae109c68938256b2e4feed\",\"urls\":[\"bzzr://d2be2518e63a938034d5171095563e73985af6a8459523071f7cada4fb019cc5\"]}},\"version\":1}",
+  "bytecode": "0x608060405234801561001057600080fd5b50336000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610326806100a06000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631aa3a0081461005157806360104e11146100e1575b600080fd5b34801561005d57600080fd5b50610066610138565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100a657808201518184015260208101905061008b565b50505050905090810190601f1680156100d35780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b3480156100ed57600080fd5b506100f6610291565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6060600073ffffffffffffffffffffffffffffffffffffffff166000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161415156101d657600080fd5b336000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506040805190810160405280600781526020017f7375636365737300000000000000000000000000000000000000000000000000815250905090565b60008060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050905600a165627a7a723058208bbf86960b88687300ad22c406bf5c64b55a3e82c8925d97e6d32a4cd0f5d87a0029",
+  "deployedBytecode": "0x60806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680631aa3a0081461005157806360104e11146100e1575b600080fd5b34801561005d57600080fd5b50610066610138565b6040518080602001828103825283818151815260200191508051906020019080838360005b838110156100a657808201518184015260208101905061008b565b50505050905090810190601f1680156100d35780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b3480156100ed57600080fd5b506100f6610291565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6060600073ffffffffffffffffffffffffffffffffffffffff166000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff161415156101d657600080fd5b336000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff1602179055506040805190810160405280600781526020017f7375636365737300000000000000000000000000000000000000000000000000815250905090565b60008060003373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050905600a165627a7a723058208bbf86960b88687300ad22c406bf5c64b55a3e82c8925d97e6d32a4cd0f5d87a0029",
+  "sourceMap": "27:650:3:-;;;167:76;8:9:-1;5:2;;;30:1;27;20:12;5:2;167:76:3;225:10;198:6;:18;205:10;198:18;;;;;;;;;;;;;;;:26;;;:37;;;;;;;;;;;;;;;;;;27:650;;;;;;",
+  "deployedSourceMap": "27:650:3:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;251:307;;8:9:-1;5:2;;;30:1;27;20:12;5:2;251:307:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:10;8:100;;;99:1;94:3;90:11;84:18;80:1;75:3;71:11;64:39;52:2;49:1;45:10;40:15;;8:100;;;12:14;251:307:3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;564:110;;8:9:-1;5:2;;;30:1;27;20:12;5:2;564:110:3;;;;;;;;;;;;;;;;;;;;;;;;;;;251:307;286:14;359:1;321:40;;:6;:18;328:10;321:18;;;;;;;;;;;;;;;:26;;;;;;;;;;;;:40;;;313:49;;;;;;;;495:10;467:6;:18;474:10;467:18;;;;;;;;;;;;;;;:26;;;:38;;;;;;;;;;;;;;;;;;520:16;;;;;;;;;;;;;;;;;;;;251:307;:::o;564:110::-;609:12;640:6;:18;647:10;640:18;;;;;;;;;;;;;;;:26;;;;;;;;;;;;633:33;;564:110;:::o",
+  "source": "pragma solidity 0.4.24;\r\n\r\ncontract Personal {\r\n    struct Person{\r\n        address account;\r\n        uint tokens;\r\n    }\r\n    mapping(address=>Person) People;\r\n\r\n    constructor() public{\r\n        People[msg.sender].account=msg.sender;\r\n    }\r\n\r\n    function register() public returns(string success) {\r\n        require(People[msg.sender].account == address(0));\r\n        // if(People[msg.sender].account!=address(0)) return \"fail\"; \r\n        // else {\r\n            People[msg.sender].account= msg.sender;\r\n            return \"success\";\r\n        // }\r\n    }\r\n    function getMemberInfo() public view returns(address addr){\r\n        return People[msg.sender].account;\r\n    }\r\n}\r\n",
+  "sourcePath": "D:\\BlockChainDApp\\Store_Dapp\\contracts\\Personal.sol",
+  "ast": {
+    "absolutePath": "/D/BlockChainDApp/Store_Dapp/contracts/Personal.sol",
+    "exportedSymbols": {
+      "Personal": [
+        257
+      ]
+    },
+    "id": 258,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 193,
+        "literals": [
+          "solidity",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 257,
+        "linearizedBaseContracts": [
+          257
+        ],
+        "name": "Personal",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "Personal.Person",
+            "id": 198,
+            "members": [
+              {
+                "constant": false,
+                "id": 195,
+                "name": "account",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "76:15:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 194,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "76:7:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 197,
+                "name": "tokens",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "102:11:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 196,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "102:4:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Person",
+            "nodeType": "StructDefinition",
+            "scope": 257,
+            "src": "52:69:3",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 202,
+            "name": "People",
+            "nodeType": "VariableDeclaration",
+            "scope": 257,
+            "src": "127:31:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+              "typeString": "mapping(address => struct Personal.Person)"
+            },
+            "typeName": {
+              "id": 201,
+              "keyType": {
+                "id": 199,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "135:7:3",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "127:24:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                "typeString": "mapping(address => struct Personal.Person)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 200,
+                "name": "Person",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 198,
+                "src": "144:6:3",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Person_$198_storage_ptr",
+                  "typeString": "struct Personal.Person"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 214,
+              "nodeType": "Block",
+              "src": "187:56:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 212,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 205,
+                          "name": "People",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 202,
+                          "src": "198:6:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeString": "mapping(address => struct Personal.Person storage ref)"
+                          }
+                        },
+                        "id": 208,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 206,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 920,
+                            "src": "205:3:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 207,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "205:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "198:18:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeString": "struct Personal.Person storage ref"
+                        }
+                      },
+                      "id": 209,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "account",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 195,
+                      "src": "198:26:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 210,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 920,
+                        "src": "225:3:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 211,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "225:10:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "198:37:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 213,
+                  "nodeType": "ExpressionStatement",
+                  "src": "198:37:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 215,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 203,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "178:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 204,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "187:0:3"
+            },
+            "scope": 257,
+            "src": "167:76:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 243,
+              "nodeType": "Block",
+              "src": "302:256:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 229,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "baseExpression": {
+                              "argumentTypes": null,
+                              "id": 221,
+                              "name": "People",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 202,
+                              "src": "321:6:3",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                                "typeString": "mapping(address => struct Personal.Person storage ref)"
+                              }
+                            },
+                            "id": 224,
+                            "indexExpression": {
+                              "argumentTypes": null,
+                              "expression": {
+                                "argumentTypes": null,
+                                "id": 222,
+                                "name": "msg",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 920,
+                                "src": "328:3:3",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_magic_message",
+                                  "typeString": "msg"
+                                }
+                              },
+                              "id": 223,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "sender",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": null,
+                              "src": "328:10:3",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "321:18:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Person_$198_storage",
+                              "typeString": "struct Personal.Person storage ref"
+                            }
+                          },
+                          "id": 225,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "account",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 195,
+                          "src": "321:26:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 227,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "359:1:3",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 226,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "351:7:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 228,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "351:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "321:40:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 220,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        923,
+                        924
+                      ],
+                      "referencedDeclaration": 923,
+                      "src": "313:7:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 230,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "313:49:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 231,
+                  "nodeType": "ExpressionStatement",
+                  "src": "313:49:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 239,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 232,
+                          "name": "People",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 202,
+                          "src": "467:6:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeString": "mapping(address => struct Personal.Person storage ref)"
+                          }
+                        },
+                        "id": 235,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 233,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 920,
+                            "src": "474:3:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 234,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "474:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "467:18:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeString": "struct Personal.Person storage ref"
+                        }
+                      },
+                      "id": 236,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "account",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 195,
+                      "src": "467:26:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 237,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 920,
+                        "src": "495:3:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 238,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "495:10:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "467:38:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 240,
+                  "nodeType": "ExpressionStatement",
+                  "src": "467:38:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "73756363657373",
+                    "id": 241,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "527:9:3",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_4b31cabbe5862282e443c4ac3f4c14761a1d2ba88a3c858a2a36f7758f453a38",
+                      "typeString": "literal_string \"success\""
+                    },
+                    "value": "success"
+                  },
+                  "functionReturnParameters": 219,
+                  "id": 242,
+                  "nodeType": "Return",
+                  "src": "520:16:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 244,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "register",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 216,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "268:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 219,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 218,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 244,
+                  "src": "286:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 217,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "286:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "285:16:3"
+            },
+            "scope": 257,
+            "src": "251:307:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 255,
+              "nodeType": "Block",
+              "src": "622:52:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 249,
+                        "name": "People",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 202,
+                        "src": "640:6:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                          "typeString": "mapping(address => struct Personal.Person storage ref)"
+                        }
+                      },
+                      "id": 252,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 250,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 920,
+                          "src": "647:3:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 251,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "647:10:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "640:18:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Person_$198_storage",
+                        "typeString": "struct Personal.Person storage ref"
+                      }
+                    },
+                    "id": 253,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "account",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 195,
+                    "src": "640:26:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "functionReturnParameters": 248,
+                  "id": 254,
+                  "nodeType": "Return",
+                  "src": "633:33:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 256,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getMemberInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 245,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "586:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 248,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 247,
+                  "name": "addr",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 256,
+                  "src": "609:12:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 246,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "609:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "608:14:3"
+            },
+            "scope": 257,
+            "src": "564:110:3",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 258,
+        "src": "27:650:3"
+      }
+    ],
+    "src": "0:679:3"
+  },
+  "legacyAST": {
+    "absolutePath": "/D/BlockChainDApp/Store_Dapp/contracts/Personal.sol",
+    "exportedSymbols": {
+      "Personal": [
+        257
+      ]
+    },
+    "id": 258,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 193,
+        "literals": [
+          "solidity",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:23:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 257,
+        "linearizedBaseContracts": [
+          257
+        ],
+        "name": "Personal",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "Personal.Person",
+            "id": 198,
+            "members": [
+              {
+                "constant": false,
+                "id": 195,
+                "name": "account",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "76:15:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                },
+                "typeName": {
+                  "id": 194,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "76:7:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 197,
+                "name": "tokens",
+                "nodeType": "VariableDeclaration",
+                "scope": 198,
+                "src": "102:11:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 196,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "102:4:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Person",
+            "nodeType": "StructDefinition",
+            "scope": 257,
+            "src": "52:69:3",
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 202,
+            "name": "People",
+            "nodeType": "VariableDeclaration",
+            "scope": 257,
+            "src": "127:31:3",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+              "typeString": "mapping(address => struct Personal.Person)"
+            },
+            "typeName": {
+              "id": 201,
+              "keyType": {
+                "id": 199,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "135:7:3",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "127:24:3",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                "typeString": "mapping(address => struct Personal.Person)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 200,
+                "name": "Person",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 198,
+                "src": "144:6:3",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Person_$198_storage_ptr",
+                  "typeString": "struct Personal.Person"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
+            "body": {
+              "id": 214,
+              "nodeType": "Block",
+              "src": "187:56:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 212,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 205,
+                          "name": "People",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 202,
+                          "src": "198:6:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeString": "mapping(address => struct Personal.Person storage ref)"
+                          }
+                        },
+                        "id": 208,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 206,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 920,
+                            "src": "205:3:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 207,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "205:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "198:18:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeString": "struct Personal.Person storage ref"
+                        }
+                      },
+                      "id": 209,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "account",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 195,
+                      "src": "198:26:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 210,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 920,
+                        "src": "225:3:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 211,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "225:10:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "198:37:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 213,
+                  "nodeType": "ExpressionStatement",
+                  "src": "198:37:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 215,
+            "implemented": true,
+            "isConstructor": true,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 203,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "178:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 204,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "187:0:3"
+            },
+            "scope": 257,
+            "src": "167:76:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 243,
+              "nodeType": "Block",
+              "src": "302:256:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "arguments": [
+                      {
+                        "argumentTypes": null,
+                        "commonType": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        },
+                        "id": 229,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "leftExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "baseExpression": {
+                              "argumentTypes": null,
+                              "id": 221,
+                              "name": "People",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 202,
+                              "src": "321:6:3",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                                "typeString": "mapping(address => struct Personal.Person storage ref)"
+                              }
+                            },
+                            "id": 224,
+                            "indexExpression": {
+                              "argumentTypes": null,
+                              "expression": {
+                                "argumentTypes": null,
+                                "id": 222,
+                                "name": "msg",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": 920,
+                                "src": "328:3:3",
+                                "typeDescriptions": {
+                                  "typeIdentifier": "t_magic_message",
+                                  "typeString": "msg"
+                                }
+                              },
+                              "id": 223,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "memberName": "sender",
+                              "nodeType": "MemberAccess",
+                              "referencedDeclaration": null,
+                              "src": "328:10:3",
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_address",
+                                "typeString": "address"
+                              }
+                            },
+                            "isConstant": false,
+                            "isLValue": true,
+                            "isPure": false,
+                            "lValueRequested": false,
+                            "nodeType": "IndexAccess",
+                            "src": "321:18:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_struct$_Person_$198_storage",
+                              "typeString": "struct Personal.Person storage ref"
+                            }
+                          },
+                          "id": 225,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "account",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": 195,
+                          "src": "321:26:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "nodeType": "BinaryOperation",
+                        "operator": "==",
+                        "rightExpression": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            {
+                              "argumentTypes": null,
+                              "hexValue": "30",
+                              "id": 227,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": true,
+                              "kind": "number",
+                              "lValueRequested": false,
+                              "nodeType": "Literal",
+                              "src": "359:1:3",
+                              "subdenomination": null,
+                              "typeDescriptions": {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              },
+                              "value": "0"
+                            }
+                          ],
+                          "expression": {
+                            "argumentTypes": [
+                              {
+                                "typeIdentifier": "t_rational_0_by_1",
+                                "typeString": "int_const 0"
+                              }
+                            ],
+                            "id": 226,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "lValueRequested": false,
+                            "nodeType": "ElementaryTypeNameExpression",
+                            "src": "351:7:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_type$_t_address_$",
+                              "typeString": "type(address)"
+                            },
+                            "typeName": "address"
+                          },
+                          "id": 228,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": true,
+                          "kind": "typeConversion",
+                          "lValueRequested": false,
+                          "names": [],
+                          "nodeType": "FunctionCall",
+                          "src": "351:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "src": "321:40:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      }
+                    ],
+                    "expression": {
+                      "argumentTypes": [
+                        {
+                          "typeIdentifier": "t_bool",
+                          "typeString": "bool"
+                        }
+                      ],
+                      "id": 220,
+                      "name": "require",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [
+                        923,
+                        924
+                      ],
+                      "referencedDeclaration": 923,
+                      "src": "313:7:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
+                        "typeString": "function (bool) pure"
+                      }
+                    },
+                    "id": 230,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "kind": "functionCall",
+                    "lValueRequested": false,
+                    "names": [],
+                    "nodeType": "FunctionCall",
+                    "src": "313:49:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_tuple$__$",
+                      "typeString": "tuple()"
+                    }
+                  },
+                  "id": 231,
+                  "nodeType": "ExpressionStatement",
+                  "src": "313:49:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 239,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "baseExpression": {
+                          "argumentTypes": null,
+                          "id": 232,
+                          "name": "People",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 202,
+                          "src": "467:6:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeString": "mapping(address => struct Personal.Person storage ref)"
+                          }
+                        },
+                        "id": 235,
+                        "indexExpression": {
+                          "argumentTypes": null,
+                          "expression": {
+                            "argumentTypes": null,
+                            "id": 233,
+                            "name": "msg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 920,
+                            "src": "474:3:3",
+                            "typeDescriptions": {
+                              "typeIdentifier": "t_magic_message",
+                              "typeString": "msg"
+                            }
+                          },
+                          "id": 234,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "memberName": "sender",
+                          "nodeType": "MemberAccess",
+                          "referencedDeclaration": null,
+                          "src": "474:10:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          }
+                        },
+                        "isConstant": false,
+                        "isLValue": true,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "nodeType": "IndexAccess",
+                        "src": "467:18:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeString": "struct Personal.Person storage ref"
+                        }
+                      },
+                      "id": 236,
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": true,
+                      "memberName": "account",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": 195,
+                      "src": "467:26:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 237,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 920,
+                        "src": "495:3:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 238,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "495:10:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "467:38:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 240,
+                  "nodeType": "ExpressionStatement",
+                  "src": "467:38:3"
+                },
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "hexValue": "73756363657373",
+                    "id": 241,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": true,
+                    "kind": "string",
+                    "lValueRequested": false,
+                    "nodeType": "Literal",
+                    "src": "527:9:3",
+                    "subdenomination": null,
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_stringliteral_4b31cabbe5862282e443c4ac3f4c14761a1d2ba88a3c858a2a36f7758f453a38",
+                      "typeString": "literal_string \"success\""
+                    },
+                    "value": "success"
+                  },
+                  "functionReturnParameters": 219,
+                  "id": 242,
+                  "nodeType": "Return",
+                  "src": "520:16:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 244,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "register",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 216,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "268:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 219,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 218,
+                  "name": "success",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 244,
+                  "src": "286:14:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 217,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "286:6:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "285:16:3"
+            },
+            "scope": 257,
+            "src": "251:307:3",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 255,
+              "nodeType": "Block",
+              "src": "622:52:3",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "expression": {
+                      "argumentTypes": null,
+                      "baseExpression": {
+                        "argumentTypes": null,
+                        "id": 249,
+                        "name": "People",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 202,
+                        "src": "640:6:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                          "typeString": "mapping(address => struct Personal.Person storage ref)"
+                        }
+                      },
+                      "id": 252,
+                      "indexExpression": {
+                        "argumentTypes": null,
+                        "expression": {
+                          "argumentTypes": null,
+                          "id": 250,
+                          "name": "msg",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 920,
+                          "src": "647:3:3",
+                          "typeDescriptions": {
+                            "typeIdentifier": "t_magic_message",
+                            "typeString": "msg"
+                          }
+                        },
+                        "id": 251,
+                        "isConstant": false,
+                        "isLValue": false,
+                        "isPure": false,
+                        "lValueRequested": false,
+                        "memberName": "sender",
+                        "nodeType": "MemberAccess",
+                        "referencedDeclaration": null,
+                        "src": "647:10:3",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_address",
+                          "typeString": "address"
+                        }
+                      },
+                      "isConstant": false,
+                      "isLValue": true,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "nodeType": "IndexAccess",
+                      "src": "640:18:3",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_struct$_Person_$198_storage",
+                        "typeString": "struct Personal.Person storage ref"
+                      }
+                    },
+                    "id": 253,
+                    "isConstant": false,
+                    "isLValue": true,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "memberName": "account",
+                    "nodeType": "MemberAccess",
+                    "referencedDeclaration": 195,
+                    "src": "640:26:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "functionReturnParameters": 248,
+                  "id": 254,
+                  "nodeType": "Return",
+                  "src": "633:33:3"
+                }
+              ]
+            },
+            "documentation": null,
+            "id": 256,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": true,
+            "modifiers": [],
+            "name": "getMemberInfo",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 245,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "586:2:3"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 248,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 247,
+                  "name": "addr",
+                  "nodeType": "VariableDeclaration",
+                  "scope": 256,
+                  "src": "609:12:3",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address",
+                    "typeString": "address"
+                  },
+                  "typeName": {
+                    "id": 246,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "609:7:3",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "608:14:3"
+            },
+            "scope": 257,
+            "src": "564:110:3",
+            "stateMutability": "view",
+            "superFunction": null,
+            "visibility": "public"
+          }
+        ],
+        "scope": 258,
+        "src": "27:650:3"
+      }
+    ],
+    "src": "0:679:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x104009CB4907864f814A1bAc0b49AF42930DB21d",
+      "transactionHash": "0xa1648923c6c338fdff5d03a076138ccef09e727661bd664cb1f24abc25d91008"
+    }
+  },
+  "schemaVersion": "3.0.23",
+  "updatedAt": "2020-03-04T08:22:23.720Z",
+  "networkType": "ethereum",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <title>Pet-Shop:Log-In</title>
+ <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+ <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+ <style>
+   </style>
+</head>
+<body class="row">
+  <h1 class="text-center banner">Log-In Page</h1>
+  <br><br>
+  <h4 class="text-center banner" >
+  <table border="1" id="tablePlace" style="margin-left: auto; margin-right: auto;">
+  </table>
+</h4>
+  <h3 class="text-center banner">
+    <br>
+    <select id="accounts" class="select_box"></select>
+    <br><br>
+    <div class="col-sm-12" >
+      <ul>
+        <li>Account Address : <span id="accountAddr" class="accountAddr"></span></li>
+        </p>
+        <li>Holding ETH Count : <span id="ethValue"></span></li>
+        </p>
+        </li>
+      </ul>
+    </div>
+    <input type="button" value="Log-In" class="btn_login" /> 
+    <input type="button" value="Join" class="btn_join" /> 
+    </h3>
+
+  
+</body>   
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="js/bootstrap.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/truffle-contract.js"></script>
+<script src="js/init.js"></script>
+<script src="./js/Log_In.js"></script>
+</html>
