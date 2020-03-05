@@ -1,7 +1,8 @@
-# BlockChainDApp
+# BlockChainDApp 
 
-## ¡Ü Developer <br>
+
+## Developer 
 ![](./developer.jpg)
 
-## ¡Ü User <br>
+## User <br>
 ![](./user.jpg)
