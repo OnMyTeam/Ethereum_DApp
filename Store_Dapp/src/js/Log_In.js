@@ -42,35 +42,32 @@ LogIn = {
 
     refreshBalance: function (list) { 
       // tablePlace를 초기화하고 계좌수 만큼 테이블의 행을 생성합니다.
-      document.getElementById("tablePlace").innerText = " ";
-      var idiv = document.createElement('table');
-      document.getElementById("tablePlace").appendChild(idiv);
-       
+      
       var total = 0;
-      var input ="<tr><td>Account</td><td>Balance</td></tr>";
+      var input ="";
        
       for(var i = 0; i<list.length; i++){
-        
+        console.log(list[i]);
         var tempB=parseFloat(web3.fromWei(web3.eth.getBalance(list[i]),"ether"));
-        input +="<tr><td>"+ list[i] + "</td><td>" + tempB +" ETHER</td></tr>";
+        input +="<tr><td>"+ list[i] + "</td><td>" + tempB.toFixed(2) +" ETH</td></tr>";
         total+=tempB;
         
       }
   
-      input +="<tr><td><strong> TOTAL </strong></td><td><strong>" + total +" ETHER</strong></td></tr></table>";
-      idiv.innerHTML = input;	
+      // input +="<tr><td><strong> TOTAL </strong></td><td><strong>" + total +" ETH</strong></td></tr></table>";
+      $('#tableContent').html(input);
+      
       //web3.eth.filter('latest').watch(function() { refreshBalance();});
     },
    
 
     makeSelect: function(list) { 
       var select =  document.getElementById('accounts');
+      var html = '';
       for(var i = 0; i<list.length; i++){
-        var opt=document.createElement('option');
-        opt.value = list[i];
-        opt.innerHTML = list[i];
-        select.appendChild(opt);
+        html += '<a class="dropdown-item" href="#">'+list[i]+'</a>';
       }
+      $('#selectAddress').html(html);
     },
   
     bindEvents: function() {

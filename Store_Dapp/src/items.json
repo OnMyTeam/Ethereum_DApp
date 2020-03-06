@@ -1,0 +1,111 @@
+[
+  {
+    "id": 0,
+    "name": "Samsung Galaxy Phone",
+    "picture": "img/product-1.jpg",
+    "age": 3,
+    "breed": "Scottish Terrier",
+    "location": "Lisco, Alabama",
+    "cost": "400"
+  },
+  {
+    "id": 1,
+    "name": "Nokia Phone",
+    "picture": "img/product-2.jpg",
+    "age": 3,
+    "breed": "Scottish Terrier",
+    "location": "Tooleville, West Virginia",
+    "cost":"500"
+  },
+  {
+    "id": 2,
+    "name": "LG Phone",
+    "picture": "img/product-3.jpg",
+    "age": 2,
+    "breed": "French Bulldog",
+    "location": "Freeburn, Idaho",
+    "cost":"300"
+  },
+  {
+    "id": 3,
+    "name": "Sony Phone",
+    "picture": "img/product-4.jpg",
+    "age": 2,
+    "breed": "Boxer",
+    "location": "Camas, Pennsylvania",
+    "cost":"100"
+  },
+  {
+    "id": 4,
+    "name": "Samsung Galaxy Phone",
+    "picture": "img/product-1.jpg",
+    "age": 2,
+    "breed": "French Bulldog",
+    "location": "Gerber, South Dakota",
+    "cost":"100"
+  },
+  {
+    "id": 5,
+    "name": "Nokia Phone",
+    "picture": "img/product-2.jpg",
+    "age": 3,
+    "breed": "French Bulldog",
+    "location": "Innsbrook, Illinois",
+    "cost":"200"
+  },
+  {
+    "id": 6,
+    "name": "LG Phone",
+    "picture": "img/product-3.jpg",
+    "age": 3,
+    "breed": "Golden Retriever",
+    "location": "Soudan, Louisiana",
+    "cost":"500"
+  },
+  {
+    "id": 7,
+    "name": "Sony Phone",
+    "picture": "img/product-4.jpg",
+    "age": 3,
+    "breed": "Golden Retriever",
+    "location": "Jacksonwald, Palau",
+    "cost":"300"
+  },
+  {
+    "id": 8,
+    "name": "Samsung Galaxy Phone",
+    "picture": "img/product-1.jpg",
+    "age": 2,
+    "breed": "French Bulldog",
+    "location": "Honolulu, Hawaii",
+    "cost": "100"
+  },
+  {
+    "id": 9,
+    "name": "Nokia Phone",
+    "picture": "img/product-2.jpg",
+    "age": 3,
+    "breed": "Boxer",
+    "location": "Matheny, Utah",
+    "cost": "100"
+  },
+  {
+    "id": 10,
+    "name": "LG Phone",
+    "picture": "img/product-3.jpg",
+    "age": 2,
+    "breed": "Boxer",
+    "location": "Tyhee, Indiana",
+    "cost":"500"
+  },
+  {
+    "id": 11,
+    "name": "Sony Phone",
+    "picture": "img/product-4.jpg",
+    "age": 3,
+    "breed": "Scottish Terrier",
+    "location": "Windsor, Montana",
+    "cost": "100"
+  }
+
+]

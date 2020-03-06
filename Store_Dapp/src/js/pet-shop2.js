@@ -6,21 +6,20 @@ PetShop = {
   init: async function() {
     // Load pets.
     $.getJSON('../items.json', function(data) {
-      var itemrow = $('#itemrow');
-      var itemTemplate = $('#itemTemplate');
+      var petsRow = $('#petsRow');
+      var petTemplate = $('#petTemplate');
 
       for (i = 0; i < data.length; i ++) {
-        console.log(i);
-        itemTemplate.find('.item-title').text(data[i].name);
-        itemTemplate.find('img').attr('src', data[i].picture);
-        itemTemplate.find('.product-carousel-price-sub').text(data[i].cost);
-        // itemTemplate.find('.pet-age').text(data[i].age);
-        // itemTemplate.find('.pet-location').text(data[i].location);
-        // itemTemplate.find('.pet-cost').text(data[i].cost);
-        itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
-        itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
+        petTemplate.find('.panel-title').text(data[i].name);
+        petTemplate.find('img').attr('src', data[i].picture);
+        petTemplate.find('.pet-breed').text(data[i].breed);
+        petTemplate.find('.pet-age').text(data[i].age);
+        petTemplate.find('.pet-location').text(data[i].location);
+        petTemplate.find('.pet-cost').text(data[i].cost);
+        petTemplate.find('.btn-adopt').attr('data-id', data[i].id);
+        petTemplate.find('.btn-adopt').attr('data-cost', data[i].cost);
 
-        itemrow.append(itemTemplate.html());
+        petsRow.append(petTemplate.html());
       }
     });
     Init.init();
@@ -46,7 +45,7 @@ PetShop = {
     
       // Set the provider for our contract
       Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
-      PetShop.getTokenInfo();
+        PetShop.getTokenInfo();
     });
     PetShop.getAccountInfo();
   },
@@ -62,21 +61,21 @@ PetShop = {
       url=url.split('=')[1];
       url='0x4696B806d2E5358ccC46404B3950d2598826e9d6';
       PetShop.address=url;
-      document.getElementById('accountAddr').innerHTML=PetShop.address;
-      web3.eth.getBalance(PetShop.address, function(account,balance){
-          document.getElementById('ethValue').innerHTML=web3.fromWei(balance.toString()) + "ETH";
-          PetShop.getTokenInfo();
-          return PetShop.bindEvents();
-      });
+      
+        document.getElementById('accountAddr').innerHTML=PetShop.address;
+        web3.eth.getBalance(PetShop.address, function(account,balance){
+            document.getElementById('ethValue').innerHTML=web3.fromWei(balance.toString()) + "ETH";
+            // PetShop.getTokenInfo();
+            return PetShop.bindEvents();
+        });
     // });
     
   },
 
   getTokenInfo: function(){
-
+    
     Init.contracts.FixedSupplyToken.deployed().then(function(instance){
       var tokenInstance = instance;
-      console.log(Init.contracts);
       account=document.getElementById('accountAddr').innerText;
     // Execute adopt as a transaction by sending account
 
@@ -87,8 +86,7 @@ PetShop = {
   },
 
   bindEvents: function() {
-
-    $(document).on('click', '.add_to_cart_button', PetShop.handleAdopt);
+    $(document).on('click', '.btn-adopt', PetShop.handleAdopt);
     $(document).on('click', '.btn_myPage',PetShop.goMyPage);
   },
 
@@ -103,7 +101,7 @@ PetShop = {
       for (i = 0; i < adopters.length; i++) {
         console.log(adopters[i]);
         if (adopters[i] != "0x0000000000000000000000000000000000000000") {
-          $('.single-shop-product').eq(i).find('button').text('Success').attr('disabled', true);
+          $('.panel-pet').eq(i).find('button').text('Success').attr('disabled', true);
         }
       }
     }).catch(function(err) {
@@ -112,7 +110,6 @@ PetShop = {
   },
 
   handleAdopt: function(event) {
-
     // event.preventDefault();
 
     var petId = parseInt($(event.target).data('id'));
@@ -136,9 +133,9 @@ PetShop = {
       // Execute adopt as a transaction by sending account
         return tokenInstance.SubToken(tokenAmount,{from:account});
       }).then(function(result) {
-        console.log(result);
-        console.log(result.logs[0].args.tokens.c[1]);
-        document.getElementById('tokenValue').innerHTML=result.logs[0].args.tokens.c[1];
+        // console.log(result);
+        // console.log(result.logs[0].args.tokens);
+        document.getElementById('tokenValue').innerHTML=result.logs[0].args.tokens;
       }).catch(function(err) {
         console.log(err.message);
       });
