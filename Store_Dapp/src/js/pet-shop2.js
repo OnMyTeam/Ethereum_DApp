@@ -59,7 +59,7 @@ PetShop = {
     // web3.eth.getAccounts(function(error,accounts){
       var url=location.href;
       url=url.split('=')[1];
-      url='0x4696B806d2E5358ccC46404B3950d2598826e9d6';
+      url='0x59d0ee1d91901f911c86576a96f858f0c9d71812';
       PetShop.address=url;
       
         document.getElementById('accountAddr').innerHTML=PetShop.address;

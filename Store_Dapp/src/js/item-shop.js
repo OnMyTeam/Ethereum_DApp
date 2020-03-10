@@ -13,9 +13,6 @@ PetShop = {
         itemTemplate.find('.item-title').text(data[i].name);
         itemTemplate.find('img').attr('src', data[i].picture);
         itemTemplate.find('.product-carousel-price-sub').text(data[i].cost);
-        // itemTemplate.find('.pet-age').text(data[i].age);
-        // itemTemplate.find('.pet-location').text(data[i].location);
-        // itemTemplate.find('.pet-cost').text(data[i].cost);
         itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
         itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
 
@@ -56,18 +53,17 @@ PetShop = {
 
   
   getAccountInfo: function() {
-    // web3.eth.getAccounts(function(error,accounts){
-      var url=location.href;
-      url=url.split('=')[1];
-      url='0x4696B806d2E5358ccC46404B3950d2598826e9d6';
+    web3.eth.getAccounts(function(error,accounts){
+      
       PetShop.address=url;
       document.getElementById('accountAddr').innerHTML=PetShop.address;
       web3.eth.getBalance(PetShop.address, function(account,balance){
-          document.getElementById('ethValue').innerHTML=web3.fromWei(balance.toString()) + "ETH";
-          PetShop.getTokenInfo();
-          return PetShop.bindEvents();
+        var ether = web3.fromWei(balance.toString());
+        document.getElementById('ethValue').innerHTML=ether.toFixed(2) + "ETH";
+        PetShop.getTokenInfo();
+        return PetShop.bindEvents();
       });
-    // });
+    });
     
   },
 
@@ -80,6 +76,7 @@ PetShop = {
 
       return tokenInstance.balanceOf(account,{from:account});
     }).then(function(result) {
+      console.log(result.c);
       document.getElementById('tokenValue').innerText=result.c;
     });
   },
@@ -87,7 +84,7 @@ PetShop = {
   bindEvents: function() {
 
     $(document).on('click', '.add_to_cart_button', PetShop.handleAdopt);
-    $(document).on('click', '.btn_myPage',PetShop.goMyPage);
+
   },
 
   markAdopted: function(t) {
@@ -159,10 +156,6 @@ PetShop = {
     // });
 
   },
-  goMyPage: function(){
-    console.log("click mypage");
-    location.href="../myPage.html?addr=" +PetShop.address ;
-  }
 
 };
 

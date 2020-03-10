@@ -119,12 +119,12 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     constructor() public {
         symbol = "osdc";
         name = "Example Fixed Supply Token";
-        decimals = 18;
-        _totalSupply = 1000000 * 10**uint(decimals);
+        decimals = 10;
+        _totalSupply = 100000 * 10**uint(decimals);
         balances[owner] = _totalSupply;
         
-        fundsWallet=msg.sender;
-        unitsOneEthCanBuy=10;
+        fundsWallet = msg.sender;
+        unitsOneEthCanBuy = 10;
         
         emit Transfer(address(0), owner, _totalSupply);
     }
