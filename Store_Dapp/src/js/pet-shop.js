@@ -10,7 +10,6 @@ PetShop = {
       var itemTemplate = $('#itemTemplate');
 
       for (i = 0; i < data.length; i ++) {
-        console.log(i);
         itemTemplate.find('.item-title').text(data[i].name);
         itemTemplate.find('img').attr('src', data[i].picture);
         itemTemplate.find('.product-carousel-price-sub').text(data[i].cost);
@@ -76,7 +75,6 @@ PetShop = {
 
     Init.contracts.FixedSupplyToken.deployed().then(function(instance){
       var tokenInstance = instance;
-      console.log(Init.contracts);
       account=document.getElementById('accountAddr').innerText;
     // Execute adopt as a transaction by sending account
 
@@ -101,7 +99,7 @@ PetShop = {
       return adoptionInstance.getAdopters.call();
     }).then(function(adopters) {
       for (i = 0; i < adopters.length; i++) {
-        console.log(adopters[i]);
+        // console.log(adopters[i]);
         if (adopters[i] != "0x0000000000000000000000000000000000000000") {
           $('.single-shop-product').eq(i).find('button').text('Success').attr('disabled', true);
         }
@@ -117,8 +115,8 @@ PetShop = {
 
     var petId = parseInt($(event.target).data('id'));
     var tokenAmount=parseInt($(event.target).data('cost'));
-    console.log(petId);
-    console.log(tokenAmount);
+    // console.log(petId);
+    // console.log(tokenAmount);
     var adoptionInstance;
     var account = document.getElementById("accountAddr").innerHTML;
     var isAdoption

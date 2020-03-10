@@ -41,13 +41,13 @@ LogIn = {
     },
 
     refreshBalance: function (list) { 
-      // tablePlace를 초기화하고 계좌수 만큼 테이블의 행을 생성합니다.
+      // tablePlace瑜? 珥덇린?솕?븯怨? 怨꾩쥖?닔 留뚰겮 ?뀒?씠釉붿쓽 ?뻾?쓣 ?깮?꽦?빀?땲?떎.
       
       var total = 0;
       var input ="";
        
       for(var i = 0; i<list.length; i++){
-        console.log(list[i]);
+
         var tempB=parseFloat(web3.fromWei(web3.eth.getBalance(list[i]),"ether"));
         input +="<tr><td>"+ list[i] + "</td><td>" + tempB.toFixed(2) +" ETH</td></tr>";
         total+=tempB;
@@ -64,16 +64,22 @@ LogIn = {
     makeSelect: function(list) { 
       var select =  document.getElementById('accounts');
       var html = '';
+      html += '<option value="">Select</a>';
       for(var i = 0; i<list.length; i++){
-        html += '<a class="dropdown-item" href="#">'+list[i]+'</a>';
+        html += '<option value="'+list[i]+'">'+list[i]+'</a>';
       }
-      $('#selectAddress').html(html);
+      $('.custom-select').html(html);
     },
   
     bindEvents: function() {
-        $(document).on('click', '.btn_login', LogIn.logIn);
-        $(document).on('click', '.btn_join', LogIn.join);
-        $(document).on('change', '.select_box', LogIn.changeSelect);
+      // $(document).on('click', '.btn_login', LogIn.logIn);
+      // $(document).on('click', '.btn_join', LogIn.join);
+      $(document).on('change', '.select_box', LogIn.changeSelect);
+      $(document).on('click', '.dropdown-item', LogIn.changeAddress);
+        
+    },
+    changeAddress: function() {
+      console.log(111);
     },
   
     logIn: function(event) {
