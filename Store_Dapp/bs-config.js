@@ -9,8 +9,8 @@ app.get('/', function (req, res) {
 
 app.get('/shop', function (req, res) {
   console.log(111);
-  // res.sendFile(__dirname + "/src/" + "item-shop.html");
-  res.render(__dirname + "/src/" + "item-shop.html", {title: 'aaaa'});
+  res.sendFile(__dirname + "/src/" + "item-shop.html", {title: 'aaaa'});
+  // res.render(__dirname + "/src/" + "item-shop.html", {title: 'aaaa'});
 });
 
 app.get('/myaccount', function (req, res) {

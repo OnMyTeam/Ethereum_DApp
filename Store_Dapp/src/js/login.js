@@ -76,23 +76,12 @@ LogIn = {
     // $(document).on('change', '.select_box', LogIn.changeSelect);
     
 
-      // $('#login').click(function () {
-      //   var selectAddress = $('.custom-select').val();
-      //   alert(selectAddress);
-      //   //Ajax GET Method TEST
-      //   $.ajax({
-      //     url: '/shop',
-      //     dataType: 'json',
-      //     type: 'GET',
-      //     data: { data: selectAddress },
-      //     success: function (result) {
+      $('#login_btn').click(function () {
 
-      //     }
-      //   });
-      //   // location.href='/shop?id=1111';
-      //   // alert(location.href);
-      //   // alert(2222);
-      // });    
+        location.href='/shop';
+        // alert(location.href);
+        // alert(2222);
+      });    
 
     // $(document).on('change', 'custom-select', LogIn.changeAddress);
 
@@ -133,17 +122,8 @@ LogIn = {
 $(function () {
    
   $(window).load(function () {
-    function goMovePage(){
-      var selectAddress = $('.custom-select').val();
-      alert(selectAddress);      
-      
-    }
-    location.href='/shop?id=111111';  
+   
     LogIn.init();
-
-
   });
-
-
 
 });
