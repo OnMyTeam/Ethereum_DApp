@@ -47,14 +47,14 @@
     "absolutePath": "/D/BlockChainDApp/Store_Dapp/contracts/Personal.sol",
     "exportedSymbols": {
       "Personal": [
-        257
+        441
       ]
     },
-    "id": 258,
+    "id": 442,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 193,
+        "id": 377,
         "literals": [
           "solidity",
           "0.4",
@@ -69,23 +69,23 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 257,
+        "id": 441,
         "linearizedBaseContracts": [
-          257
+          441
         ],
         "name": "Personal",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "Personal.Person",
-            "id": 198,
+            "id": 382,
             "members": [
               {
                 "constant": false,
-                "id": 195,
+                "id": 379,
                 "name": "account",
                 "nodeType": "VariableDeclaration",
-                "scope": 198,
+                "scope": 382,
                 "src": "76:15:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -94,7 +94,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 194,
+                  "id": 378,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "76:7:3",
@@ -108,10 +108,10 @@
               },
               {
                 "constant": false,
-                "id": 197,
+                "id": 381,
                 "name": "tokens",
                 "nodeType": "VariableDeclaration",
-                "scope": 198,
+                "scope": 382,
                 "src": "102:11:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -120,7 +120,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 196,
+                  "id": 380,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "102:4:3",
@@ -135,27 +135,27 @@
             ],
             "name": "Person",
             "nodeType": "StructDefinition",
-            "scope": 257,
+            "scope": 441,
             "src": "52:69:3",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 202,
+            "id": 386,
             "name": "People",
             "nodeType": "VariableDeclaration",
-            "scope": 257,
+            "scope": 441,
             "src": "127:31:3",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
               "typeString": "mapping(address => struct Personal.Person)"
             },
             "typeName": {
-              "id": 201,
+              "id": 385,
               "keyType": {
-                "id": 199,
+                "id": 383,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "135:7:3",
@@ -167,18 +167,18 @@
               "nodeType": "Mapping",
               "src": "127:24:3",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                 "typeString": "mapping(address => struct Personal.Person)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 200,
+                "id": 384,
                 "name": "Person",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 198,
+                "referencedDeclaration": 382,
                 "src": "144:6:3",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Person_$198_storage_ptr",
+                  "typeIdentifier": "t_struct$_Person_$382_storage_ptr",
                   "typeString": "struct Personal.Person"
                 }
               }
@@ -188,14 +188,14 @@
           },
           {
             "body": {
-              "id": 214,
+              "id": 398,
               "nodeType": "Block",
               "src": "187:56:3",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 212,
+                    "id": 396,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -206,34 +206,34 @@
                         "argumentTypes": null,
                         "baseExpression": {
                           "argumentTypes": null,
-                          "id": 205,
+                          "id": 389,
                           "name": "People",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 202,
+                          "referencedDeclaration": 386,
                           "src": "198:6:3",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                             "typeString": "mapping(address => struct Personal.Person storage ref)"
                           }
                         },
-                        "id": 208,
+                        "id": 392,
                         "indexExpression": {
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 206,
+                            "id": 390,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 920,
+                            "referencedDeclaration": 1502,
                             "src": "205:3:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 207,
+                          "id": 391,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -254,18 +254,18 @@
                         "nodeType": "IndexAccess",
                         "src": "198:18:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeIdentifier": "t_struct$_Person_$382_storage",
                           "typeString": "struct Personal.Person storage ref"
                         }
                       },
-                      "id": 209,
+                      "id": 393,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "account",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 195,
+                      "referencedDeclaration": 379,
                       "src": "198:26:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -278,18 +278,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 210,
+                        "id": 394,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 920,
+                        "referencedDeclaration": 1502,
                         "src": "225:3:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 211,
+                      "id": 395,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -309,14 +309,14 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 213,
+                  "id": 397,
                   "nodeType": "ExpressionStatement",
                   "src": "198:37:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 215,
+            "id": 399,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -324,19 +324,19 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 203,
+              "id": 387,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "178:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 204,
+              "id": 388,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "187:0:3"
             },
-            "scope": 257,
+            "scope": 441,
             "src": "167:76:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -344,7 +344,7 @@
           },
           {
             "body": {
-              "id": 243,
+              "id": 427,
               "nodeType": "Block",
               "src": "302:256:3",
               "statements": [
@@ -358,7 +358,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 229,
+                        "id": 413,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -369,34 +369,34 @@
                             "argumentTypes": null,
                             "baseExpression": {
                               "argumentTypes": null,
-                              "id": 221,
+                              "id": 405,
                               "name": "People",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 202,
+                              "referencedDeclaration": 386,
                               "src": "321:6:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                                 "typeString": "mapping(address => struct Personal.Person storage ref)"
                               }
                             },
-                            "id": 224,
+                            "id": 408,
                             "indexExpression": {
                               "argumentTypes": null,
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 222,
+                                "id": 406,
                                 "name": "msg",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 920,
+                                "referencedDeclaration": 1502,
                                 "src": "328:3:3",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_message",
                                   "typeString": "msg"
                                 }
                               },
-                              "id": 223,
+                              "id": 407,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -417,18 +417,18 @@
                             "nodeType": "IndexAccess",
                             "src": "321:18:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Person_$198_storage",
+                              "typeIdentifier": "t_struct$_Person_$382_storage",
                               "typeString": "struct Personal.Person storage ref"
                             }
                           },
-                          "id": 225,
+                          "id": 409,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "account",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 195,
+                          "referencedDeclaration": 379,
                           "src": "321:26:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -443,7 +443,7 @@
                             {
                               "argumentTypes": null,
                               "hexValue": "30",
-                              "id": 227,
+                              "id": 411,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -466,7 +466,7 @@
                                 "typeString": "int_const 0"
                               }
                             ],
-                            "id": 226,
+                            "id": 410,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -479,7 +479,7 @@
                             },
                             "typeName": "address"
                           },
-                          "id": 228,
+                          "id": 412,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -507,21 +507,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 220,
+                      "id": 404,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        923,
-                        924
+                        1505,
+                        1506
                       ],
-                      "referencedDeclaration": 923,
+                      "referencedDeclaration": 1505,
                       "src": "313:7:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 230,
+                    "id": 414,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -535,14 +535,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 231,
+                  "id": 415,
                   "nodeType": "ExpressionStatement",
                   "src": "313:49:3"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 239,
+                    "id": 423,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -553,34 +553,34 @@
                         "argumentTypes": null,
                         "baseExpression": {
                           "argumentTypes": null,
-                          "id": 232,
+                          "id": 416,
                           "name": "People",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 202,
+                          "referencedDeclaration": 386,
                           "src": "467:6:3",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                             "typeString": "mapping(address => struct Personal.Person storage ref)"
                           }
                         },
-                        "id": 235,
+                        "id": 419,
                         "indexExpression": {
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 233,
+                            "id": 417,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 920,
+                            "referencedDeclaration": 1502,
                             "src": "474:3:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 234,
+                          "id": 418,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -601,18 +601,18 @@
                         "nodeType": "IndexAccess",
                         "src": "467:18:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeIdentifier": "t_struct$_Person_$382_storage",
                           "typeString": "struct Personal.Person storage ref"
                         }
                       },
-                      "id": 236,
+                      "id": 420,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "account",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 195,
+                      "referencedDeclaration": 379,
                       "src": "467:26:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -625,18 +625,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 237,
+                        "id": 421,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 920,
+                        "referencedDeclaration": 1502,
                         "src": "495:3:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 238,
+                      "id": 422,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -656,7 +656,7 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 240,
+                  "id": 424,
                   "nodeType": "ExpressionStatement",
                   "src": "467:38:3"
                 },
@@ -664,7 +664,7 @@
                   "expression": {
                     "argumentTypes": null,
                     "hexValue": "73756363657373",
-                    "id": 241,
+                    "id": 425,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -679,15 +679,15 @@
                     },
                     "value": "success"
                   },
-                  "functionReturnParameters": 219,
-                  "id": 242,
+                  "functionReturnParameters": 403,
+                  "id": 426,
                   "nodeType": "Return",
                   "src": "520:16:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 244,
+            "id": 428,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -695,22 +695,22 @@
             "name": "register",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 216,
+              "id": 400,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "268:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 219,
+              "id": 403,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 218,
+                  "id": 402,
                   "name": "success",
                   "nodeType": "VariableDeclaration",
-                  "scope": 244,
+                  "scope": 428,
                   "src": "286:14:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -719,7 +719,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 217,
+                    "id": 401,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "286:6:3",
@@ -734,7 +734,7 @@
               ],
               "src": "285:16:3"
             },
-            "scope": 257,
+            "scope": 441,
             "src": "251:307:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -742,7 +742,7 @@
           },
           {
             "body": {
-              "id": 255,
+              "id": 439,
               "nodeType": "Block",
               "src": "622:52:3",
               "statements": [
@@ -753,34 +753,34 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 249,
+                        "id": 433,
                         "name": "People",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 202,
+                        "referencedDeclaration": 386,
                         "src": "640:6:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                           "typeString": "mapping(address => struct Personal.Person storage ref)"
                         }
                       },
-                      "id": 252,
+                      "id": 436,
                       "indexExpression": {
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 250,
+                          "id": 434,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 920,
+                          "referencedDeclaration": 1502,
                           "src": "647:3:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 251,
+                        "id": 435,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -801,33 +801,33 @@
                       "nodeType": "IndexAccess",
                       "src": "640:18:3",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Person_$198_storage",
+                        "typeIdentifier": "t_struct$_Person_$382_storage",
                         "typeString": "struct Personal.Person storage ref"
                       }
                     },
-                    "id": 253,
+                    "id": 437,
                     "isConstant": false,
                     "isLValue": true,
                     "isPure": false,
                     "lValueRequested": false,
                     "memberName": "account",
                     "nodeType": "MemberAccess",
-                    "referencedDeclaration": 195,
+                    "referencedDeclaration": 379,
                     "src": "640:26:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
-                  "functionReturnParameters": 248,
-                  "id": 254,
+                  "functionReturnParameters": 432,
+                  "id": 438,
                   "nodeType": "Return",
                   "src": "633:33:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 256,
+            "id": 440,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -835,22 +835,22 @@
             "name": "getMemberInfo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 245,
+              "id": 429,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "586:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 248,
+              "id": 432,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 247,
+                  "id": 431,
                   "name": "addr",
                   "nodeType": "VariableDeclaration",
-                  "scope": 256,
+                  "scope": 440,
                   "src": "609:12:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -859,7 +859,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 246,
+                    "id": 430,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "609:7:3",
@@ -874,14 +874,14 @@
               ],
               "src": "608:14:3"
             },
-            "scope": 257,
+            "scope": 441,
             "src": "564:110:3",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 258,
+        "scope": 442,
         "src": "27:650:3"
       }
     ],
@@ -891,14 +891,14 @@
     "absolutePath": "/D/BlockChainDApp/Store_Dapp/contracts/Personal.sol",
     "exportedSymbols": {
       "Personal": [
-        257
+        441
       ]
     },
-    "id": 258,
+    "id": 442,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 193,
+        "id": 377,
         "literals": [
           "solidity",
           "0.4",
@@ -913,23 +913,23 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 257,
+        "id": 441,
         "linearizedBaseContracts": [
-          257
+          441
         ],
         "name": "Personal",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "canonicalName": "Personal.Person",
-            "id": 198,
+            "id": 382,
             "members": [
               {
                 "constant": false,
-                "id": 195,
+                "id": 379,
                 "name": "account",
                 "nodeType": "VariableDeclaration",
-                "scope": 198,
+                "scope": 382,
                 "src": "76:15:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -938,7 +938,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 194,
+                  "id": 378,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "76:7:3",
@@ -952,10 +952,10 @@
               },
               {
                 "constant": false,
-                "id": 197,
+                "id": 381,
                 "name": "tokens",
                 "nodeType": "VariableDeclaration",
-                "scope": 198,
+                "scope": 382,
                 "src": "102:11:3",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -964,7 +964,7 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 196,
+                  "id": 380,
                   "name": "uint",
                   "nodeType": "ElementaryTypeName",
                   "src": "102:4:3",
@@ -979,27 +979,27 @@
             ],
             "name": "Person",
             "nodeType": "StructDefinition",
-            "scope": 257,
+            "scope": 441,
             "src": "52:69:3",
             "visibility": "public"
           },
           {
             "constant": false,
-            "id": 202,
+            "id": 386,
             "name": "People",
             "nodeType": "VariableDeclaration",
-            "scope": 257,
+            "scope": 441,
             "src": "127:31:3",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
               "typeString": "mapping(address => struct Personal.Person)"
             },
             "typeName": {
-              "id": 201,
+              "id": 385,
               "keyType": {
-                "id": 199,
+                "id": 383,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "135:7:3",
@@ -1011,18 +1011,18 @@
               "nodeType": "Mapping",
               "src": "127:24:3",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                 "typeString": "mapping(address => struct Personal.Person)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 200,
+                "id": 384,
                 "name": "Person",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 198,
+                "referencedDeclaration": 382,
                 "src": "144:6:3",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_Person_$198_storage_ptr",
+                  "typeIdentifier": "t_struct$_Person_$382_storage_ptr",
                   "typeString": "struct Personal.Person"
                 }
               }
@@ -1032,14 +1032,14 @@
           },
           {
             "body": {
-              "id": 214,
+              "id": 398,
               "nodeType": "Block",
               "src": "187:56:3",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 212,
+                    "id": 396,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1050,34 +1050,34 @@
                         "argumentTypes": null,
                         "baseExpression": {
                           "argumentTypes": null,
-                          "id": 205,
+                          "id": 389,
                           "name": "People",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 202,
+                          "referencedDeclaration": 386,
                           "src": "198:6:3",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                             "typeString": "mapping(address => struct Personal.Person storage ref)"
                           }
                         },
-                        "id": 208,
+                        "id": 392,
                         "indexExpression": {
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 206,
+                            "id": 390,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 920,
+                            "referencedDeclaration": 1502,
                             "src": "205:3:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 207,
+                          "id": 391,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1098,18 +1098,18 @@
                         "nodeType": "IndexAccess",
                         "src": "198:18:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeIdentifier": "t_struct$_Person_$382_storage",
                           "typeString": "struct Personal.Person storage ref"
                         }
                       },
-                      "id": 209,
+                      "id": 393,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "account",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 195,
+                      "referencedDeclaration": 379,
                       "src": "198:26:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -1122,18 +1122,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 210,
+                        "id": 394,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 920,
+                        "referencedDeclaration": 1502,
                         "src": "225:3:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 211,
+                      "id": 395,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1153,14 +1153,14 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 213,
+                  "id": 397,
                   "nodeType": "ExpressionStatement",
                   "src": "198:37:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 215,
+            "id": 399,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
@@ -1168,19 +1168,19 @@
             "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 203,
+              "id": 387,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "178:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 204,
+              "id": 388,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "187:0:3"
             },
-            "scope": 257,
+            "scope": 441,
             "src": "167:76:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1188,7 +1188,7 @@
           },
           {
             "body": {
-              "id": 243,
+              "id": 427,
               "nodeType": "Block",
               "src": "302:256:3",
               "statements": [
@@ -1202,7 +1202,7 @@
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         },
-                        "id": 229,
+                        "id": 413,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1213,34 +1213,34 @@
                             "argumentTypes": null,
                             "baseExpression": {
                               "argumentTypes": null,
-                              "id": 221,
+                              "id": 405,
                               "name": "People",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 202,
+                              "referencedDeclaration": 386,
                               "src": "321:6:3",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                                 "typeString": "mapping(address => struct Personal.Person storage ref)"
                               }
                             },
-                            "id": 224,
+                            "id": 408,
                             "indexExpression": {
                               "argumentTypes": null,
                               "expression": {
                                 "argumentTypes": null,
-                                "id": 222,
+                                "id": 406,
                                 "name": "msg",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 920,
+                                "referencedDeclaration": 1502,
                                 "src": "328:3:3",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_magic_message",
                                   "typeString": "msg"
                                 }
                               },
-                              "id": 223,
+                              "id": 407,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1261,18 +1261,18 @@
                             "nodeType": "IndexAccess",
                             "src": "321:18:3",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Person_$198_storage",
+                              "typeIdentifier": "t_struct$_Person_$382_storage",
                               "typeString": "struct Personal.Person storage ref"
                             }
                           },
-                          "id": 225,
+                          "id": 409,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "account",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 195,
+                          "referencedDeclaration": 379,
                           "src": "321:26:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -1287,7 +1287,7 @@
                             {
                               "argumentTypes": null,
                               "hexValue": "30",
-                              "id": 227,
+                              "id": 411,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -1310,7 +1310,7 @@
                                 "typeString": "int_const 0"
                               }
                             ],
-                            "id": 226,
+                            "id": 410,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -1323,7 +1323,7 @@
                             },
                             "typeName": "address"
                           },
-                          "id": 228,
+                          "id": 412,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -1351,21 +1351,21 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 220,
+                      "id": 404,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        923,
-                        924
+                        1505,
+                        1506
                       ],
-                      "referencedDeclaration": 923,
+                      "referencedDeclaration": 1505,
                       "src": "313:7:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$returns$__$",
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 230,
+                    "id": 414,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1379,14 +1379,14 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 231,
+                  "id": 415,
                   "nodeType": "ExpressionStatement",
                   "src": "313:49:3"
                 },
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 239,
+                    "id": 423,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1397,34 +1397,34 @@
                         "argumentTypes": null,
                         "baseExpression": {
                           "argumentTypes": null,
-                          "id": 232,
+                          "id": 416,
                           "name": "People",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 202,
+                          "referencedDeclaration": 386,
                           "src": "467:6:3",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                             "typeString": "mapping(address => struct Personal.Person storage ref)"
                           }
                         },
-                        "id": 235,
+                        "id": 419,
                         "indexExpression": {
                           "argumentTypes": null,
                           "expression": {
                             "argumentTypes": null,
-                            "id": 233,
+                            "id": 417,
                             "name": "msg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 920,
+                            "referencedDeclaration": 1502,
                             "src": "474:3:3",
                             "typeDescriptions": {
                               "typeIdentifier": "t_magic_message",
                               "typeString": "msg"
                             }
                           },
-                          "id": 234,
+                          "id": 418,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1445,18 +1445,18 @@
                         "nodeType": "IndexAccess",
                         "src": "467:18:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_Person_$198_storage",
+                          "typeIdentifier": "t_struct$_Person_$382_storage",
                           "typeString": "struct Personal.Person storage ref"
                         }
                       },
-                      "id": 236,
+                      "id": 420,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "account",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 195,
+                      "referencedDeclaration": 379,
                       "src": "467:26:3",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -1469,18 +1469,18 @@
                       "argumentTypes": null,
                       "expression": {
                         "argumentTypes": null,
-                        "id": 237,
+                        "id": 421,
                         "name": "msg",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 920,
+                        "referencedDeclaration": 1502,
                         "src": "495:3:3",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
                       },
-                      "id": 238,
+                      "id": 422,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1500,7 +1500,7 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 240,
+                  "id": 424,
                   "nodeType": "ExpressionStatement",
                   "src": "467:38:3"
                 },
@@ -1508,7 +1508,7 @@
                   "expression": {
                     "argumentTypes": null,
                     "hexValue": "73756363657373",
-                    "id": 241,
+                    "id": 425,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -1523,15 +1523,15 @@
                     },
                     "value": "success"
                   },
-                  "functionReturnParameters": 219,
-                  "id": 242,
+                  "functionReturnParameters": 403,
+                  "id": 426,
                   "nodeType": "Return",
                   "src": "520:16:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 244,
+            "id": 428,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": false,
@@ -1539,22 +1539,22 @@
             "name": "register",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 216,
+              "id": 400,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "268:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 219,
+              "id": 403,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 218,
+                  "id": 402,
                   "name": "success",
                   "nodeType": "VariableDeclaration",
-                  "scope": 244,
+                  "scope": 428,
                   "src": "286:14:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1563,7 +1563,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 217,
+                    "id": 401,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "286:6:3",
@@ -1578,7 +1578,7 @@
               ],
               "src": "285:16:3"
             },
-            "scope": 257,
+            "scope": 441,
             "src": "251:307:3",
             "stateMutability": "nonpayable",
             "superFunction": null,
@@ -1586,7 +1586,7 @@
           },
           {
             "body": {
-              "id": 255,
+              "id": 439,
               "nodeType": "Block",
               "src": "622:52:3",
               "statements": [
@@ -1597,34 +1597,34 @@
                       "argumentTypes": null,
                       "baseExpression": {
                         "argumentTypes": null,
-                        "id": 249,
+                        "id": 433,
                         "name": "People",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 202,
+                        "referencedDeclaration": 386,
                         "src": "640:6:3",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$198_storage_$",
+                          "typeIdentifier": "t_mapping$_t_address_$_t_struct$_Person_$382_storage_$",
                           "typeString": "mapping(address => struct Personal.Person storage ref)"
                         }
                       },
-                      "id": 252,
+                      "id": 436,
                       "indexExpression": {
                         "argumentTypes": null,
                         "expression": {
                           "argumentTypes": null,
-                          "id": 250,
+                          "id": 434,
                           "name": "msg",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 920,
+                          "referencedDeclaration": 1502,
                           "src": "647:3:3",
                           "typeDescriptions": {
                             "typeIdentifier": "t_magic_message",
                             "typeString": "msg"
                           }
                         },
-                        "id": 251,
+                        "id": 435,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1645,33 +1645,33 @@
                       "nodeType": "IndexAccess",
                       "src": "640:18:3",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Person_$198_storage",
+                        "typeIdentifier": "t_struct$_Person_$382_storage",
                         "typeString": "struct Personal.Person storage ref"
                       }
                     },
-                    "id": 253,
+                    "id": 437,
                     "isConstant": false,
                     "isLValue": true,
                     "isPure": false,
                     "lValueRequested": false,
                     "memberName": "account",
                     "nodeType": "MemberAccess",
-                    "referencedDeclaration": 195,
+                    "referencedDeclaration": 379,
                     "src": "640:26:3",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     }
                   },
-                  "functionReturnParameters": 248,
-                  "id": 254,
+                  "functionReturnParameters": 432,
+                  "id": 438,
                   "nodeType": "Return",
                   "src": "633:33:3"
                 }
               ]
             },
             "documentation": null,
-            "id": 256,
+            "id": 440,
             "implemented": true,
             "isConstructor": false,
             "isDeclaredConst": true,
@@ -1679,22 +1679,22 @@
             "name": "getMemberInfo",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 245,
+              "id": 429,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "586:2:3"
             },
             "payable": false,
             "returnParameters": {
-              "id": 248,
+              "id": 432,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 247,
+                  "id": 431,
                   "name": "addr",
                   "nodeType": "VariableDeclaration",
-                  "scope": 256,
+                  "scope": 440,
                   "src": "609:12:3",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1703,7 +1703,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 246,
+                    "id": 430,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "609:7:3",
@@ -1718,14 +1718,14 @@
               ],
               "src": "608:14:3"
             },
-            "scope": 257,
+            "scope": 441,
             "src": "564:110:3",
             "stateMutability": "view",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 258,
+        "scope": 442,
         "src": "27:650:3"
       }
     ],
@@ -1739,12 +1739,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x5178B44c9a21bE4aD66d98124fAE9EeE94Ff097d",
-      "transactionHash": "0x911811290a144f2fe6bb6dacdd2fbd65c82be74933faa7d4f9d206af615a79f1"
+      "address": "0x329594301C588714DBc9792a45175F70FfCECfEA",
+      "transactionHash": "0x83048d6679310367e13b596e4ab60e13dbd99ceac74bc96676c58ea3528d0df4"
     }
   },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-03-10T07:47:31.119Z",
+  "updatedAt": "2020-03-12T09:54:28.345Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

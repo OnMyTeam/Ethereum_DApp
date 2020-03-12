@@ -12,13 +12,17 @@ PetShop = {
       for (i = 0; i < data.length; i ++) {
         itemTemplate.find('.item-title').text(data[i].name);
         itemTemplate.find('img').attr('src', data[i].picture);
-        itemTemplate.find('.product-carousel-price-sub').text(data[i].cost);
+        itemTemplate.find('.product-carousel-price-sub').text(data[i].cost+' osdc');
+        itemTemplate.find('.add_to_cart_button').attr('data-title', data[i].name);
         itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
         itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
+        itemTemplate.find('.add_to_cart_button').attr('data-src', data[i].picture);
 
         itemrow.append(itemTemplate.html());
       }
     });
+
+    PetShop.address = address;
     Init.init();
     return await PetShop.initContract();
   },
@@ -42,9 +46,10 @@ PetShop = {
     
       // Set the provider for our contract
       Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
-      PetShop.getTokenInfo();
+      // PetShop.getTokenInfo();
     });
-    PetShop.getAccountInfo();
+    //PetShop.getAccountInfo();
+    PetShop.bindEvents();
   },
   
   setToNum: function(num){
@@ -55,7 +60,8 @@ PetShop = {
   getAccountInfo: function() {
     web3.eth.getAccounts(function(error,accounts){
       
-      PetShop.address=url;
+      PetShop.address= address;
+      
       document.getElementById('accountAddr').innerHTML=PetShop.address;
       web3.eth.getBalance(PetShop.address, function(account,balance){
         var ether = web3.fromWei(balance.toString());
@@ -87,41 +93,67 @@ PetShop = {
 
   },
 
-  markAdopted: function(t) {
+  markAdopted: async function(t) {
     var adoptionInstance;
-
+    // Init.contracts.Adoption.deployed().then(function(instance) {
+    //   var result = instance.getAdopters(PetShop.address,{from: PetShop.address, gas:10000000});
+    //   console.log(result);
+    // });
+    
+    
+    // return;
     Init.contracts.Adoption.deployed().then(function(instance) {
       adoptionInstance = instance;
 
-      return adoptionInstance.getAdopters.call();
+      return adoptionInstance.getAdopters(PetShop.address,{from: PetShop.address, gas:6000000});
     }).then(function(adopters) {
-      for (i = 0; i < adopters.length; i++) {
-        // console.log(adopters[i]);
-        if (adopters[i] != "0x0000000000000000000000000000000000000000") {
-          $('.single-shop-product').eq(i).find('button').text('Success').attr('disabled', true);
+      var itemlist = adopters.split(',,,,');
+      console.log(itemlist)
+      for (i = 0; i < itemlist.length; i++) {
+        if(itemlist[i] == ''){
+          continue;
         }
+        var itemInfos = itemlist[i].split('//');
+        var itemtitle = itemInfos[3];
+        var itemid = itemInfos[0];
+        var itemcost = itemInfos[1];
+        var imgsrc = itemInfos[2];
+        console.log(itemtitle);
+        console.log(itemid);
+        console.log(itemcost);
+        console.log(imgsrc);
+        console.log('------------');
+        
+
+        $('.single-shop-product').eq(itemid - 1).find('button').text('Success').attr('disabled', true);
+        $('.add_to_cart_button').eq(itemid - 1).css('background-color', 'green');
+        
       }
     }).catch(function(err) {
       console.log(err.message);
     });
   },
 
-  handleAdopt: function(event) {
-
+  handleAdopt: async function(event) {
     // event.preventDefault();
 
-    var petId = parseInt($(event.target).data('id'));
-    var tokenAmount=parseInt($(event.target).data('cost'));
-    // console.log(petId);
-    // console.log(tokenAmount);
-    var adoptionInstance;
-    var account = document.getElementById("accountAddr").innerHTML;
-    var isAdoption
+    var title = $(event.target).data('title');
+    var stuffCode = parseInt($(event.target).data('id'));
+    var tokenAmount = parseInt($(event.target).data('cost'));
+    var imgSrc = $(event.target).data('src');
+    console.log(title);
+    console.log(stuffCode);
+    console.log(tokenAmount);
+    console.log(imgSrc);
 
+    var adoptionInstance;
+    var account = PetShop.address;
+    console.log(account);
+    var isAdoption;
     Init.contracts.Adoption.deployed().then(function(instance) {
         adoptionInstance = instance;
       // Execute adopt as a transaction by sending account
-        return adoptionInstance.adopt(petId,{from: account});
+        return adoptionInstance.adopt(account, stuffCode, tokenAmount, imgSrc, title,{from: account, gas:3000000});
     }).then(function(result) {
       alert("Adopt success!")
       
@@ -133,7 +165,7 @@ PetShop = {
       }).then(function(result) {
         console.log(result);
         console.log(result.logs[0].args.tokens.c[1]);
-        document.getElementById('tokenValue').innerHTML=result.logs[0].args.tokens.c[1];
+        // document.getElementById('tokenValue').innerHTML=result.logs[0].args.tokens.c[1];
       }).catch(function(err) {
         console.log(err.message);
       });
@@ -159,8 +191,10 @@ PetShop = {
 
 };
 
+
 $(function() {
   $(window).load(function() {
-     PetShop.init();
+    
+    PetShop.init();
   });
 });

@@ -74,24 +74,10 @@ LogIn = {
   bindEvents: function () {
 
     // $(document).on('change', '.select_box', LogIn.changeSelect);
-    
-
-      $('#login_btn').click(function () {
-
-        location.href='/shop';
-        // alert(location.href);
-        // alert(2222);
-      });    
-
     // $(document).on('change', 'custom-select', LogIn.changeAddress);
 
   },
-  // moveShopPage: function(event){
-  //   var selectAddress = $('.custom-select').val();
-    
-  //   location.href="/src/item-shop.html";
-  //   alert(location.href);
-  // },
+
 
   logIn: function (event) {
     let account = document.getElementById('accountAddr').innerText;

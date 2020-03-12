@@ -1,21 +1,27 @@
 var express = require('express');
 var app = express();
-
-// app.use(express.static('public'));
+var bodyParser = require('body-parser');
+app.use(express.static('public'));
+app.set('view engine','ejs');
+app.set('views','./src');
+app.use(bodyParser.urlencoded({ extended: false}))
 
 app.get('/', function (req, res) {
-  res.sendFile(__dirname + "/src/" + "index.html");
+  res.render('index');
 });
 
+app.post('/shop', function (req, res) {
+  var address = req.body.address;
+  res.render('item-shop', {address: address});
+});
 app.get('/shop', function (req, res) {
-  console.log(111);
-  res.sendFile(__dirname + "/src/" + "item-shop.html", {title: 'aaaa'});
-  // res.render(__dirname + "/src/" + "item-shop.html", {title: 'aaaa'});
+  var address = req.query.address;
+  res.render('item-shop', {address: address});
 });
-
 app.get('/myaccount', function (req, res) {
-  res.sendFile(__dirname + "/src/" + "cart.html");
-  // res.render(__dirname + "/src/" + "item-shop.html", {title: 'aaaa'});
+  var address = req.query.address;
+  res.render('cart', {address: address});
+  
 });
 
 

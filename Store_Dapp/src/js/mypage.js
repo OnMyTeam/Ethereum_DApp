@@ -10,6 +10,17 @@ Mypage = {
   },
 
   initContract: function () {
+    $.getJSON('Adoption.json', function(data) {
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var AdoptionArtifact = data;
+      Init.contracts.Adoption = TruffleContract(AdoptionArtifact);
+    
+      // Set the provider for our contract
+      Init.contracts.Adoption.setProvider(Init.web3Provider);
+    
+      // Use our contract to retrieve and mark the adopted pets
+      return Mypage.markAdopted();
+    });    
     $.getJSON('Personal.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var PersonalArtifact = data;
@@ -41,6 +52,7 @@ Mypage = {
 
       // Set the provider for our contract
       Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
+      Mypage.address = address;
       return Mypage.getAccountList();
     });
   },
@@ -72,10 +84,7 @@ Mypage = {
 
   getAccountInfo: function () {
     // web3.eth.getAccounts(function(error,accounts){
-    var url = location.href;
-    url = url.split('=')[1];
-    url = '0x59d0ee1d91901f911c86576a96f858f0c9d71812';
-    Mypage.address = url;
+
     document.getElementById('accountAddr').innerHTML = Mypage.address;
     web3.eth.getBalance(Mypage.address, function (error, balance) {
       var ether = web3.fromWei(balance.toString());
@@ -125,6 +134,8 @@ Mypage = {
     $(document).on('click', '.add_to_cart_button', Mypage.buyToken);
     $(document).on('click', '.btn_registerBL', Mypage.registerBlackList);
     $(document).on('click', '.btn_deleteBL', Mypage.deleteBlackList);
+    $(document).on('click', '.remove', Mypage.deleteAdopt);
+    
   },
 
   logIn: function (event) {
@@ -197,7 +208,65 @@ Mypage = {
     }).catch(function (error) {
       console.log(error);
     })
-  }
+  },
+  deleteAdopt: function (event) {
+    var index = $(event.target).data('id');
+    var adoptionInstance;
+    Init.contracts.Adoption.deployed().then(function (instance) {
+      adoptionInstance = instance;
+      return adoptionInstance.deleteAdopter(Mypage.address,index, { from: Mypage.address });
+    }).then(function (result) {
+      console.log(result);
+      Mypage.markAdopted();
+    }).catch(function (error) {
+      console.log(error);
+    })    
+  },  
+  markAdopted: async function(t) {
+    var itemrow = $('#tableContent');
+    var itemTemplate = $('#detailContent');
+    var adoptionInstance;
+    // Init.contracts.Adoption.deployed().then(function(instance) {
+    //   var result = instance.getAdopters(PetShop.address,{from: PetShop.address, gas:10000000});
+    //   console.log(result);
+    // });
+    
+    
+    // return;
+    Init.contracts.Adoption.deployed().then(function(instance) {
+      adoptionInstance = instance;
+
+      return adoptionInstance.getAdopters(Mypage.address,{from: Mypage.address, gas:6000000});
+    }).then(function(adopters) {
+      var itemlist = adopters.split(',,,,');
+      console.log(itemlist)
+      for (i = 0; i < itemlist.length; i++) {
+        if(itemlist[i] == ''){
+          continue;
+        }
+        var itemInfos = itemlist[i].split('//');
+        var itemtitle = itemInfos[3];
+        var itemid = itemInfos[0];
+        var itemcost = itemInfos[1];
+        var imgsrc = itemInfos[2];
+        var itemIndex = itemInfos[4];
+        console.log(itemtitle);
+        console.log(itemid);
+        console.log(itemcost);
+        console.log(imgsrc);
+        console.log('------------');
+        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
+        itemTemplate.find('.remove').attr('data-id', itemIndex);
+        itemTemplate.find('.product-name').text(itemtitle);
+        itemTemplate.find('.product-price').text(itemcost+' osdc');
+        
+        itemrow.append('<tr class="cart_item">'+itemTemplate.html()+'</tr>');
+        
+      }
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+  },  
 
 };
 
