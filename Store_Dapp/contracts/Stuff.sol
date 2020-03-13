@@ -1,62 +1,57 @@
-pragma solidity >=0.4.24 <0.6.2;
-pragma experimental ABIEncoderV2;
+pragma solidity  >=0.4.24 <0.7.0;
+
 contract Stuff {
     struct stuffInfo{
         uint code;
         string name;
-        string description;
-        string src;
+        string imgsrc;
         uint cost;
-        address owner;
-        bool isBuy;
+
     }
     mapping(uint=> stuffInfo) public stuffArray;
-    mapping(address=> stuffInfo[]) public personal;
-    mapping(address=> string[]) public personalitems;
+    //mapping(address=> stuffInfo[]) public personal;
+    mapping(address=> stuffInfo[]) public personalitems;
     uint public num;
     uint public subnum;
 
-    event  StuffInfo(uint code, string name,string description, uint cost, address owner, bool isBuy);
+    event  StuffInfo(uint code, string name,string imgsrc, uint cost);
     constructor() public {
         num = 0;
     }
 
-    // Adopting a items
-    function buy(address buyer, uint stuffCode, string memory name, string memory src) public returns(bool success) {
-        // require(stuffArray[stuffCode].isBuy == false);
-        // stuffArray[stuffCode].owner = msg.sender;         //존재 하는지 비교
-        // stuffArray[stuffCode].isBuy = true;                   // 물건 구매 했다교 표시
-        // personal[buyer].push(stuffArray[stuffCode]); //개인 구매 물건에 추가 
-        stuffInfo sutff;
-        sutff.code = stuffCode;
-        sutff.name = name;
-        sutff.src = src;
-        sutff.owner = buyer;
-        sutff.isBuy = true;
-        stuffArray[stuffCode] = sutff;
-        personal[buyer].push(stuffArray[stuffCode]);
+    // Adopting a itemss
+    function stuffbuy(address buyer, uint stuffCode, string memory name, string memory src, uint cost) public returns(bool success) {
         
-//        string items = uint2str(stuffCode) + "," + name + "," + src + "," + buyer + "," + "1";
-        //string sStuffCode = uint2str(stuffCode);
+        stuffInfo storage stuff;
+        stuff.code = stuffCode;
+        stuff.name = name;
+        stuff.imgsrc = src;
+        stuff.cost = cost;
         
-        string memory s = string(abi.encodePacked("a", " ", "concatenated", " ", "string"));
-        personalitems[buyer].push(s);
-        emit StuffInfo(stuffArray[stuffCode].code, stuffArray[stuffCode].name,stuffArray[stuffCode].description, stuffArray[stuffCode].cost, buyer,stuffArray[stuffCode].isBuy);
+        stuffArray[num] = stuff;
+       
+        
+        
+        //personalitems[buyer].push(stuffArray[stuffCode]); //개인 구매 물건에 추가
+        personalitems[buyer].push(stuffArray[num]); //개인 구매 물건에 추가 
+        num += 1;
+    
+ 
+        //emit StuffInfo(stuffArray[_stuffCode].code, stuffArray[_stuffCode].name,stuffArray[_stuffCode].imgsrc, stuffArray[_stuffCode].cost);
         return true;
     }
-    
-    function registerStuff(address _owner, string _name, string _description, uint _cost) public returns(bool success){
+    // owner
+    function registerStuff(address _owner, string _name, string _imgsrc, uint _cost) public returns(bool success){
         
-        // stuffInfo memory tmp= stuffInfo(num,_name,_description,_cost,_owner,false);
-        stuffArray[num]=stuffInfo(num,_name,_description,'',_cost,_owner,false);
+        
+        stuffArray[num]=stuffInfo(num,_name,_imgsrc,_cost);
         num+=1;
 
         return true;
     }
     
     function deleteStuff(uint _code, address _owner ) public returns(bool success) {
-        require(stuffArray[_code].owner ==_owner);
-        require(stuffArray[_code].code ==_code);
+
         delete stuffArray[_code];
         subnum+=1;
         
@@ -67,23 +62,37 @@ contract Stuff {
     //     // stuffInfo memory tmp=stuffArray[id];
     //     return (tmp.code,tmp.name, tmp.description,tmp.cost,tmp.owner,tmp.isBuy);
     // }
-    function getStuff(address buyer) public view returns(string[] memory){
-        // stuffInfo memory tmp=stuffArray[id];
-        string[] storage result = personalitems[buyer];
-        return result;
+    function getStuff(address buyer) public view returns(string memory){
+        stuffInfo[] memory items = personalitems[buyer];
+        string memory citems;
+        
+        for( uint i=0; i<items.length; i++){
+            string memory stuffCode = uint2str(items[i].code);
+            string memory cost = uint2str(items[i].cost);
+            string memory imgsrc = items[i].imgsrc;
+            string memory name = items[i].name;
+            string memory index = uint2str(i);
+            if(keccak256(abi.encodePacked(imgsrc)) == keccak256(abi.encodePacked(""))){
+                continue;
+            }
+            string memory val = string(abi.encodePacked(stuffCode, "//", cost, "//", imgsrc, "//", name, "//", index));
+            
+            citems = string(abi.encodePacked(citems, val, ",,,,"));
+        }
+        return citems;
     }    
     function getnum() public view returns( uint,uint){
         return (num, subnum);
     }
     
-    function getPersonal(address addr)public view returns(uint){
-        return personal[addr].length;
-    }
+    // function getPersonal(address addr)public view returns(uint){
+    //     return personal[addr].length;
+    // }
     
-    function getPersonalStuff(address addr, uint id) public view returns(uint, string , string , uint ,address , bool ){
-        stuffInfo memory tmp=personal[addr][id];
-        return (tmp.code,tmp.name, tmp.description,tmp.cost,tmp.owner,tmp.isBuy);
-    }
+    // function getPersonalStuff(address addr, uint id) public view returns(uint, string , string , uint ,address , bool ){
+    //     stuffInfo memory tmp=personal[addr][id];
+    //     return (tmp.code,tmp.name, tmp.description,tmp.cost,tmp.owner,tmp.isBuy);
+    // }
     function uint2str(uint i) internal pure returns (string){
         if (i == 0) return "0";
         uint j = i;
