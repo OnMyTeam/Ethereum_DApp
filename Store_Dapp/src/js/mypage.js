@@ -216,34 +216,34 @@ Mypage = {
       adoptionInstance = instance;
       return adoptionInstance.deleteAdopter(Mypage.address,index, { from: Mypage.address });
     }).then(function (result) {
-      console.log(result);
+      console.log("result : "+result);
+      var itemTemplate = $('#detailContent');
+      console.log(itemTemplate.html());      
       Mypage.markAdopted();
+      
     }).catch(function (error) {
       console.log(error);
     })    
   },  
-  markAdopted: async function(t) {
+  markAdopted: async function() {
     var itemrow = $('#tableContent');
     var itemTemplate = $('#detailContent');
+    console.log(itemTemplate.html());
+    var html = '';
     var adoptionInstance;
-    // Init.contracts.Adoption.deployed().then(function(instance) {
-    //   var result = instance.getAdopters(PetShop.address,{from: PetShop.address, gas:10000000});
-    //   console.log(result);
-    // });
-    
-    
-    // return;
     Init.contracts.Adoption.deployed().then(function(instance) {
       adoptionInstance = instance;
 
-      return adoptionInstance.getAdopters(Mypage.address,{from: Mypage.address, gas:6000000});
+      return adoptionInstance.getAdopters(Mypage.address,{from: Mypage.address, gas:3000000});
     }).then(function(adopters) {
+      
       var itemlist = adopters.split(',,,,');
       console.log(itemlist)
       for (i = 0; i < itemlist.length; i++) {
         if(itemlist[i] == ''){
           continue;
         }
+        
         var itemInfos = itemlist[i].split('//');
         var itemtitle = itemInfos[3];
         var itemid = itemInfos[0];
@@ -255,14 +255,17 @@ Mypage = {
         console.log(itemcost);
         console.log(imgsrc);
         console.log('------------');
+
         itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
         itemTemplate.find('.remove').attr('data-id', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost+' osdc');
         
-        itemrow.append('<tr class="cart_item">'+itemTemplate.html()+'</tr>');
+        html += '<tr class="cart_item">'+itemTemplate.html()+'</tr>';
         
       }
+      console.log(html);
+      itemrow.html(html);
     }).catch(function(err) {
       console.log(err.message);
     });

@@ -1,39 +1,59 @@
 pragma solidity  >=0.4.24 <0.7.0;
-pragma experimental ABIEncoderV2;
+
 contract Adoption {
     address[16] public adopters;
     struct Item { // Struct
+        uint stuffCode;
         uint cost;
-        bytes name;
+        string src;
+        string title;
     }
-    mapping(address=> string[]) public personalitems;
+    mapping(address=> Item[]) public personalitems;
     // Adopting a pet
-    function adopt(address buyer, uint stuffCode, uint cost, string src, string title) public returns (uint) {
+    function adopt(address buyer, uint stuffCode, uint cost, string memory src, string memory title) public returns (uint) {
         require(stuffCode >= 0 && stuffCode <= 15);
-        string memory nstuffCode = uint2str(stuffCode);
-        string memory ncost = uint2str(cost);
-        string memory s = string(abi.encodePacked(nstuffCode, "//", ncost, "//", src, "//", title));
-        
-        personalitems[buyer].push(s);
+        // string memory nstuffCode = uint2str(stuffCode);
+        // string memory ncost = uint2str(cost);
+        // string memory s = string(abi.encodePacked(nstuffCode, "//", ncost, "//", src, "//", title));
+        Item storage item;
+        item.stuffCode = stuffCode;
+        item.cost = cost;
+        item.src = src;
+        item.title = title;
+        personalitems[buyer].push(item);
 
         return stuffCode;
     }
     // Retrieving the adopters
     function getAdopters(address buyer) public view returns (string memory) {
-        string[] memory items = personalitems[buyer];
+        Item[] memory items = personalitems[buyer];
         string memory ritems;
         
         for( uint i=0; i<items.length; i++){
+            string memory stuffCode = uint2str(items[i].stuffCode);
+            string memory cost = uint2str(items[i].cost);
+            string memory src = items[i].src;
+            string memory title = items[i].title;
             string memory index = uint2str(i);
-            ritems = string(abi.encodePacked(ritems,items[i],"//", index, ",,,,"));
+            if(keccak256(abi.encodePacked(src)) == keccak256(abi.encodePacked(""))){
+                continue;
+            }
+            string memory val = string(abi.encodePacked(stuffCode, "//", cost, "//", src, "//", title, "//", index));
+            
+            ritems = string(abi.encodePacked(ritems, val, ",,,,"));
         }
 
         return ritems;
 
     }
     function deleteAdopter(address buyer, uint index) public {
-        string[] memory items = personalitems[buyer];
-        delete items[index];
+        // Item[] memory items = personalitems[buyer];
+        // items[index].stuffCode=99999;
+        // items[index].cost=99999;
+        // items[index].src="xxxx";
+        // items[index].title="xxx";
+        delete personalitems[buyer][index];
+        
     }    
     
     function uint2str(uint i) internal pure returns (string){
