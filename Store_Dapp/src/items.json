@@ -70,42 +70,6 @@
     "breed": "Golden Retriever",
     "location": "Jacksonwald, Palau",
     "cost":"300"
-  },
-  {
-    "id": 9,
-    "name": "Samsung Galaxy Phone",
-    "picture": "img/product-1.jpg",
-    "age": 2,
-    "breed": "French Bulldog",
-    "location": "Honolulu, Hawaii",
-    "cost": "100"
-  },
-  {
-    "id": 10,
-    "name": "Nokia Phone",
-    "picture": "img/product-2.jpg",
-    "age": 3,
-    "breed": "Boxer",
-    "location": "Matheny, Utah",
-    "cost": "100"
-  },
-  {
-    "id": 11,
-    "name": "LG Phone",
-    "picture": "img/product-3.jpg",
-    "age": 2,
-    "breed": "Boxer",
-    "location": "Tyhee, Indiana",
-    "cost":"500"
-  },
-  {
-    "id": 12,
-    "name": "Sony Phone",
-    "picture": "img/product-4.jpg",
-    "age": 3,
-    "breed": "Scottish Terrier",
-    "location": "Windsor, Montana",
-    "cost": "100"
   }
 
 ]

@@ -135,13 +135,13 @@
 
                                 <tr class="cart-subtotal">
                                     <th style="width:87%"> <input type="text" class="form-control is-valid"
-                                            id="tokenAmount" placeholder="Enter Stuff Name..." min="0"></th>
-                                    <td rowspan="2"><button class="add_to_cart_button" href="#"
-                                            rel="nofollow">Register<br></button></td>
+                                            id="stuffName" placeholder="Enter Stuff Name..." min="0"></th>
+                                    <td rowspan="2"><button class="" href="#"
+                                            rel="nofollow" id="register">Register<br></button></td>
                                 </tr>
 
                                 <tr class="shipping">
-                                    <th> <input type="number" class="form-control is-valid" id="tokenAmount"
+                                    <th> <input type="number" class="form-control is-valid" id="stuffCost"
                                             placeholder="Enter Stuff Cost..." min="0"></th>
 
                                 </tr>
@@ -153,47 +153,86 @@
 
                     <div class="product-content-right">
                         <div class="woocommerce">
-                            <h2>Purchase History</h2>
-                            <form method="post" action="#">
-                                <table cellspacing="0" class="shop_table cart">
-                                    <thead>
-                                        <tr>
-                                            <th class="product-remove">&nbsp;</th>
-                                            <th class="product-thumbnail">&nbsp;</th>
-                                            <th class="product-name">Product</th>
-                                            <th class="product-price">Price</th>
-
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tableContent">
-
-
-                                    </tbody>
-
-                                    <tr class="cart_item" style="display: none;" id="detailContent">
-                                        <td class="product-remove">
-                                            <a title="Remove this item" class="remove" href="javascript:;"
-                                                data-id="">×</a>
-                                        </td>
-
-                                        <td class="product-thumbnail">
-                                            <a href="single-product.html"><img width="145" height="145"
-                                                    alt="poster_1_up" class="shop_thumbnail"
-                                                    src="img/product-thumb-2.jpg"></a>
-                                        </td>
-
-                                        <td class="product-name">
-                                            Ship Your Idea
-                                        </td>
-
-                                        <td class="product-price">
-                                            <span class="amount">£15.00</span>
-                                        </td>
-
+                            <h2>Register Stuff List</h2>
+                            <table cellspacing="0" class="shop_table cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">&nbsp;</th>
+                                        <th class="product-thumbnail">&nbsp;</th>
+                                        <th class="product-name">Product</th>
+                                        <th class="product-price">Price</th>
 
                                     </tr>
-                                </table>
-                            </form>
+                                </thead>
+                                <tbody id="regContent">
+
+
+                                </tbody>
+
+                                <tr class="cart_item" style="display: none;" id="detailregContent">
+                                    <td class="product-remove" style="width: 5%;">
+                                        <a title="Remove this item" class="removestuff" href="javascript:;"
+                                            data-id="">×</a>
+                                    </td>
+
+                                    <td class="product-thumbnail" style="width: 30%;">
+                                        <a href="single-product.html"><img width="145" height="145"
+                                                alt="poster_1_up" class="shop_thumbnail"
+                                                src="img/product-thumb-2.jpg"></a>
+                                    </td>
+
+                                    <td class="product-name" style="width: 30%;">
+                                        Ship Your Idea
+                                    </td>
+
+                                    <td class="product-price" style="width: 30%;">
+                                        <span class="amount">£15.00</span>
+                                    </td>
+
+
+                                </tr>
+                            </table>                            
+                            <h2>Purchase History</h2>
+  
+                            <table cellspacing="0" class="shop_table cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">&nbsp;</th>
+                                        <th class="product-thumbnail">&nbsp;</th>
+                                        <th class="product-name">Product</th>
+                                        <th class="product-price">Price</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody id="historyContent">
+
+
+                                </tbody>
+
+                                <tr class="cart_item" style="display: none;" id="historyDetailContent">
+                                    <td class="product-remove" style="width: 5%;">
+                                        <a title="Remove this item" class="removehistory" href="javascript:;"
+                                            data-id="">×</a>
+                                    </td>
+
+                                    <td class="product-thumbnail" style="width: 30%;">
+                                        <a href="single-product.html"><img width="145" height="145"
+                                                alt="poster_1_up" class="shop_thumbnail"
+                                                src="img/product-thumb-2.jpg"></a>
+                                    </td>
+
+                                    <td class="product-name" style="width: 30%;">
+                                        Ship Your Idea
+                                    </td>
+
+                                    <td class="product-price" style="width: 30%;">
+                                        <span class="amount">£15.00</span>
+                                    </td>
+
+
+                                </tr>
+                            </table>
+
 
                             <div class="cart-collaterals">
 

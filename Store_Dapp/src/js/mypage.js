@@ -10,17 +10,17 @@ Mypage = {
   },
 
   initContract: function () {
-    $.getJSON('Adoption.json', function(data) {
+    $.getJSON('Stuff.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var AdoptionArtifact = data;
-      Init.contracts.Adoption = TruffleContract(AdoptionArtifact);
+      var StuffArtifact = data;
+      Init.contracts.Stuff = TruffleContract(StuffArtifact);
     
       // Set the provider for our contract
-      Init.contracts.Adoption.setProvider(Init.web3Provider);
+      Init.contracts.Stuff.setProvider(Init.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
-      return Mypage.markAdopted();
-    });    
+      return Mypage.getStuffList();
+    });  
     $.getJSON('Personal.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var PersonalArtifact = data;
@@ -134,7 +134,9 @@ Mypage = {
     $(document).on('click', '.add_to_cart_button', Mypage.buyToken);
     $(document).on('click', '.btn_registerBL', Mypage.registerBlackList);
     $(document).on('click', '.btn_deleteBL', Mypage.deleteBlackList);
-    $(document).on('click', '.remove', Mypage.deleteAdopt);
+    $(document).on('click', '.removehistory', Mypage.deleteMyStuff);
+    $(document).on('click', '.removestuff', Mypage.deleteStuff);
+    $(document).on('click', '#register', Mypage.registerStuff);
     
   },
 
@@ -209,42 +211,57 @@ Mypage = {
       console.log(error);
     })
   },
-  deleteAdopt: function (event) {
+  deleteMyStuff: function (event) {
     var index = $(event.target).data('id');
-    var adoptionInstance;
-    Init.contracts.Adoption.deployed().then(function (instance) {
-      adoptionInstance = instance;
-      return adoptionInstance.deleteAdopter(Mypage.address,index, { from: Mypage.address });
+    var StuffInstance;
+    Init.contracts.Stuff.deployed().then(function (instance) {
+      StuffInstance = instance;
+      return StuffInstance.deleteMyStuff(Mypage.address,index, { from: Mypage.address });
     }).then(function (result) {
       console.log("result : "+result);
-      var itemTemplate = $('#detailContent');
-      console.log(itemTemplate.html());      
-      Mypage.markAdopted();
+    
+      Mypage.getStuffMyList();
+      
+    }).catch(function (error) {
+      console.log(error);
+    })    
+  },
+  deleteStuff: function (event) {
+    var index = $(event.target).data('id');
+    console.log(index);
+    var StuffInstance;
+    Init.contracts.Stuff.deployed().then(function (instance) {
+      StuffInstance = instance;
+      return StuffInstance.deleteStuff(index, { from: Mypage.address });
+    }).then(function (result) {
+      console.log("result : "+result);
+    
+      Mypage.getStuffList();
       
     }).catch(function (error) {
       console.log(error);
     })    
   },  
-  markAdopted: async function() {
-    var itemrow = $('#tableContent');
-    var itemTemplate = $('#detailContent');
-    console.log(itemTemplate.html());
-    var html = '';
-    var adoptionInstance;
-    Init.contracts.Adoption.deployed().then(function(instance) {
-      adoptionInstance = instance;
+  getStuffList: function(t) {
+    var itemrow = $('#regContent');
+    var itemTemplate = $('#detailregContent');
 
-      return adoptionInstance.getAdopters(Mypage.address,{from: Mypage.address, gas:3000000});
+    var html = '';
+    var StuffInstance;
+    Init.contracts.Stuff.deployed().then(function(instance) {
+      StuffInstance = instance;
+      console.log(Mypage.address);
+      return StuffInstance.getStuff({from: Mypage.address, gas:3000000});
     }).then(function(adopters) {
       
-      var itemlist = adopters.split(',,,,');
+      var itemlist = adopters.split('//');
       console.log(itemlist)
       for (i = 0; i < itemlist.length; i++) {
         if(itemlist[i] == ''){
           continue;
         }
         
-        var itemInfos = itemlist[i].split('//');
+        var itemInfos = itemlist[i].split(',');
         var itemtitle = itemInfos[3];
         var itemid = itemInfos[0];
         var itemcost = itemInfos[1];
@@ -257,19 +274,84 @@ Mypage = {
         console.log('------------');
 
         itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
-        itemTemplate.find('.remove').attr('data-id', itemIndex);
+        itemTemplate.find('.removestuff').attr('data-id', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost+' osdc');
         
         html += '<tr class="cart_item">'+itemTemplate.html()+'</tr>';
         
       }
-      console.log(html);
+
       itemrow.html(html);
+      Mypage.getStuffMyList();
     }).catch(function(err) {
       console.log(err.message);
     });
   },  
+  getStuffMyList: function(t) {
+    var itemrow = $('#historyContent');
+    var itemTemplate = $('#historyDetailContent');
+
+    var html = '';
+    var StuffInstance;
+    Init.contracts.Stuff.deployed().then(function(instance) {
+      StuffInstance = instance;
+      console.log(Mypage.address);
+      return StuffInstance.getMyStuff(Mypage.address,{from: Mypage.address, gas:3000000});
+    }).then(function(adopters) {
+      
+      var itemlist = adopters.split('//');
+      console.log(itemlist)
+      for (i = 0; i < itemlist.length; i++) {
+        if(itemlist[i] == ''){
+          continue;
+        }
+        
+        var itemInfos = itemlist[i].split(',');
+        var itemtitle = itemInfos[3];
+        var itemid = itemInfos[0];
+        var itemcost = itemInfos[1];
+        var imgsrc = itemInfos[2];
+        var itemIndex = itemInfos[4];
+        // console.log(itemtitle);
+        // console.log(itemid);
+        // console.log(itemcost);
+        // console.log(imgsrc);
+        // console.log('------------');
+
+        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
+        itemTemplate.find('.removehistory').attr('data-id', itemIndex);
+        itemTemplate.find('.product-name').text(itemtitle);
+        itemTemplate.find('.product-price').text(itemcost+' osdc');
+        
+        html += '<tr class="cart_item">'+itemTemplate.html()+'</tr>';
+        
+      }
+
+      itemrow.html(html);
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+  },
+  registerStuff: function(){
+    var StuffInstance;
+    var name=$('#stuffName').val();
+    var cost=$('#stuffCost').val();
+    var imgsrc = 'img/product-5.jpg';
+    
+    console.log(name);
+    console.log(cost);
+  
+    Init.contracts.Stuff.deployed().then(function(instance){
+      StuffInstance= instance;
+      return StuffInstance.registerStuff(name, imgsrc, cost,{from:Mypage.address, gas:3000000});
+    }).then(function(result){
+      Mypage.getStuffList();
+    }).catch(function(error){
+      console.log(error);
+    });
+  },  
+
 
 };
 

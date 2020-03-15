@@ -6,26 +6,27 @@ Mall = {
     init: async function() {
       Init.init();
       Mall.bindEvents();
+      Mall.address = address;
       return await Mall.initContract();
     },
   
     initContract: function() {
-    $.getJSON('../items.json', function(data) {
-      var itemrow = $('#itemrow');
-      var itemTemplate = $('#itemTemplate');
+      $.getJSON('../items.json', function(data) {
+        var itemrow = $('#itemrow');
+        var itemTemplate = $('#itemTemplate');
 
-      for (i = 0; i < data.length; i ++) {
-        itemTemplate.find('.item-title').text(data[i].name);
-        itemTemplate.find('img').attr('src', data[i].picture);
-        itemTemplate.find('.product-carousel-price-sub').text(data[i].cost+' osdc');
-        itemTemplate.find('.add_to_cart_button').attr('data-title', data[i].name);
-        itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
-        itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
-        itemTemplate.find('.add_to_cart_button').attr('data-src', data[i].picture);
+        for (i = 0; i < data.length; i ++) {
+          itemTemplate.find('.item-title').text(data[i].name);
+          itemTemplate.find('img').attr('src', data[i].picture);
+          itemTemplate.find('.product-carousel-price-sub').text(data[i].cost+' osdc');
+          itemTemplate.find('.add_to_cart_button').attr('data-title', data[i].name);
+          itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
+          itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
+          itemTemplate.find('.add_to_cart_button').attr('data-src', data[i].picture);
 
-        itemrow.append(itemTemplate.html());
-      }
-    });
+          itemrow.append(itemTemplate.html());
+        }
+      });
 
       $.getJSON('Stuff.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -76,27 +77,20 @@ Mall = {
       // });
     },
 
-    getStuffList: function(t) {
-      var adoptionInstance;
-      // Init.contracts.Adoption.deployed().then(function(instance) {
-      //   var result = instance.getAdopters(PetShop.address,{from: PetShop.address, gas:10000000});
-      //   console.log(result);
-      // });
-      
-      
-      // return;
+    getMyStuffList: async function(t) {
+      var StuffInstance;
       Init.contracts.Stuff.deployed().then(function(instance) {
-        adoptionInstance = instance;
+        StuffInstance = instance;
 
-        return adoptionInstance.getAdopters(Mall.address,{from: Mall.address, gas:6000000});
+        return StuffInstance.getMyStuff(Mall.address,{from: Mall.address, gas:6000000});
       }).then(function(adopters) {
-        var itemlist = adopters.split(',,,,');
+        var itemlist = adopters.split('//');
         console.log(itemlist)
         for (i = 0; i < itemlist.length; i++) {
           if(itemlist[i] == ''){
             continue;
           }
-          var itemInfos = itemlist[i].split('//');
+          var itemInfos = itemlist[i].split(',');
           var itemtitle = itemInfos[3];
           var itemid = itemInfos[0];
           var itemcost = itemInfos[1];
@@ -118,6 +112,52 @@ Mall = {
 
     },
 
+    getStuffList: async function(t) {
+      var itemrow = $('#itemrow');
+      var itemTemplate = $('#itemTemplate');
+
+      var StuffInstance;
+      Init.contracts.Stuff.deployed().then(function(instance) {
+        StuffInstance = instance;
+
+        return StuffInstance.getStuff({from: Mall.address, gas:6000000});
+      }).then(function(adopters) {
+        var itemlist = adopters.split('//');
+        console.log(itemlist);
+        for (i = 0; i < itemlist.length; i++) {
+          if(itemlist[i] == ''){
+            continue;
+          }
+          var itemInfos = itemlist[i].split(',');
+          var itemtitle = itemInfos[3];
+          var itemid = itemInfos[0];
+          var itemcost = itemInfos[1];
+          var imgsrc = itemInfos[2];
+          console.log(itemtitle);
+          console.log(itemid);
+          console.log(itemcost);
+          console.log(imgsrc);
+          console.log('------------');
+          
+          itemTemplate.find('.item-title').text(itemtitle);
+          itemTemplate.find('img').attr('src', imgsrc);
+          itemTemplate.find('.product-carousel-price-sub').text(itemcost+' osdc');
+          itemTemplate.find('.add_to_cart_button').attr('data-title', itemtitle);
+          itemTemplate.find('.add_to_cart_button').attr('data-id', itemid);
+          itemTemplate.find('.add_to_cart_button').attr('data-cost', itemcost);
+          itemTemplate.find('.add_to_cart_button').attr('data-src', imgsrc);
+
+          itemrow.append(itemTemplate.html());
+          
+        }
+        Mall.getMyStuffList();
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+
+    },
+
+
     bindEvents: function() {
       $(document).on('click', '.btn_myPage',Mall.goMyPage);
       // $(document).on('click', '.btn-buy', Mall.buyStuff);
@@ -125,11 +165,11 @@ Mall = {
       $(document).on('click', '.btn_delStuff', Mall.deleteStuff);
       $(document).on('click', '.btn_goBack', Mall.goBack);
       $(document).on('click', '.add_to_cart_button', Mall.buyStuff);
-
+      $(document).on('click', '#register', Mall.registerStuff);
     },
   
     buyStuff: function(event) {
-      console.log(111);
+
       var title = $(event.target).data('title');
       var stuffCode = parseInt($(event.target).data('id'));
       var tokenAmount = parseInt($(event.target).data('cost'));
@@ -141,17 +181,17 @@ Mall = {
 
       var StuffInstance;
       var account = Mall.address;
-      console.log(account);
+      console.log("account"+account);
       var isAdoption;
       Init.contracts.Stuff.deployed().then(function(instance) {
           StuffInstance = instance;
         // Execute adopt as a transaction by sending account
-          return StuffInstance.adopt(account, stuffCode, tokenAmount, imgSrc, title,{from: account, gas:3000000});
+          return StuffInstance.stuffbuy(account, stuffCode, title, imgSrc, tokenAmount,{from: account, gas:3000000});
       }).then(function(result) {
         alert("Adopt success!")
         
         Init.contracts.FixedSupplyToken.deployed().then(function(instance) {
-          tokenInstance = instance;
+          var tokenInstance = instance;
     
         // Execute adopt as a transaction by sending account
           return tokenInstance.SubToken(tokenAmount,{from:account});
@@ -163,7 +203,7 @@ Mall = {
           console.log(err.message);
         });
 
-        return Mall.getStuffList();
+        return Mall.getMyStuffList();
       }).catch(function(err) {
         alert("Adopt failed :(");
         console.log(err.message);
@@ -188,7 +228,7 @@ Mall = {
         var StuffInstance= instance;
         return StuffInstance.registerStuff(Mall.address, name, description, cost,{from:Mall.address, gas:3000000});
       }).then(function(result){
-        Mall.getStuffList();
+        Mall.getMyStuffList();
       }).catch(function(error){
         console.log(error);
       });
@@ -203,7 +243,7 @@ Mall = {
         var StuffInstance= instance;
         return StuffInstance.deleteStuff(code, Mall.address,{from:Mall.address, gas:3000000});
       }).then(function(result){
-        Mall.getStuffList();
+        Mall.getMyStuffList();
       }).catch(function(error){
         console.log(error);
       });
@@ -223,7 +263,7 @@ Mall = {
   
   $(function() {
     $(window).load(function() {
-       Mall.init();
+      Mall.init();
     });
   });
   

@@ -120,7 +120,7 @@ contract FixedSupplyToken is ERC20Interface, Owned {
         symbol = "osdc";
         name = "Example Fixed Supply Token";
         decimals = 10;
-        _totalSupply = 100000000 * 10**uint(decimals);
+        _totalSupply = 10000000000 * 10**uint(decimals);
         balances[owner] = _totalSupply;
         
         fundsWallet = msg.sender;
