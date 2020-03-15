@@ -335,13 +335,15 @@ Mypage = {
   },
   registerStuff: function(){
     var StuffInstance;
+    var imgnum = Math.floor((Math.random() * 5)) + 1;
     var name=$('#stuffName').val();
     var cost=$('#stuffCost').val();
-    var imgsrc = 'img/product-5.jpg';
+    var imgsrc = 'img/product-'+imgnum+'.jpg';
     
     console.log(name);
     console.log(cost);
-  
+    console.log(imgsrc);
+
     Init.contracts.Stuff.deployed().then(function(instance){
       StuffInstance= instance;
       return StuffInstance.registerStuff(name, imgsrc, cost,{from:Mypage.address, gas:3000000});
