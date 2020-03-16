@@ -76,7 +76,13 @@ contract Stuff is Owned{
     function deleteStuff(uint _code) public returns(bool success) {
 
         delete stuffArray[_code];
-        num -= 1;
+        for( uint i=_code; i < num - 1; i++){
+            stuffArray[i+1].code = _code;
+            stuffArray[i] = stuffArray[i+1];
+            
+        }
+        delete stuffArray[num - 1];
+        num = num - 1;
         return true;
     }
     function getStuff() public view returns(string memory){

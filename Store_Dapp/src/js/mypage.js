@@ -20,6 +20,8 @@ Mypage = {
       Init.contracts.Stuff.setProvider(Init.web3Provider);
     
       // Use our contract to retrieve and mark the adopted pets
+      Mypage.getOwner();
+      Mypage.getStuffMyList();
       return Mypage.getStuffList();
     });  
     $.getJSON('Personal.json', function (data) {
@@ -230,7 +232,7 @@ Mypage = {
     var StuffInstance;
     Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
-      return StuffInstance.deleteStuff(index, { from: Mypage.address });
+      return StuffInstance.deleteStuff(index, { from: Mypage.address, gas:3000000 });
     }).then(function (result) {
       console.log("result : "+result);
     
@@ -264,7 +266,7 @@ Mypage = {
         var itemid = itemInfos[0];
         var itemcost = itemInfos[1];
         var imgsrc = itemInfos[2];
-        var itemIndex = itemInfos[4];
+        // var itemIndex = itemInfos[4];
         console.log(itemtitle);
         console.log(itemid);
         console.log(itemcost);
@@ -272,7 +274,7 @@ Mypage = {
         console.log('------------');
 
         itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
-        itemTemplate.find('.removestuff').attr('data-id', itemIndex);
+        itemTemplate.find('.removestuff').attr('data-id', itemid);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost+' osdc');
         
@@ -281,8 +283,7 @@ Mypage = {
       }
 
       itemrow.html(html);
-      Mypage.getOwner();
-      Mypage.getStuffMyList();
+      
     }).catch(function(err) {
       console.log(err.message);
     });
@@ -333,9 +334,10 @@ Mypage = {
     });
   },
   registerStuff: function(){
-    console.log(111);
+   
+
     var StuffInstance;
-    var imgnum = Math.floor((Math.random() * 5)) + 1;
+    var imgnum = Math.floor((Math.random() * 4)) + 1;
     var name=$('#stuffName').val();
     var cost=$('#stuffCost').val();
     var imgsrc = 'img/product-'+imgnum+'.jpg';

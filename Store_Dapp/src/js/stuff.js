@@ -94,6 +94,7 @@ Mall = {
           var itemid = itemInfos[0];
           var itemcost = itemInfos[1];
           var imgsrc = itemInfos[2];
+          var itemindex = itemInfos[4];
           console.log(itemtitle);
           console.log(itemid);
           console.log(itemcost);
