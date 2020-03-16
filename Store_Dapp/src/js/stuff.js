@@ -2,10 +2,9 @@ Mall = {
     web3Provider: null,
     contracts: {},
     address: 0x00,
-  
+    ownerYN : 'N',
     init: async function() {
       Init.init();
-      Mall.bindEvents();
       Mall.address = address;
       return await Mall.initContract();
     },
@@ -35,7 +34,6 @@ Mall = {
       
         // Set the provider for our contract
         Init.contracts.Stuff.setProvider(Init.web3Provider);
-      
         // Use our contract to retrieve and mark the adopted pets
         return Mall.getStuffList();
       });
@@ -76,6 +74,7 @@ Mall = {
         document.getElementById('tokenValue').innerText=result.c;
       });
     },
+
 
     getMyStuffList: async function(t) {
       var StuffInstance;
@@ -151,21 +150,31 @@ Mall = {
           
         }
         Mall.getMyStuffList();
+        Mall.getOwner();
       }).catch(function(err) {
         console.log(err.message);
       });
 
     },
+    getOwner: function(){
+      var StuffInstance;
+      Init.contracts.Stuff.deployed().then(function(instance) {
+        StuffInstance = instance;
 
+        return StuffInstance.owner.call();
+      }).then(function(result) {
+        if (result == Mall.address) {
+          Mall.ownerYN = 'Y';
+        }
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    },
 
     bindEvents: function() {
-      $(document).on('click', '.btn_myPage',Mall.goMyPage);
-      // $(document).on('click', '.btn-buy', Mall.buyStuff);
-      $(document).on('click', '.btn_registerStuff', Mall.registerStuff);
-      $(document).on('click', '.btn_delStuff', Mall.deleteStuff);
-      $(document).on('click', '.btn_goBack', Mall.goBack);
+
       $(document).on('click', '.add_to_cart_button', Mall.buyStuff);
-      $(document).on('click', '#register', Mall.registerStuff);
+      
     },
   
     buyStuff: function(event) {

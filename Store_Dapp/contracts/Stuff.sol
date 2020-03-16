@@ -28,15 +28,12 @@ contract Owned {
         newOwner = address(0);
     }
 }
-
-
 contract Stuff is Owned{
     struct stuffInfo{
         uint code;
         uint cost;
         string name;
         string imgsrc;
-        
     }
     mapping(uint=> stuffInfo) public stuffArray;
     //mapping(address=> stuffInfo[]) public personal;

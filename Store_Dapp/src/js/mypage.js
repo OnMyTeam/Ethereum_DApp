@@ -3,7 +3,7 @@ Mypage = {
   contracts: {},
   address: 0x0,
   ownAdress: 0x0,
-  auth: "Personal",
+  ownerYN: "N",
 
   init: async function () {
     Init.init();
@@ -105,7 +105,25 @@ Mypage = {
       document.getElementById('tokenValue').innerText = result.c;
     });
   },
+  getOwner: function(){
+    var StuffInstance;
+    Init.contracts.Stuff.deployed().then(function(instance) {
+      StuffInstance = instance;
 
+      return StuffInstance.owner.call();
+    }).then(function(result) {
+      if (result == Mypage.address) {
+        Mypage.ownerYN = 'Y';
+        console.log(Mypage.ownerYN);
+      }
+      else {
+        $("#stuffRegister").css("display", "none");
+        $("#stuffRegisterList").css("display", "none");
+      }
+    }).catch(function(err) {
+      console.log(err.message);
+    });
+  },
   getBlacklist: function (list) {
     
     document.getElementById("BlackList").innerText = " ";
@@ -284,6 +302,7 @@ Mypage = {
       }
 
       itemrow.html(html);
+      Mypage.getOwner();
       Mypage.getStuffMyList();
     }).catch(function(err) {
       console.log(err.message);
@@ -349,6 +368,7 @@ Mypage = {
       StuffInstance= instance;
       return StuffInstance.registerStuff(name, imgsrc, cost,{from:Mypage.address, gas:3000000});
     }).then(function(result){
+      alert('Success!');
       Mypage.getStuffList();
     }).catch(function(error){
       console.log(error);
