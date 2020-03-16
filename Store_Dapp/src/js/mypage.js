@@ -21,7 +21,6 @@ Mypage = {
     
       // Use our contract to retrieve and mark the adopted pets
       Mypage.getOwner();
-      Mypage.getStuffMyList();
       return Mypage.getStuffList();
     });  
     $.getJSON('Personal.json', function (data) {
@@ -169,8 +168,7 @@ Mypage = {
 
   buyToken: function () {
     var token_amount = $('#tokenAmount').val();
-    alert(token_amount);
-    alert(typeof(token_amount));
+
     if (token_amount<=0){ alert("1 이상을 입력하시오.");return; }
     
     $('#tokenAmount').val(0);
@@ -283,7 +281,7 @@ Mypage = {
       }
 
       itemrow.html(html);
-      
+      Mypage.getStuffMyList();
     }).catch(function(err) {
       console.log(err.message);
     });

@@ -198,7 +198,7 @@ Mall = {
         // Execute adopt as a transaction by sending account
           return StuffInstance.stuffbuy(account, stuffCode, title, imgSrc, tokenAmount,{from: account, gas:3000000});
       }).then(function(result) {
-        alert("Adopt success!")
+        alert("Success!");
         
         Init.contracts.FixedSupplyToken.deployed().then(function(instance) {
           var tokenInstance = instance;

@@ -77,7 +77,7 @@ contract Stuff is Owned{
 
         delete stuffArray[_code];
         for( uint i=_code; i < num - 1; i++){
-            stuffArray[i+1].code = _code;
+            stuffArray[i+1].code = i;
             stuffArray[i] = stuffArray[i+1];
             
         }
