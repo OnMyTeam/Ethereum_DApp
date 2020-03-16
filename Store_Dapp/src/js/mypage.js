@@ -130,10 +130,10 @@ Mypage = {
 
 
   bindEvents: function () {
-    $(document).on('click', '.btn_goBack', Mypage.goBack);
+    // $(document).on('click', '.btn_goBack', Mypage.goBack);
     $(document).on('click', '.add_to_token_button', Mypage.buyToken);
-    $(document).on('click', '.btn_registerBL', Mypage.registerBlackList);
-    $(document).on('click', '.btn_deleteBL', Mypage.deleteBlackList);
+    // $(document).on('click', '.btn_registerBL', Mypage.registerBlackList);
+    // $(document).on('click', '.btn_deleteBL', Mypage.deleteBlackList);
     $(document).on('click', '.removehistory', Mypage.deleteMyStuff);
     $(document).on('click', '.removestuff', Mypage.deleteStuff);
     $(document).on('click', '.add_to_item_button', Mypage.registerStuff);
