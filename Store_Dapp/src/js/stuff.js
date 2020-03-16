@@ -10,22 +10,22 @@ Mall = {
     },
   
     initContract: function() {
-      $.getJSON('../items.json', function(data) {
-        var itemrow = $('#itemrow');
-        var itemTemplate = $('#itemTemplate');
+      // $.getJSON('../items.json', function(data) {
+      //   var itemrow = $('#itemrow');
+      //   var itemTemplate = $('#itemTemplate');
 
-        for (i = 0; i < data.length; i ++) {
-          itemTemplate.find('.item-title').text(data[i].name);
-          itemTemplate.find('img').attr('src', data[i].picture);
-          itemTemplate.find('.product-carousel-price-sub').text(data[i].cost+' osdc');
-          itemTemplate.find('.add_to_cart_button').attr('data-title', data[i].name);
-          itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
-          itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
-          itemTemplate.find('.add_to_cart_button').attr('data-src', data[i].picture);
+      //   for (i = 0; i < data.length; i ++) {
+      //     itemTemplate.find('.item-title').text(data[i].name);
+      //     itemTemplate.find('img').attr('src', data[i].picture);
+      //     itemTemplate.find('.product-carousel-price-sub').text(data[i].cost+' osdc');
+      //     itemTemplate.find('.add_to_cart_button').attr('data-title', data[i].name);
+      //     itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
+      //     itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
+      //     itemTemplate.find('.add_to_cart_button').attr('data-src', data[i].picture);
 
-          itemrow.append(itemTemplate.html());
-        }
-      });
+      //     itemrow.append(itemTemplate.html());
+      //   }
+      // });
 
       $.getJSON('Stuff.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract

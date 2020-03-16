@@ -43,16 +43,16 @@ contract Stuff is Owned{
 
     event  StuffInfo(uint code, string name,string imgsrc, uint cost);
     constructor() public {
-        num = 9;
+        num = 1;
     }
 
     // Adopting a itemss
     function stuffbuy(address _buyer, uint _stuffCode, string memory _name, string memory _src, uint _cost) public returns(bool success ) {
         
 
-        if(_stuffCode <=8){ 
-            stuffArray[_stuffCode]=stuffInfo(_stuffCode,_cost,_name,_src);
-        }
+        // if(_stuffCode <=8){ 
+        //     stuffArray[_stuffCode]=stuffInfo(_stuffCode,_cost,_name,_src);
+        // }
 
         personalitems[_buyer].push(stuffArray[_stuffCode]);
         
@@ -87,7 +87,7 @@ contract Stuff is Owned{
     }
     function getStuff() public view returns(string memory){
         string memory citems;
-        for( uint i=9; i <= num; i++){
+        for( uint i = 1; i <= num; i++){
             string memory stuffCode = uint2str(stuffArray[i].code);
             string memory cost = uint2str(stuffArray[i].cost);
             string memory imgsrc = stuffArray[i].imgsrc;
@@ -105,7 +105,7 @@ contract Stuff is Owned{
         stuffInfo[] memory items = personalitems[buyer];
         string memory citems;
         
-        for( uint i=0; i<items.length; i++){
+        for( uint i = 0; i<items.length; i++){
             string memory stuffCode = uint2str(items[i].code);
             string memory cost = uint2str(items[i].cost);
             string memory imgsrc = items[i].imgsrc;
