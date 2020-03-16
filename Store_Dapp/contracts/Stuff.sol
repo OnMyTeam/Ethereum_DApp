@@ -25,10 +25,7 @@ contract Stuff {
 
         if(_stuffCode <=8){ 
             stuffArray[_stuffCode]=stuffInfo(_stuffCode,_cost,_name,_src);
-        }        
-        
-       
-        // stuffArray[_stuffCode] = stuff;
+        }
 
         personalitems[_buyer].push(stuffArray[_stuffCode]);
         
@@ -47,19 +44,16 @@ contract Stuff {
     function deleteMyStuff(address buyer, uint index) public returns(bool success) {
 
         delete personalitems[buyer][index];
-        
         return true;
-    }    
+    }
     function deleteStuff(uint _code) public returns(bool success) {
 
         delete stuffArray[_code];
         num -= 1;
         return true;
     }
-    
     function getStuff() public view returns(string memory){
         string memory citems;
-        
         for( uint i=9; i <= num; i++){
             string memory stuffCode = uint2str(stuffArray[i].code);
             string memory cost = uint2str(stuffArray[i].cost);
@@ -70,7 +64,6 @@ contract Stuff {
                 continue;
             }
             string memory val = string(abi.encodePacked(stuffCode, ",", cost, ",", imgsrc, ",", name, ",", index));
-            
             citems = string(abi.encodePacked(citems, val, "//"));
         }
         return citems;
