@@ -60,27 +60,8 @@ Mypage = {
 
   getAccountList: function () {
     Mypage.getAccountInfo();
-    Mypage.getAccountAuth();
     Mypage.getTokenInfo();
-  },
-
-  getAccountAuth: function () {
-    // Init.contracts.Migration.deployed().then(function (instance) {
-    //   var MigrationInstance = instance;
-    //   return MigrationInstance.isOwner({ from: Mypage.address })
-    // }).then(function (result) {
-
-    //   if (result) {
-    //     Mypage.auth = "Owner";
-    //     $("#BlackListDiv").show();
-    //     Mypage.getBlacklist();
-    //   }
-    //   else Mypage.auth = "Personal";
-    //   document.getElementById('isOwner').innerHTML = Mypage.auth;
-    //   console.log("getAccountAuth  " + Mypage.auth);
-    // }).catch(function (error) {
-    //   console.log(error);
-    // });
+    Mypage.bindEvents();
   },
 
   getAccountInfo: function () {
@@ -90,7 +71,7 @@ Mypage = {
     web3.eth.getBalance(Mypage.address, function (error, balance) {
       var ether = web3.fromWei(balance.toString());
       document.getElementById('ethValue').innerHTML = ether + " ETH";
-      return Mypage.bindEvents();
+     
     });
 
   },
@@ -115,11 +96,10 @@ Mypage = {
       if (result == Mypage.address) {
         Mypage.ownerYN = 'Y';
         console.log(Mypage.ownerYN);
+        $("#stuffRegister").css("display", "block");
+        $("#stuffRegisterList").css("display", "block");        
       }
-      else {
-        $("#stuffRegister").css("display", "none");
-        $("#stuffRegisterList").css("display", "none");
-      }
+
     }).catch(function(err) {
       console.log(err.message);
     });
@@ -173,9 +153,7 @@ Mypage = {
       }
     });
   },
-  join: function (event) {
-    location.href = "./join.html";
-  },
+
 
   changeSelect: function () {
     var address = document.getElementById('accounts').value;
@@ -189,11 +167,12 @@ Mypage = {
 
   buyToken: function () {
     var token_amount = $('#tokenAmount').val();
-
+    alert(token_amount);
+    alert(typeof(token_amount));
     if (token_amount<=0){ alert("1 이상을 입력하시오.");return; }
+    
+    $('#tokenAmount').val(0);
     var contractAddress = Init.contracts.FixedSupplyToken.address;
-    $('#tokenAmount').val("0");
- 
     web3.eth.sendTransaction({ from: Mypage.address, to: contractAddress, value: token_amount},
     function (e, r) {
 
@@ -354,6 +333,7 @@ Mypage = {
     });
   },
   registerStuff: function(){
+    console.log(111);
     var StuffInstance;
     var imgnum = Math.floor((Math.random() * 5)) + 1;
     var name=$('#stuffName').val();
