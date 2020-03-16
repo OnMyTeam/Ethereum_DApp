@@ -32,6 +32,7 @@ contract Stuff is Owned{
     struct stuffInfo{
         uint code;
         uint cost;
+        uint precode;
         string name;
         string imgsrc;
     }
@@ -53,7 +54,7 @@ contract Stuff is Owned{
         // if(_stuffCode <=8){ 
         //     stuffArray[_stuffCode]=stuffInfo(_stuffCode,_cost,_name,_src);
         // }
-
+        stuffArray[_stuffCode].precode = _stuffCode;
         personalitems[_buyer].push(stuffArray[_stuffCode]);
         
         // emit StuffInfo(stuffArray[_stuffCode].code, stuffArray[_stuffCode].name,stuffArray[_stuffCode].imgsrc, stuffArray[_stuffCode].cost);
@@ -63,7 +64,7 @@ contract Stuff is Owned{
     function registerStuff(string _name, string _imgsrc, uint _cost) public returns(bool success){
         
         
-        stuffArray[num]=stuffInfo(num,_cost,_name,_imgsrc);
+        stuffArray[num]=stuffInfo(num,_cost, num,_name,_imgsrc);
         num = num + 1;
 
         return true;
@@ -77,9 +78,9 @@ contract Stuff is Owned{
 
         delete stuffArray[_code];
         for( uint i=_code; i < num - 1; i++){
+            stuffArray[i+1].precode = stuffArray[i+1].code;
             stuffArray[i+1].code = i;
             stuffArray[i] = stuffArray[i+1];
-            
         }
         delete stuffArray[num - 1];
         num = num - 1;
@@ -93,10 +94,11 @@ contract Stuff is Owned{
             string memory imgsrc = stuffArray[i].imgsrc;
             string memory name = stuffArray[i].name;
             string memory index = uint2str(i);
+            string memory precode = uint2str(stuffArray[i].precode);
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
             }
-            string memory val = string(abi.encodePacked(stuffCode, ",", cost, ",", imgsrc, ",", name, ",", index));
+            string memory val = string(abi.encodePacked(stuffCode, ",", cost, ",", imgsrc, ",", name, ",", index, ",", precode));
             citems = string(abi.encodePacked(citems, val, "//"));
         }
         return citems;
@@ -111,6 +113,7 @@ contract Stuff is Owned{
             string memory imgsrc = items[i].imgsrc;
             string memory name = items[i].name;
             string memory index = uint2str(i);
+            
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
             }

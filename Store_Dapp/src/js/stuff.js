@@ -2,7 +2,8 @@ Mall = {
     web3Provider: null,
     contracts: {},
     address: 0x00,
-    ownerYN : 'N',
+    ownerYN : 'N',  
+    itemlist : null,
     init: async function() {
       Init.init();
       Mall.address = address;
@@ -83,27 +84,45 @@ Mall = {
 
         return StuffInstance.getMyStuff(Mall.address,{from: Mall.address, gas:6000000});
       }).then(function(adopters) {
-        var itemlist = adopters.split('//');
-        console.log(itemlist)
-        for (i = 0; i < itemlist.length; i++) {
-          if(itemlist[i] == ''){
+        var myitemlist = adopters.split('//');
+        console.log("mylist");
+        console.log(myitemlist);
+        for (var i = 0; i < myitemlist.length; i++) {
+          if(myitemlist[i] == ''){
             continue;
           }
-          var itemInfos = itemlist[i].split(',');
+          var itemInfos = myitemlist[i].split(',');
           var itemtitle = itemInfos[3];
           var itemid = itemInfos[0];
           var itemcost = itemInfos[1];
           var imgsrc = itemInfos[2];
           var itemindex = itemInfos[4];
+          // var precode = itemInfos[5];
           console.log(itemtitle);
           console.log(itemid);
           console.log(itemcost);
-          console.log(imgsrc);
+          // console.log(precode);
+     
           console.log('------------');
-          
+          var nitemlist = itemlist.split('//');
+          for (var j = 0; j < nitemlist.length; j++) {
+            if(nitemlist[j] == ''){
+              continue;
+            }
+            var itemInfos = nitemlist[j].split(',');
 
-          $('.single-shop-product').eq(itemid - 1).find('button').text('Success').attr('disabled', true);
-          $('.add_to_cart_button').eq(itemid - 1).css('background-color', 'green');
+            var precode = itemInfos[5];
+            var nitemid = itemInfos[0];
+            
+            if(precode == itemid){
+              console.log("precode " + precode + "itemid " + itemid);
+              console.log("itemtitle" + itemtitle + "itemid" + nitemid);
+              $('.single-shop-product').eq(nitemid - 1).find('button').text('Success').attr('disabled', true);
+              $('.add_to_cart_button').eq(nitemid - 1).css('background-color', 'green');
+            }
+            
+          }          
+
           
         }
       }).catch(function(err) {
@@ -122,22 +141,23 @@ Mall = {
 
         return StuffInstance.getStuff({from: Mall.address, gas:6000000});
       }).then(function(adopters) {
-        var itemlist = adopters.split('//');
-        console.log(itemlist);
-        for (i = 0; i < itemlist.length; i++) {
-          if(itemlist[i] == ''){
+        itemlist = adopters;
+        var nitemlist = itemlist.split('//');
+        console.log(nitemlist);
+        for (i = 0; i < nitemlist.length; i++) {
+          if(nitemlist[i] == ''){
             continue;
           }
-          var itemInfos = itemlist[i].split(',');
+          var itemInfos = nitemlist[i].split(',');
           var itemtitle = itemInfos[3];
           var itemid = itemInfos[0];
           var itemcost = itemInfos[1];
           var imgsrc = itemInfos[2];
-          console.log(itemtitle);
-          console.log(itemid);
-          console.log(itemcost);
-          console.log(imgsrc);
-          console.log('------------');
+          // console.log(itemtitle);
+          // console.log(itemid);
+          // console.log(itemcost);
+          // console.log(imgsrc);
+          // console.log('------------');
           
           itemTemplate.find('.item-title').text(itemtitle);
           itemTemplate.find('img').attr('src', imgsrc);
