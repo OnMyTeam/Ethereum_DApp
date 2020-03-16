@@ -5,106 +5,136 @@
 	URL: https://www.freshdesignweb.com/ustora/
 -->
 <html lang="en">
-  <head>
-    <%- include('./layout/top') %>
-  </head>
-  <body>
-   
-    <%- include('./layout/menu') %>
-    <div class="product-big-title-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="product-bit-title text-center">
-                        <h2>Shop</h2>
-                    </div>
-                </div>
-            </div>
+
+<head>
+  <%- include('./layout/top') %>
+</head>
+
+<body>
+
+  <%- include('./layout/menu') %>
+  <div class="product-big-title-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="product-bit-title text-center">
+            <h2>Shop</h2>
+          </div>
         </div>
+      </div>
     </div>
-    
-    
-    <div class="single-product-area">
-        <div class="zigzag-bottom"></div>
-        <div class="container" id="itemrow">
-            
-                
+  </div>
+
+
+  <div class="single-product-area">
+
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+      <div class="cart_totals">
+        <h2>Account Info</h2>
+
+        <table cellspacing="0">
+          <tbody>
+
+            <tr class="cart-subtotal">
+              <th>Account Address</th>
+              <td><span class="amount" id="accountAddr"></span></td>
+            </tr>
+
+            <tr class="shipping">
+              <th>Holding ETH</th>
+              <td id="ethValue"></td>
+            </tr>
+
+            <tr class="order-total">
+              <th>Holding Token</th>
+              <td><strong><span class="amount" id="tokenValue"></span></strong> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="container" id="itemrow">
+
+
+    </div>
+    <div id="itemTemplate" style="display: none;">
+      <div class="col-md-3 col-sm-6">
+        <div class="single-shop-product">
+          <div class="product-upper">
+            <img src="img/product-2.jpg" alt="">
+          </div>
+          <h2 class="item-title">Apple new mac book 2015 March :P</h2>
+          <div class="product-carousel-price">
+            <ins class="product-carousel-price-sub">$899.00</ins>
+          </div>
+
+          <div class="product-option-shop">
+            <button class="add_to_cart_button" type="button" data-id="0">Add to cart</button>
+          </div>
         </div>
-            <div id="itemTemplate" style="display: none;">
-                <div class="col-md-3 col-sm-6" >
-                    <div class="single-shop-product">
-                        <div class="product-upper">
-                            <img src="img/product-2.jpg" alt="" >
-                        </div>
-                        <h2 class="item-title">Apple new mac book 2015 March :P</h2>
-                        <div class="product-carousel-price">
-                            <ins class="product-carousel-price-sub">$899.00</ins>
-                        </div>  
-                        
-                        <div class="product-option-shop">
-                            <button class="add_to_cart_button" type="button" data-id="0" >Add to cart</button>
-                        </div>                       
-                    </div>
-                </div>
+      </div>
 
-            </div>        
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="product-pagination text-center">
-                        <nav>
-                          <ul class="pagination">
-                            <li>
-                              <a href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                              </a>
-                            </li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li>
-                              <a href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                              </a>
-                            </li>
-                          </ul>
-                        </nav>                        
-                    </div>
-                </div>
-            </div>        
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="product-pagination text-center">
+          <nav>
+            <ul class="pagination">
+              <li>
+                <a href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li><a href="#">3</a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-    <%- include('./layout/footer') %>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/web3.min.js"></script>
-    <script src="js/truffle-contract.js"></script>
-    <script src="js/init.js"></script>
-    <script src="js/stuff.js"></script>
-    <!-- <script src="js/stuff.js"></script> -->
-    <!-- Latest jQuery form server -->
-    <!-- <script src="https://code.jquery.com/jquery.min.js"></script> -->
-    
-    <!-- Bootstrap JS form CDN -->
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    
-    <!-- jQuery sticky menu -->
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/jquery.sticky.js"></script>
-    
-    <!-- jQuery easing -->
-    <script src="js/jquery.easing.1.3.min.js"></script>
-    
-    <!-- Main Script -->
-    <script src="js/main.js"></script>
-    <script>
-        var address = "<%= address %>";
-      
-    </script>
+  <%- include('./layout/footer') %>
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="js/bootstrap.min.js"></script>
+  <script src="js/web3.min.js"></script>
+  <script src="js/truffle-contract.js"></script>
+  <script src="js/init.js"></script>
+  <script src="js/stuff.js"></script>
+  <!-- <script src="js/stuff.js"></script> -->
+  <!-- Latest jQuery form server -->
+  <!-- <script src="https://code.jquery.com/jquery.min.js"></script> -->
 
-  </body>
+  <!-- Bootstrap JS form CDN -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+  <!-- jQuery sticky menu -->
+  <script src="js/owl.carousel.min.js"></script>
+  <script src="js/jquery.sticky.js"></script>
+
+  <!-- jQuery easing -->
+  <script src="js/jquery.easing.1.3.min.js"></script>
+
+  <!-- Main Script -->
+  <script src="js/main.js"></script>
+  <script>
+    var address = "<%= address %>";
+
+  </script>
+
+</body>
+
 </html>

@@ -2,6 +2,7 @@ Mypage = {
   web3Provider: null,
   contracts: {},
   address: 0x0,
+  ownAdress: 0x0,
   auth: "Personal",
 
   init: async function () {

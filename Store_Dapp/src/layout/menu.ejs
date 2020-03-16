@@ -8,7 +8,7 @@
                              <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li> 
                             <li><a href="/myaccount?address=<%=address%>"><i class="fa fa-user"></i> My Cart</a></li> 
                           <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li> -->
-                        <li><a href="#"><i class="fa fa-user"></i> Logout</a></li>
+                        <li><a href="/"><i class="fa fa-user"></i> Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -22,7 +22,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="logo">
-                    <h1><a href="javascript:;"><img src="img/logo.png"></a></h1>
+                    <h1><a href="/shop?address=<%=address%>"><img src="img/logo1.png"></a></h1>
                 </div>
             </div>
 
@@ -58,9 +58,24 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active"><a href="/shop?address=<%=address%>">Shop page</a></li>
-                    <li><a href="/myaccount?address=<%=address%>">My Page</a></li>
+                    
+                    <!-- <li><a href="index.html">Home</a></li> -->
+                    <% if (menu == 'shop') {%>
+                        <li class="active">
+                    <%} else {%>
+                        <li>
+                    <%}%>
+
+                        <a href="/shop?address=<%=address%>">Shop page</a>
+                    </li>
+
+                    <% if (menu == 'myaccount') {%>
+                        <li class="active">
+                    <%} else {%>
+                        <li>
+                    <%}%>
+                        <a href="/myaccount?address=<%=address%>">My Page</a>
+                    </li>
                     <!-- <li><a href="single-product.html">Single product</a></li>
                         
                         <li><a href="checkout.html">Checkout</a></li>

@@ -60,21 +60,21 @@ Mall = {
     
     getAccountInfo: function() {
 
-        // document.getElementById('accountAddr').innerHTML=Mall.address;
-        // web3.eth.getBalance(Mall.address, function(account,balance){
-        //     document.getElementById('ethValue').innerHTML=web3.fromWei(balance.toString()) + "ETH";
-        //     return Mall.bindEvents();
-        // });
+        document.getElementById('accountAddr').innerHTML=Mall.address;
+        web3.eth.getBalance(Mall.address, function(account,balance){
+            document.getElementById('ethValue').innerHTML=web3.fromWei(balance.toString()) + "ETH";
+            return Mall.bindEvents();
+        });
     },
   
     getTokenInfo: function(){
-      // Init.contracts.FixedSupplyToken.deployed().then(function(instance){
-      //   var tokenInstance = instance;
+      Init.contracts.FixedSupplyToken.deployed().then(function(instance){
+        var tokenInstance = instance;
 
-      //   return tokenInstance.balanceOf(Mall.address,{from:Mall.address});
-      // }).then(function(result) {
-      //   document.getElementById('tokenValue').innerText=result.c;
-      // });
+        return tokenInstance.balanceOf(Mall.address,{from:Mall.address});
+      }).then(function(result) {
+        document.getElementById('tokenValue').innerText=result.c;
+      });
     },
 
     getMyStuffList: async function(t) {
@@ -209,55 +209,8 @@ Mall = {
         console.log(err.message);
       });
   
-    },
-    registerStuff: function(){
-      var name=$('#registStuff_name').val();
-      var description=$('#registStuff_description').val();
-      var cost=$('#registStuff_cost').val();
-      
-      // if (name==""){ alert("빈칸?�� 채우?��?��.");return; }
-      // if (description==""){ alert("빈칸?�� 채우?��?��.");return; }
-      // if (cost==""){ alert("빈칸?�� 채우?��?��.");return; }
+    }
 
-      $('#registStuff_name').val("");
-      $('#registStuff_description').val("");
-      $('#registStuff_cost').val("");
-      // console.log(Mall.address,name, description,cost);
-    
-      Init.contracts.Stuff.deployed().then(function(instance){
-        var StuffInstance= instance;
-        return StuffInstance.registerStuff(Mall.address, name, description, cost,{from:Mall.address, gas:3000000});
-      }).then(function(result){
-        Mall.getMyStuffList();
-      }).catch(function(error){
-        console.log(error);
-      });
-    },
-    deleteStuff: function (){
-      var code=$('#delStuff_code').val();
-
-      $('#delStuff_code').val("");
-      // console.log(code);
-    
-      Init.contracts.Stuff.deployed().then(function(instance){
-        var StuffInstance= instance;
-        return StuffInstance.deleteStuff(code, Mall.address,{from:Mall.address, gas:3000000});
-      }).then(function(result){
-        Mall.getMyStuffList();
-      }).catch(function(error){
-        console.log(error);
-      });
-    },
-
-    goMyPage: function(){
-      // console.log("click mypage");
-      location.href="../myPage.html?addr=" +Mall.address ;
-    },
-
-    goBack: function(event) {
-      location.href="../index.html";
-    },
-  
   
   };
   
