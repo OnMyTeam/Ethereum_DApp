@@ -225,7 +225,7 @@ Mypage = {
     })    
   },
   deleteStuff: function (event) {
-    var index = $(event.target).data('id');
+    var index = $(event.target).data('index');
     console.log(index);
     var StuffInstance;
     Init.contracts.Stuff.deployed().then(function (instance) {
@@ -264,15 +264,17 @@ Mypage = {
         var itemid = itemInfos[0];
         var itemcost = itemInfos[1];
         var imgsrc = itemInfos[2];
-        // var itemIndex = itemInfos[4];
+ 
+        var itemIndex = itemInfos[4];
         console.log(itemtitle);
         console.log(itemid);
-        console.log(itemcost);
-        console.log(imgsrc);
+        console.log(itemIndex);
+        // console.log(imgsrc);
         console.log('------------');
 
         itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
         itemTemplate.find('.removestuff').attr('data-id', itemid);
+        itemTemplate.find('.removestuff').attr('data-index', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost+' osdc');
         

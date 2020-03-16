@@ -32,29 +32,25 @@ contract Stuff is Owned{
     struct stuffInfo{
         uint code;
         uint cost;
-        uint precode;
         string name;
         string imgsrc;
     }
     mapping(uint=> stuffInfo) public stuffArray;
     //mapping(address=> stuffInfo[]) public personal;
     mapping(address=> stuffInfo[]) public personalitems;
-    uint public num;
-    // uint public subnum;
+    uint public index;
+    uint public stuffCode;
 
     event  StuffInfo(uint code, string name,string imgsrc, uint cost);
     constructor() public {
-        num = 1;
+        index = 0;
+        stuffCode = 0;
     }
 
     // Adopting a itemss
     function stuffbuy(address _buyer, uint _stuffCode, string memory _name, string memory _src, uint _cost) public returns(bool success ) {
         
 
-        // if(_stuffCode <=8){ 
-        //     stuffArray[_stuffCode]=stuffInfo(_stuffCode,_cost,_name,_src);
-        // }
-        stuffArray[_stuffCode].precode = _stuffCode;
         personalitems[_buyer].push(stuffArray[_stuffCode]);
         
         // emit StuffInfo(stuffArray[_stuffCode].code, stuffArray[_stuffCode].name,stuffArray[_stuffCode].imgsrc, stuffArray[_stuffCode].cost);
@@ -64,8 +60,9 @@ contract Stuff is Owned{
     function registerStuff(string _name, string _imgsrc, uint _cost) public returns(bool success){
         
         
-        stuffArray[num]=stuffInfo(num,_cost, num,_name,_imgsrc);
-        num = num + 1;
+        stuffArray[index]=stuffInfo(stuffCode,_cost, _name,_imgsrc);
+        index = index + 1;
+        stuffCode = stuffCode + 1;
 
         return true;
     }
@@ -77,28 +74,26 @@ contract Stuff is Owned{
     function deleteStuff(uint _code) public returns(bool success) {
 
         delete stuffArray[_code];
-        for( uint i=_code; i < num - 1; i++){
-            stuffArray[i+1].precode = stuffArray[i+1].code;
-            stuffArray[i+1].code = i;
+        for( uint i=_code; i < index - 1; i++){
+
             stuffArray[i] = stuffArray[i+1];
         }
-        delete stuffArray[num - 1];
-        num = num - 1;
+        delete stuffArray[index - 1];
+        index = index - 1;
         return true;
     }
     function getStuff() public view returns(string memory){
         string memory citems;
-        for( uint i = 1; i <= num; i++){
+        for( uint i = 0; i <= index; i++){
             string memory stuffCode = uint2str(stuffArray[i].code);
             string memory cost = uint2str(stuffArray[i].cost);
             string memory imgsrc = stuffArray[i].imgsrc;
             string memory name = stuffArray[i].name;
-            string memory index = uint2str(i);
-            string memory precode = uint2str(stuffArray[i].precode);
+            string memory id = uint2str(i);
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
             }
-            string memory val = string(abi.encodePacked(stuffCode, ",", cost, ",", imgsrc, ",", name, ",", index, ",", precode));
+            string memory val = string(abi.encodePacked(stuffCode, ",", cost, ",", imgsrc, ",", name, ",", id));
             citems = string(abi.encodePacked(citems, val, "//"));
         }
         return citems;
@@ -112,19 +107,19 @@ contract Stuff is Owned{
             string memory cost = uint2str(items[i].cost);
             string memory imgsrc = items[i].imgsrc;
             string memory name = items[i].name;
-            string memory index = uint2str(i);
+            string memory id = uint2str(i);
             
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
             }
-            string memory val = string(abi.encodePacked(stuffCode, ",", cost, ",", imgsrc, ",", name, ",", index));
+            string memory val = string(abi.encodePacked(stuffCode, ",", cost, ",", imgsrc, ",", name, ",", id));
             
             citems = string(abi.encodePacked(citems, val, "//"));
         }
         return citems;
     }    
     function getnum() public view returns( uint){
-        return num;
+        return index;
     }
     
     // function getPersonal(address addr)public view returns(uint){

@@ -94,34 +94,28 @@ Mall = {
           var itemInfos = myitemlist[i].split(',');
           var itemtitle = itemInfos[3];
           var itemid = itemInfos[0];
-          var itemcost = itemInfos[1];
+          // alert(itemid);
           var imgsrc = itemInfos[2];
           var itemindex = itemInfos[4];
           // var precode = itemInfos[5];
           console.log(itemtitle);
-          console.log(itemid);
-          console.log(itemcost);
+          console.log("itemid " + itemid);
+          console.log("itemindex "+ itemindex);
           // console.log(precode);
      
           console.log('------------');
-          var nitemlist = itemlist.split('//');
-          for (var j = 0; j < nitemlist.length; j++) {
-            if(nitemlist[j] == ''){
-              continue;
+          $('.single-shop-product').each(function (index, item){
+            var stuffcode = $(item).data('stuffcode');
+            console.log("code" + stuffcode + "itemed" + itemid);
+            if(stuffcode == itemid){
+              $(item).find('button').text('Success').attr('disabled', true);
+              $(item).find('.add_to_cart_button').css('background-color', 'green');             
             }
-            var itemInfos = nitemlist[j].split(',');
 
-            var precode = itemInfos[5];
-            var nitemid = itemInfos[0];
-            
-            if(precode == itemid){
-              console.log("precode " + precode + "itemid " + itemid);
-              console.log("itemtitle" + itemtitle + "itemid" + nitemid);
-              $('.single-shop-product').eq(nitemid - 1).find('button').text('Success').attr('disabled', true);
-              $('.add_to_cart_button').eq(nitemid - 1).css('background-color', 'green');
-            }
-            
-          }          
+          });
+
+          // $('.single-shop-product').eq(itemid).find('button').text('Success').attr('disabled', true);
+          // $('.add_to_cart_button').eq(itemid).css('background-color', 'green');             
 
           
         }
@@ -140,30 +134,33 @@ Mall = {
         StuffInstance = instance;
 
         return StuffInstance.getStuff({from: Mall.address, gas:6000000});
-      }).then(function(adopters) {
-        itemlist = adopters;
-        var nitemlist = itemlist.split('//');
-        console.log(nitemlist);
-        for (i = 0; i < nitemlist.length; i++) {
-          if(nitemlist[i] == ''){
+      }).then(function(result) {
+
+        var result = result.split('//');
+        console.log(result);
+        for (i = 0; i < result.length; i++) {
+          if(result[i] == ''){
             continue;
           }
-          var itemInfos = nitemlist[i].split(',');
+          var itemInfos = result[i].split(',');
           var itemtitle = itemInfos[3];
           var itemid = itemInfos[0];
+          var index = itemInfos[4];
           var itemcost = itemInfos[1];
           var imgsrc = itemInfos[2];
-          // console.log(itemtitle);
-          // console.log(itemid);
-          // console.log(itemcost);
-          // console.log(imgsrc);
-          // console.log('------------');
+          console.log(itemtitle);
+          console.log(itemid);
+          console.log(itemcost);
+          console.log(imgsrc);
+          console.log('------------');
           
           itemTemplate.find('.item-title').text(itemtitle);
           itemTemplate.find('img').attr('src', imgsrc);
           itemTemplate.find('.product-carousel-price-sub').text(itemcost+' osdc');
+          itemTemplate.find('.single-shop-product').attr('data-stuffcode', itemid);          
           itemTemplate.find('.add_to_cart_button').attr('data-title', itemtitle);
-          itemTemplate.find('.add_to_cart_button').attr('data-id', itemid);
+          itemTemplate.find('.add_to_cart_button').attr('data-id', index);
+          itemTemplate.find('.add_to_cart_button').attr('data-stuffcode', itemid);
           itemTemplate.find('.add_to_cart_button').attr('data-cost', itemcost);
           itemTemplate.find('.add_to_cart_button').attr('data-src', imgsrc);
 
@@ -201,13 +198,15 @@ Mall = {
     buyStuff: function(event) {
 
       var title = $(event.target).data('title');
-      var stuffCode = parseInt($(event.target).data('id'));
+      var index = parseInt($(event.target).data('id'));
       var tokenAmount = parseInt($(event.target).data('cost'));
+      var stuffcode = parseInt($(event.target).data('stuffcode'));
       var imgSrc = $(event.target).data('src');
       console.log(title);
-      console.log(stuffCode);
-      console.log(tokenAmount);
-      console.log(imgSrc);
+      // console.log(index);
+
+      console.log(stuffcode);
+      // console.log(imgSrc);
 
       var StuffInstance;
       var account = Mall.address;
@@ -216,7 +215,7 @@ Mall = {
       Init.contracts.Stuff.deployed().then(function(instance) {
           StuffInstance = instance;
         // Execute adopt as a transaction by sending account
-          return StuffInstance.stuffbuy(account, stuffCode, title, imgSrc, tokenAmount,{from: account, gas:3000000});
+          return StuffInstance.stuffbuy(account, index, title, imgSrc, tokenAmount,{from: account, gas:3000000});
       }).then(function(result) {
         alert("Success!");
         
