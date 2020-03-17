@@ -94,8 +94,7 @@ Mall = {
           var itemInfos = myitemlist[i].split(',');
           var itemtitle = itemInfos[3];
           var itemid = itemInfos[0];
-          // alert(itemid);
-          var imgsrc = itemInfos[2];
+          //var imgsrc = itemInfos[2];
           var itemindex = itemInfos[4];
           // var precode = itemInfos[5];
           console.log(itemtitle);
@@ -133,7 +132,11 @@ Mall = {
       }).then(function(result) {
 
         var result = result.split('//');
+        console.log("===== result ======");
         console.log(result);
+        if(result == ''){
+          itemrow.html('<center> <b>There is no registered stuff</b></center><br><br><br>');
+        }
         for (i = 0; i < result.length; i++) {
           if(result[i] == ''){
             continue;

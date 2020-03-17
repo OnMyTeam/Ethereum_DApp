@@ -17,7 +17,7 @@ LogIn = {
       Init.contracts.Personal.setProvider(Init.web3Provider);
 
       // Use our contract to retrieve and mark the adopted pets
-      LogIn.getAccountInfo();
+      // LogIn.getAccountInfo();
       LogIn.bindEvents();
       return LogIn.getAccountList();
     });
@@ -73,23 +73,29 @@ LogIn = {
 
   bindEvents: function () {
 
-    // $(document).on('change', '.select_box', LogIn.changeSelect);
+    $(document).on('click', '.btn-primary', LogIn.logIn);
     // $(document).on('change', 'custom-select', LogIn.changeAddress);
 
   },
 
 
   logIn: function (event) {
-    let account = document.getElementById('accountAddr').innerText;
+
+    var address = $('#selectAccount').val();
+    var loginForm = $('#loginform');
     Init.contracts.Personal.deployed().then(function (instance) {
-      return instance.getMemberInfo({ from: account });
+      return instance.getMemberInfo({ from: address });
     }).then(function (result) {
+      
       if (result != 0x0) {
-        alert("Log-in success!");
-        location.href = "../pet-shop.html?addr=" + result;
+
+        loginForm.attr('action','/shop');
+        loginForm.attr('method','post');
+        loginForm.submit();
+         
       }
       else {
-        alert("Please join first!");
+        alert("Please Join First!");
       }
     });
   },

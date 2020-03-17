@@ -30,25 +30,39 @@ Join = {
     },
 
     makeSelect: function(list) { 
-        var select =  document.getElementById('accounts');
-        for(var i = 0; i<list.length; i++){
-          var opt=document.createElement('option');
-          opt.value = list[i];
-          opt.innerHTML = list[i];
-          select.appendChild(opt);
+        var html = '';
+        html += '<option value="">Select</a>';
+        for (var i = 0; i < list.length; i++) {
+          html += '<option value="' + list[i] + '">' + list[i] + '</a>';
         }
+        $('.custom-select').html(html);
       },
   
     bindEvents: function() {
         $(document).on('click', '.btn_goBack', Join.goBack);
-        $(document).on('click', '.btn_register', Join.join);
-        $(document).on('change', '.select_box', Join.changeSelect);
+        $(document).on('click', '.btn-facebook', Join.join);
+        $(document).on('change', '#selectAccount', Join.changeSelect);
     },
 
     changeSelect: function(){
-        var address=document.getElementById('accounts').value;
-        document.getElementById('accountAddr').innerHTML=address;
-        document.getElementById('ethValue').innerHTML=parseFloat(web3.fromWei(web3.eth.getBalance(address),"ether"))+"ETHER";
+        var address = $('#selectAccount').val();
+        console.log(address);
+        $('#address').text(address);
+        var ether = parseFloat(web3.fromWei(web3.eth.getBalance(address),"ether"))+"ETH";
+        $('#etherValue').text(ether);
+
+        Init.contracts.Personal.deployed().then(function (instance) {
+          return instance.getMemberInfo({ from: address });
+        }).then(function (result) {
+          if (result != 0x0) {
+
+            $('#register').html("<font color='green'><b>YES</b></font>");
+          }
+          else {
+            $('#register').html("<font color='red'>NO</font>");
+          }
+        });        
+        
     },
   
     goBack: function(event) {
@@ -56,19 +70,22 @@ Join = {
     },
 
     join: function(event){
-        Init.contracts.Personal.deployed().then(function(instance){
-            let PersonalInstance=instance;
-            let account=document.getElementById('accountAddr').innerText;
-            console.log(account);
-            return PersonalInstance.register({from:account})
-        }).then(function(result){
-            console.log(result);
-            alert("Successfully Register!");
-            Join.goBack();
-        }).catch(function (error){
-            console.log(error);
-            alert("Already Registered");
-        });
+      
+      Init.contracts.Personal.deployed().then(function(instance){
+          let PersonalInstance = instance;
+          var address = $('#address').text();
+          
+          console.log(address);
+          return PersonalInstance.register({from:address})
+      }).then(function(result){
+          console.log(result);
+          alert("Successfully Register!");
+          $('#register').html("<font color='green'><b>YES</b></font>");
+          
+      }).catch(function (error){
+          console.log(error);
+          alert("Already Registered");
+      });
     }
   };
   
