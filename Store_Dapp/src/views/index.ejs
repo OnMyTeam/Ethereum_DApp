@@ -18,7 +18,7 @@
     rel="stylesheet">
 
   <!-- Custom styles for this template-->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="public/css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
 
@@ -36,56 +36,52 @@
           <div class="card-body p-0">
             <!-- Nested Row within Card Body -->
             <div class="row">
-
-
               <div class="col-lg-12">
                 <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Join Page</h1>
-                  </div>
-                  <form class="user" action='/shop' method="POST">
-
-                    <div class="form-group">
-                      <label>Select Address</label>
-                      <select class="custom-select" name="address" id="selectAccount">
-
-
-                      </select>
-                    </div>
                   <div class="table-responsive">
-                    <hr>
                     <table class="table table-bordered" id="dataTable" cellspacing="0">
                       <thead>
                         <tr>
-                          <th width="70%">Account address</th>
-                          <td id="address"></td>
+                          <th width="70%">Account</th>
+                          <th>Balance</th>
+
                         </tr>
-                        <tr>
-                          <th width="70%">Ether</th>
-                          <td id="etherValue"></td>
-                        </tr>
-                        <tr>
-                          <th width="70%">Register</th>
-                          <td id="register"></td>
-                        </tr>                                                
                       </thead>
 
                       <tbody id="tableContent">
 
                       </tbody>
                     </table>
-                  </div>                    
+                                        
+                  </div>
+                </div>
+              </div>
+              <hr>
+              <div class="col-lg-12">
+                 
+                <div class="p-5">
+                 
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Welcome Store!</h1>
+                  </div>
+                  <form class="user" id="loginform" action='/shop' method="POST">
+
+                    <div class="form-group">
+                      <label>Select Address</label>
+                      <select class="custom-select" name="address" id="selectAccount">
+                      </select>
+                    </div>
                     <hr>
 
-                    <a href="/" class="btn btn-primary btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Login
-                    </a>
-                    <a href="javascript:;" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw"></i> Register
+                    <input type="button" class="btn btn-primary btn-user btn-block" value="Login">
+                      
+                    </button>
+                    <a href="/join" class="btn btn-facebook btn-user btn-block">
+                      <i class="fab fa-google fa-fw"></i> Join
                     </a>
 
                   </form>
-
+                  
                   <div class="text-center">
                     <!-- <a class="small" href="forgot-password.html">Forgot Password?</a> -->
                   </div>
@@ -104,26 +100,23 @@
     </div>
 
   </div>
-
+                  
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <!-- Bootstrap core JavaScript
   <script src="js/jquery.min.js"></script>     -->
-  <script src="js/web3.min.js"></script>
-  <script src="js/truffle-contract.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/join.js"></script>
-  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="public/js/web3.min.js"></script>
+  <script src="public/js/truffle-contract.js"></script>
+  <script src="public/js/init.js"></script>
+  <script src="public/js/login.js"></script>
+  <script src="public/js/bootstrap.bundle.min.js"></script>
   <!-- Core plugin JavaScript-->
-  <script src="js/jquery.easing.min.js"></script>
+  <script src="public/js/jquery.easing.min.js"></script>
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin-2.min.js"></script>
+  <script src="public/js/sb-admin-2.min.js"></script>
 
-  <script type="text/javascript">
-
-
-  </script>
-
+  
+  
 </body>
 
 </html>

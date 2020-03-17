@@ -1,0 +1,1 @@
+const imgsrc = 'public/img/';

@@ -3,7 +3,7 @@ var app = express();
 var bodyParser = require('body-parser');
 app.use(express.static('public'));
 app.set('view engine','ejs');
-app.set('views','./src');
+app.set('views','./src/views');
 app.use(bodyParser.urlencoded({ extended: false}))
 
 app.get('/', function (req, res) {

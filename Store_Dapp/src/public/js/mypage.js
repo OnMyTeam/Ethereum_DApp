@@ -283,7 +283,7 @@ Mypage = {
         var itemtitle = itemInfos[3];
         var itemid = itemInfos[0];
         var itemcost = itemInfos[1];
-        var imgsrc = itemInfos[2];
+        var imgfile = itemInfos[2];
 
         var itemIndex = itemInfos[4];
         console.log(itemtitle);
@@ -292,7 +292,7 @@ Mypage = {
         // console.log(imgsrc);
         console.log('------------');
 
-        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
+        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc + imgfile);
         itemTemplate.find('.removestuff').attr('data-id', itemid);
         itemTemplate.find('.removestuff').attr('data-index', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
@@ -331,7 +331,7 @@ Mypage = {
         var itemtitle = itemInfos[3];
         var itemid = itemInfos[0];
         var itemcost = itemInfos[1];
-        var imgsrc = itemInfos[2];
+        var imgfile = itemInfos[2];
         var itemIndex = itemInfos[4];
         // console.log(itemtitle);
         // console.log(itemid);
@@ -339,7 +339,7 @@ Mypage = {
         // console.log(imgsrc);
         // console.log('------------');
 
-        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
+        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc + imgfile);
         itemTemplate.find('.removehistory').attr('data-id', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost + ' osdc');
@@ -360,7 +360,7 @@ Mypage = {
     var imgnum = Math.floor((Math.random() * 4)) + 1;
     var name = $('#stuffName').val();
     var cost = $('#stuffCost').val();
-    var imgsrc = 'img/product-' + imgnum + '.jpg';
+    var imgsrc = 'product-' + imgnum + '.jpg';
 
     console.log(name);
     console.log(cost);

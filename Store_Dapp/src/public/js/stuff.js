@@ -11,22 +11,6 @@ Mall = {
     },
   
     initContract: function() {
-      // $.getJSON('../items.json', function(data) {
-      //   var itemrow = $('#itemrow');
-      //   var itemTemplate = $('#itemTemplate');
-
-      //   for (i = 0; i < data.length; i ++) {
-      //     itemTemplate.find('.item-title').text(data[i].name);
-      //     itemTemplate.find('img').attr('src', data[i].picture);
-      //     itemTemplate.find('.product-carousel-price-sub').text(data[i].cost+' osdc');
-      //     itemTemplate.find('.add_to_cart_button').attr('data-title', data[i].name);
-      //     itemTemplate.find('.add_to_cart_button').attr('data-id', data[i].id);
-      //     itemTemplate.find('.add_to_cart_button').attr('data-cost', data[i].cost);
-      //     itemTemplate.find('.add_to_cart_button').attr('data-src', data[i].picture);
-
-      //     itemrow.append(itemTemplate.html());
-      //   }
-      // });
 
       $.getJSON('Stuff.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -135,7 +119,7 @@ Mall = {
         // console.log("===== result ======");
         // console.log(result);
         if(result == ''){
-          html = "<center><img src='img/no_product.png'/></center>";
+          html = "<center><img src='public/img/no_product.png'/></center>";
           itemrow.html(html);
         }
         for (i = 0; i < result.length; i++) {
@@ -147,22 +131,22 @@ Mall = {
           var itemid = itemInfos[0];
           var index = itemInfos[4];
           var itemcost = itemInfos[1];
-          var imgsrc = itemInfos[2];
+          var imgfile = itemInfos[2];
           console.log(itemtitle);
           console.log(itemid);
           console.log(itemcost);
-          console.log(imgsrc);
+          console.log(imgfile);
           console.log('------------');
           
           itemTemplate.find('.item-title').text(itemtitle);
-          itemTemplate.find('img').attr('src', imgsrc);
+          itemTemplate.find('img').attr('src', imgsrc + imgfile);
           itemTemplate.find('.product-carousel-price-sub').text(itemcost+' osdc');
           itemTemplate.find('.single-shop-product').attr('data-stuffcode', itemid);          
           itemTemplate.find('.add_to_cart_button').attr('data-title', itemtitle);
           itemTemplate.find('.add_to_cart_button').attr('data-id', index);
           itemTemplate.find('.add_to_cart_button').attr('data-stuffcode', itemid);
           itemTemplate.find('.add_to_cart_button').attr('data-cost', itemcost);
-          itemTemplate.find('.add_to_cart_button').attr('data-src', imgsrc);
+          itemTemplate.find('.add_to_cart_button').attr('data-src', imgsrc+imgfile);
 
           itemrow.append(itemTemplate.html());
           
