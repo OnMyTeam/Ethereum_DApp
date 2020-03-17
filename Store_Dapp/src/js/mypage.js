@@ -95,16 +95,21 @@ Mypage = {
 
       return StuffInstance.owner.call();
     }).then(function (result) {
+      
       if (result == Mypage.address) {
         Mypage.ownerYN = 'Y';
-        console.log(Mypage.ownerYN);
+        $("#accountAddrAdmin").text('Account Address(admin)');
         $("#stuffRegister").css("display", "block");
         $("#stuffRegisterList").css("display", "block");
         $("#blacklistRegister").css("display", "block");
         $("#blackList").css("display", "block");
       }
+      else{ 
+        $("#accountAddrAdmin").text('Account Address(member)');
+      }
 
     }).catch(function (err) {
+
       console.log(err.message);
     });
   },
@@ -178,7 +183,10 @@ Mypage = {
       $("#blacklistAccount").val('');
       Mypage.getBlacklist();
     }).catch(function (error) {
-      console.log(error);
+      if(error.message == 'VM Exception while processing transaction: revert D'){
+        alert('Already register blacklist');
+      }
+      console.log(error.message);
     })
   },
   getBlacklist: function (list) {
@@ -191,8 +199,7 @@ Mypage = {
       BlackListInstance = instance;
       return BlackListInstance.getBlacklist();
     }).then(function (list) {
-      console.log("blacklist: ");
-      console.log(list);
+
       for (var i = 0; i < list.length; i++) {
         if (list[i] != 0x0){
  

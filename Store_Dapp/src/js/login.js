@@ -82,6 +82,8 @@ LogIn = {
   logIn: function (event) {
 
     var address = $('#selectAccount').val();
+    if (address == ''){ alert('Please select address'); return;}
+    
     var loginForm = $('#loginform');
     Init.contracts.Personal.deployed().then(function (instance) {
       return instance.getMemberInfo({ from: address });
@@ -98,9 +100,6 @@ LogIn = {
         alert("Please Join First!");
       }
     });
-  },
-  join: function (event) {
-    location.href = "./join.html";
   },
 
   changeSelect: function () {

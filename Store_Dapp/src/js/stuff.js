@@ -183,6 +183,9 @@ Mall = {
       }).then(function(result) {
         if (result == Mall.address) {
           Mall.ownerYN = 'Y';
+          $("#accountAddrAdmin").text('Account Address(admin)');
+        }else{
+          $("#accountAddrAdmin").text('Account Address(member)');
         }
       }).catch(function(err) {
         console.log(err.message);
@@ -235,7 +238,7 @@ Mall = {
         return Mall.getMyStuffList();
       }).catch(function(err) {
         alert("Adopt failed :(");
-        console.log(err.message);
+        console.log(err);
       });
   
     }

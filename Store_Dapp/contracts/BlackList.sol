@@ -15,6 +15,7 @@ contract BlackList {
     
     // BlackList register
     function setBlacklist(address _addr) public  {
+        require(blackList[_addr] == 0, "D");
         blackList[_addr] = 1;
         blackListKey.push(_addr);
         
