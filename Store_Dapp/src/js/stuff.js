@@ -113,10 +113,6 @@ Mall = {
             }
 
           });
-
-          // $('.single-shop-product').eq(itemid).find('button').text('Success').attr('disabled', true);
-          // $('.add_to_cart_button').eq(itemid).css('background-color', 'green');             
-
           
         }
       }).catch(function(err) {
