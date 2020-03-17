@@ -11,18 +11,18 @@ Mypage = {
   },
 
   initContract: function () {
-    $.getJSON('Stuff.json', function(data) {
+    $.getJSON('Stuff.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var StuffArtifact = data;
       Init.contracts.Stuff = TruffleContract(StuffArtifact);
-    
+
       // Set the provider for our contract
       Init.contracts.Stuff.setProvider(Init.web3Provider);
-    
+
       // Use our contract to retrieve and mark the adopted pets
       Mypage.getOwner();
       return Mypage.getStuffList();
-    });  
+    });
     $.getJSON('Personal.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var PersonalArtifact = data;
@@ -38,6 +38,7 @@ Mypage = {
 
       // Set the provider for our contract
       Init.contracts.BlackList.setProvider(Init.web3Provider);
+      return Mypage.getBlacklist();
     });
     $.getJSON('Migrations.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -72,7 +73,7 @@ Mypage = {
     web3.eth.getBalance(Mypage.address, function (error, balance) {
       var ether = web3.fromWei(balance.toString());
       document.getElementById('ethValue').innerHTML = ether + " ETH";
-     
+
     });
 
   },
@@ -87,46 +88,27 @@ Mypage = {
       document.getElementById('tokenValue').innerText = result.c;
     });
   },
-  getOwner: function(){
+  getOwner: function () {
     var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function(instance) {
+    Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
 
       return StuffInstance.owner.call();
-    }).then(function(result) {
+    }).then(function (result) {
       if (result == Mypage.address) {
         Mypage.ownerYN = 'Y';
         console.log(Mypage.ownerYN);
         $("#stuffRegister").css("display", "block");
-        $("#stuffRegisterList").css("display", "block");        
+        $("#stuffRegisterList").css("display", "block");
+        $("#blacklistRegister").css("display", "block");
+        $("#blackList").css("display", "block");
       }
 
-    }).catch(function(err) {
+    }).catch(function (err) {
       console.log(err.message);
     });
   },
-  getBlacklist: function (list) {
-    
-    document.getElementById("BlackList").innerText = " ";
-    var idiv = document.createElement('table');
-    document.getElementById("BlackList").appendChild(idiv);
 
-    var total = 0;
-    var input = "<tr><td>Account</td></tr>";
-
-    Init.contracts.BlackList.deployed().then(function (instance) {
-      var BlackListInstance = instance;
-      return BlackListInstance.getBlacklist();
-    }).then(function (list) {
-      console.log("blacklist: ");
-      console.log(list);
-      for (var i = 0; i < list.length; i++) {
-        if (list[i] != 0x0) input += "<tr><td>" + list[i] + "</td></tr>";
-      }
-      idiv.innerHTML = input;
-    });
-
-  },
 
 
   bindEvents: function () {
@@ -136,8 +118,10 @@ Mypage = {
     // $(document).on('click', '.btn_deleteBL', Mypage.deleteBlackList);
     $(document).on('click', '.removehistory', Mypage.deleteMyStuff);
     $(document).on('click', '.removestuff', Mypage.deleteStuff);
+    $(document).on('click', '.removeblacklist', Mypage.deleteBlackList);
     $(document).on('click', '.add_to_item_button', Mypage.registerStuff);
-    
+    $(document).on('click', '.add_to_blacklist_button', Mypage.registerBlackList);
+
   },
 
   logIn: function (event) {
@@ -169,39 +153,68 @@ Mypage = {
   buyToken: function () {
     var token_amount = $('#tokenAmount').val();
 
-    if (token_amount<=0){ alert("1 이상을 입력하시오.");return; }
-    
+    if (token_amount <= 0) { alert("1 이상을 입력하시오."); return; }
+
     $('#tokenAmount').val(0);
     var contractAddress = Init.contracts.FixedSupplyToken.address;
-    web3.eth.sendTransaction({ from: Mypage.address, to: contractAddress, value: token_amount},
-    function (e, r) {
+    web3.eth.sendTransaction({ from: Mypage.address, to: contractAddress, value: token_amount },
+      function (e, r) {
 
-      Mypage.getAccountInfo();
-      Mypage.getTokenInfo();
-    });
+        Mypage.getAccountInfo();
+        Mypage.getTokenInfo();
+      });
   },
   registerBlackList: function () {
-    var regis_account = $("#regisBL_account").val();
-    console.log(regis_account);
-    $("#regisBL_account").val("");
+ 
+    var account = $("#blacklistAccount").val();
+    console.log(account);
+    
+    var BlackListInstance;
     Init.contracts.BlackList.deployed().then(function (instance) {
       BlackListInstance = instance;
-      return BlackListInstance.blacklisting(regis_account, { from: Mypage.address });
+      return BlackListInstance.setBlacklist(account, { from: Mypage.address });
     }).then(function (result) {
-      console.log(result);
+      console.log("result, " + result);
+      $("#blacklistAccount").val('');
       Mypage.getBlacklist();
     }).catch(function (error) {
       console.log(error);
     })
   },
+  getBlacklist: function (list) {
+    var itemrow = $('#blacklistContent');
+    var itemTemplate = $('#detailblacklistContent');
+    var html = '';
+    var BlackListInstance;
 
-  deleteBlackList: function () {
-    var del_account = $("#delBL_account").val();
-    console.log(del_account);
-    $("#delBL_account").val("");
     Init.contracts.BlackList.deployed().then(function (instance) {
       BlackListInstance = instance;
-      return BlackListInstance.deleteFromBlacklist(del_account, { from: Mypage.address });
+      return BlackListInstance.getBlacklist();
+    }).then(function (list) {
+      console.log("blacklist: ");
+      console.log(list);
+      for (var i = 0; i < list.length; i++) {
+        if (list[i] != 0x0){
+ 
+          itemTemplate.find('.removeblacklist').attr('data-id', i);
+          itemTemplate.find('.removeblacklist').attr('data-address', list[i]);
+          itemTemplate.find('.product-name').text(list[i]);
+
+          html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
+        }
+      }
+      itemrow.html(html);
+      
+    });
+
+  },
+  deleteBlackList: function () {
+    var index = $(event.target).data('id');
+    var address = $(event.target).data('address');
+
+    Init.contracts.BlackList.deployed().then(function (instance) {
+      BlackListInstance = instance;
+      return BlackListInstance.deleteBlacklist(address, index, { from: Mypage.address });
     }).then(function (result) {
       console.log(result);
       Mypage.getBlacklist();
@@ -214,15 +227,15 @@ Mypage = {
     var StuffInstance;
     Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
-      return StuffInstance.deleteMyStuff(Mypage.address,index, { from: Mypage.address });
+      return StuffInstance.deleteMyStuff(Mypage.address, index, { from: Mypage.address });
     }).then(function (result) {
-      console.log("result : "+result);
-    
+      console.log("result : " + result);
+
       Mypage.getStuffMyList();
-      
+
     }).catch(function (error) {
       console.log(error);
-    })    
+    })
   },
   deleteStuff: function (event) {
     var index = $(event.target).data('index');
@@ -230,41 +243,41 @@ Mypage = {
     var StuffInstance;
     Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
-      return StuffInstance.deleteStuff(index, { from: Mypage.address, gas:3000000 });
+      return StuffInstance.deleteStuff(index, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
-      console.log("result : "+result);
-    
+      console.log("result : " + result);
+
       Mypage.getStuffList();
-      
+
     }).catch(function (error) {
       console.log(error);
-    })    
-  },  
-  getStuffList: function(t) {
+    })
+  },
+  getStuffList: function (t) {
     var itemrow = $('#regContent');
     var itemTemplate = $('#detailregContent');
 
     var html = '';
     var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function(instance) {
+    Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
       console.log(Mypage.address);
-      return StuffInstance.getStuff({from: Mypage.address, gas:3000000});
-    }).then(function(adopters) {
-      
+      return StuffInstance.getStuff({ from: Mypage.address, gas: 3000000 });
+    }).then(function (adopters) {
+
       var itemlist = adopters.split('//');
       console.log(itemlist)
       for (i = 0; i < itemlist.length; i++) {
-        if(itemlist[i] == ''){
+        if (itemlist[i] == '') {
           continue;
         }
-        
+
         var itemInfos = itemlist[i].split(',');
         var itemtitle = itemInfos[3];
         var itemid = itemInfos[0];
         var itemcost = itemInfos[1];
         var imgsrc = itemInfos[2];
- 
+
         var itemIndex = itemInfos[4];
         console.log(itemtitle);
         console.log(itemid);
@@ -276,37 +289,37 @@ Mypage = {
         itemTemplate.find('.removestuff').attr('data-id', itemid);
         itemTemplate.find('.removestuff').attr('data-index', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
-        itemTemplate.find('.product-price').text(itemcost+' osdc');
-        
-        html += '<tr class="cart_item">'+itemTemplate.html()+'</tr>';
-        
+        itemTemplate.find('.product-price').text(itemcost + ' osdc');
+
+        html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
+
       }
 
       itemrow.html(html);
       Mypage.getStuffMyList();
-    }).catch(function(err) {
+    }).catch(function (err) {
       console.log(err.message);
     });
-  },  
-  getStuffMyList: function(t) {
+  },
+  getStuffMyList: function (t) {
     var itemrow = $('#historyContent');
     var itemTemplate = $('#historyDetailContent');
 
     var html = '';
     var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function(instance) {
+    Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
       console.log(Mypage.address);
-      return StuffInstance.getMyStuff(Mypage.address,{from: Mypage.address, gas:3000000});
-    }).then(function(adopters) {
-      
+      return StuffInstance.getMyStuff(Mypage.address, { from: Mypage.address, gas: 3000000 });
+    }).then(function (adopters) {
+
       var itemlist = adopters.split('//');
       console.log(itemlist)
       for (i = 0; i < itemlist.length; i++) {
-        if(itemlist[i] == ''){
+        if (itemlist[i] == '') {
           continue;
         }
-        
+
         var itemInfos = itemlist[i].split(',');
         var itemtitle = itemInfos[3];
         var itemid = itemInfos[0];
@@ -322,40 +335,40 @@ Mypage = {
         itemTemplate.find('.shop_thumbnail').attr('src', imgsrc);
         itemTemplate.find('.removehistory').attr('data-id', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
-        itemTemplate.find('.product-price').text(itemcost+' osdc');
-        
-        html += '<tr class="cart_item">'+itemTemplate.html()+'</tr>';
-        
+        itemTemplate.find('.product-price').text(itemcost + ' osdc');
+
+        html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
+
       }
 
       itemrow.html(html);
-    }).catch(function(err) {
+    }).catch(function (err) {
       console.log(err.message);
     });
   },
-  registerStuff: function(){
-   
+  registerStuff: function () {
+
 
     var StuffInstance;
     var imgnum = Math.floor((Math.random() * 4)) + 1;
-    var name=$('#stuffName').val();
-    var cost=$('#stuffCost').val();
-    var imgsrc = 'img/product-'+imgnum+'.jpg';
-    
+    var name = $('#stuffName').val();
+    var cost = $('#stuffCost').val();
+    var imgsrc = 'img/product-' + imgnum + '.jpg';
+
     console.log(name);
     console.log(cost);
     console.log(imgsrc);
 
-    Init.contracts.Stuff.deployed().then(function(instance){
-      StuffInstance= instance;
-      return StuffInstance.registerStuff(name, imgsrc, cost,{from:Mypage.address, gas:3000000});
-    }).then(function(result){
+    Init.contracts.Stuff.deployed().then(function (instance) {
+      StuffInstance = instance;
+      return StuffInstance.registerStuff(name, imgsrc, cost, { from: Mypage.address, gas: 3000000 });
+    }).then(function (result) {
       alert('Success!');
       Mypage.getStuffList();
-    }).catch(function(error){
+    }).catch(function (error) {
       console.log(error);
     });
-  },  
+  },
 
 
 };

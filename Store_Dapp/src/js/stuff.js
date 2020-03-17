@@ -132,10 +132,11 @@ Mall = {
       }).then(function(result) {
 
         var result = result.split('//');
-        console.log("===== result ======");
-        console.log(result);
+        // console.log("===== result ======");
+        // console.log(result);
         if(result == ''){
-          itemrow.html('<center> <b>There is no registered stuff</b></center><br><br><br>');
+          html = "<center><img src='img/no_product.png'/></center>";
+          itemrow.html(html);
         }
         for (i = 0; i < result.length; i++) {
           if(result[i] == ''){
