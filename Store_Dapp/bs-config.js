@@ -9,7 +9,9 @@ app.use(bodyParser.urlencoded({ extended: false}))
 app.get('/', function (req, res) {
   res.render('index');
 });
-
+app.get('/join', function (req, res) {
+  res.render('join');
+});
 app.post('/shop', function (req, res) {
   var address = req.body.address;
   res.render('item-shop', {address: address, menu:'shop'});
@@ -18,6 +20,7 @@ app.get('/shop', function (req, res) {
   var address = req.query.address;
   res.render('item-shop', {address: address, menu:'shop'});
 });
+
 app.get('/myaccount', function (req, res) {
   var address = req.query.address;
   res.render('cart', {address: address, menu:'myaccount'});
