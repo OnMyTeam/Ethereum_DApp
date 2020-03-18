@@ -11,7 +11,18 @@ Mall = {
     },
   
     initContract: function() {
-
+      $.getJSON('BlackList.json', function (data) {
+       
+        // Get the necessary contract artifact file and instantiate it with truffle-contract
+        var BlackListArtifact = data;
+      
+        Init.contracts.BlackList = TruffleContract(BlackListArtifact);
+       
+        // Set the provider for our contract
+        Init.contracts.BlackList.setProvider(Init.web3Provider);
+      
+        
+      });
       $.getJSON('Stuff.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
         var StuffArtifact = data;
@@ -36,10 +47,7 @@ Mall = {
      
     },
     
-    setToNum: function(num){
-      return Number(num).toPrecision(50).toString().split('.')[0];
-    },
-  
+
     
     getAccountInfo: function() {
 
@@ -187,24 +195,21 @@ Mall = {
       var title = $(event.target).data('title');
       var index = parseInt($(event.target).data('id'));
       var tokenAmount = parseInt($(event.target).data('cost'));
-      var stuffcode = parseInt($(event.target).data('stuffcode'));
-      var imgSrc = $(event.target).data('src');
-      console.log(title);
-      // console.log(index);
 
-      console.log(stuffcode);
-      // console.log(imgSrc);
+
+
 
       var StuffInstance;
+      var BlackListInstance;
+      var tokenInstance;
       var account = Mall.address;
       console.log("account"+account);
-      var isAdoption;
-      Init.contracts.Stuff.deployed().then(function(instance) {
-          StuffInstance = instance;
+
+      Init.contracts.BlackList.deployed().then(function(instance) {
+          BlackListInstance = instance;
         // Execute adopt as a transaction by sending account
-          return StuffInstance.stuffbuy(account, index, title, imgSrc, tokenAmount,{from: account, gas:3000000});
+          return BlackListInstance.checkBlacklist({from: account, gas:3000000});
       }).then(function(result) {
-        alert("Success!");
         
         Init.contracts.FixedSupplyToken.deployed().then(function(instance) {
           var tokenInstance = instance;
@@ -212,18 +217,38 @@ Mall = {
         // Execute adopt as a transaction by sending account
           return tokenInstance.SubToken(tokenAmount,{from:account});
         }).then(function(result) {
+
+          Init.contracts.Stuff.deployed().then(function(instance) {
+              StuffInstance = instance;
+            // Execute adopt as a transaction by sending account
+              return StuffInstance.stuffbuy(account, index, tokenAmount,{from: account, gas:3000000});
+          }).then(function(result) {
+            alert("Success!");
+            Mall.getTokenInfo();
+            Mall.getMyStuffList();
+          }).catch(function(err) {
+            
+            console.log(err);
+          });          
           console.log(result);
           console.log(result.logs[0].args.tokens.c[1]);
-          // document.getElementById('tokenValue').innerHTML=result.logs[0].args.tokens.c[1];
+          
         }).catch(function(err) {
-          console.log(err.message);
+          if(err.message == 'VM Exception while processing transaction: revert need token'){
+            alert('lack of token');
+          }
+          
         });
 
-        return Mall.getMyStuffList();
+        
       }).catch(function(err) {
-        alert("Adopt failed :(");
-        console.log(err);
+          if(err.message == 'VM Exception while processing transaction: revert Already blacklist'){
+            alert('blacklist!');
+          }        
+         console.log(err.message);
       });
+      
+
   
     }
 

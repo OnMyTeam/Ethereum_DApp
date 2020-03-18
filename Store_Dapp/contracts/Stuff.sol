@@ -29,6 +29,7 @@ contract Owned {
     }
 }
 contract Stuff is Owned{
+    
     struct stuffInfo{
         uint code;
         uint cost;
@@ -48,12 +49,11 @@ contract Stuff is Owned{
     }
 
     // Adopting a itemss
-    function stuffbuy(address _buyer, uint _stuffCode, string memory _name, string memory _src, uint _cost) public returns(bool success ) {
+    function stuffbuy(address _buyer, uint _index, uint _cost) public returns(bool) {
         
-
-        personalitems[_buyer].push(stuffArray[_stuffCode]);
+        personalitems[_buyer].push(stuffArray[_index]);
         
-        // emit StuffInfo(stuffArray[_stuffCode].code, stuffArray[_stuffCode].name,stuffArray[_stuffCode].imgsrc, stuffArray[_stuffCode].cost);
+        emit StuffInfo(stuffArray[_index].code, stuffArray[_index].name,stuffArray[_index].imgsrc, stuffArray[_index].cost);
         return true;
     }
     // owner

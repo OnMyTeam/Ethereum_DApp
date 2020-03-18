@@ -240,7 +240,7 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     }
 
     function SubToken(uint tokens) public returns(uint){
-        require (tokens < balances[msg.sender]);
+        require (tokens <= balances[msg.sender], "need token");
         balances[msg.sender] -=tokens;
         
         emit Balance(balances[msg.sender]);

@@ -31,7 +31,7 @@ Mypage = {
       // Set the provider for our contract
       Init.contracts.Personal.setProvider(Init.web3Provider);
     });
-    $.getJSON('Blacklist.json', function (data) {
+    $.getJSON('BlackList.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var BlackListArtifact = data;
       Init.contracts.BlackList = TruffleContract(BlackListArtifact);
@@ -162,6 +162,7 @@ Mypage = {
 
     $('#tokenAmount').val(0);
     var contractAddress = Init.contracts.FixedSupplyToken.address;
+    
     web3.eth.sendTransaction({ from: Mypage.address, to: contractAddress, value: token_amount },
       function (e, r) {
 
