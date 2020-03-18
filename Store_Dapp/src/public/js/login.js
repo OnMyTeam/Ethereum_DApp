@@ -1,6 +1,7 @@
 LogIn = {
   web3Provider: null,
   contracts: {},
+  accountlist : null,
 
   init: async function () {
     Init.init();
@@ -8,6 +9,15 @@ LogIn = {
   },
 
   initContract: function () {
+    $.getJSON('FixedSupplyToken.json', function(data) {
+      // Get the necessary contract artifact file and instantiate it with truffle-contract
+      var TokenArtifact = data;
+      Init.contracts.FixedSupplyToken = TruffleContract(TokenArtifact);
+    
+      // Set the provider for our contract
+      Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
+      // PetShop.getTokenInfo();
+    });    
     $.getJSON('Personal.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var PersonalArtifact = data;
@@ -36,28 +46,47 @@ LogIn = {
   },
   getAccountList: function () {
     web3.eth.getAccounts(function (e, r) {
+      LogIn.accountlist = r;
       LogIn.refreshBalance(r);
       LogIn.makeSelect(r);
     });
   },
 
-  refreshBalance: function (list) {
+  refreshBalance: async function (list) {
 
     var total = 0;
+    var token = [];
     var input = "";
+    var tokenInstance;
+
 
     for (var i = 0; i < list.length; i++) {
-
       var tempB = parseFloat(web3.fromWei(web3.eth.getBalance(list[i]), "ether"));
-      input += "<tr><td>" + list[i] + "</td><td>" + tempB.toFixed(2) + " ETH</td></tr>";
-      total += tempB;
+      await Init.contracts.FixedSupplyToken.deployed().then(function(instance){
+        
+        var tokenInstance = instance;
+        return tokenInstance.balanceOf(list[i],{from:list[i]});
+      }).then(function(result) {
+        if(result.c[1] == undefined){
+          token = 0 ;
+        }else {
+          token = result.c[1];
+        }
+        input += "<tr>";
+        input += "<td>" + list[i] + "</td>";
+        input += "<td>" + tempB.toFixed(2) + " ETH</td>";
+        input += "<td> " + token + " </td>";
+        input += "</tr>";
+        total += tempB;    
+  
+        
+      });      
+
 
     }
-
-    // input +="<tr><td><strong> TOTAL </strong></td><td><strong>" + total +" ETH</strong></td></tr></table>";
+    console.log(input);
     $('#tableContent').html(input);
 
-    //web3.eth.filter('latest').watch(function() { refreshBalance();});
   },
 
 
