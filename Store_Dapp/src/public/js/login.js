@@ -57,8 +57,6 @@ LogIn = {
     var total = 0;
     var token = [];
     var input = "";
-    var tokenInstance;
-
 
     for (var i = 0; i < list.length; i++) {
       var tempB = parseFloat(web3.fromWei(web3.eth.getBalance(list[i]), "ether"));
@@ -68,7 +66,7 @@ LogIn = {
         return tokenInstance.balanceOf(list[i],{from:list[i]});
       }).then(function(result) {
         if(result.c[1] == undefined){
-          token = 0 ;
+          token = 0;
         }else {
           token = result.c[1];
         }

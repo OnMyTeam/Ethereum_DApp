@@ -1,34 +1,13 @@
 pragma solidity  >=0.4.24 <0.7.0;
+import './Token.sol';
+import './Personal.sol';
+import './BlackList.sol';
 
-// ----------------------------------------------------------------------------
-// Owned contract
-// ----------------------------------------------------------------------------
-contract Owned {
-    address public owner;
-    address public newOwner;
-
-    event OwnershipTransferred(address indexed _from, address indexed _to);
-
-    constructor() public {
-        owner = msg.sender;
-    }
-
-    modifier onlyOwner {
-        require(msg.sender == owner);
-        _;
-    }
-
-    function transferOwnership(address _newOwner) public onlyOwner {
-        newOwner = _newOwner;
-    }
-    function acceptOwnership() public {
-        require(msg.sender == newOwner);
-        emit OwnershipTransferred(owner, newOwner);
-        owner = newOwner;
-        newOwner = address(0);
-    }
-}
 contract Stuff is Owned{
+    
+    Personal personal;
+    BlackList blacklist;
+    FixedSupplyToken fixedsupplytoken;
     
     struct stuffInfo{
         uint code;
@@ -48,8 +27,13 @@ contract Stuff is Owned{
         stuffCode = 0;
     }
 
-    // Adopting a itemss
-    function stuffbuy(address _buyer, uint _index, uint _cost) public returns(bool) {
+// Adopting a items
+    function stuffbuy(address _fixedTokenAddr, address _blacklistAddr, address _personaladdr, address _buyer, uint _index, uint _cost) public returns(bool) {
+        personal = Personal(_personaladdr);
+        blacklist = BlackList(_blacklistAddr);
+        fixedsupplytoken = FixedSupplyToken(_fixedTokenAddr);
+        blacklist.checkBlacklist();
+        fixedsupplytoken.SubToken(_cost);
         
         personalitems[_buyer].push(stuffArray[_index]);
         

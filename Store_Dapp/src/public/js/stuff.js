@@ -11,6 +11,17 @@ Mall = {
     },
   
     initContract: function() {
+      $.getJSON('Personal.json', function (data) {
+        // Get the necessary contract artifact file and instantiate it with truffle-contract
+        var PersonalArtifact = data;
+        Init.contracts.Personal = TruffleContract(PersonalArtifact);
+
+        // Set the provider for our contract
+        Init.contracts.Personal.setProvider(Init.web3Provider);
+        
+        // Use our contract to retrieve and mark the adopted pets
+
+      });      
       $.getJSON('BlackList.json', function (data) {
        
         // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -20,7 +31,6 @@ Mall = {
        
         // Set the provider for our contract
         Init.contracts.BlackList.setProvider(Init.web3Provider);
-      
         
       });
       $.getJSON('Stuff.json', function(data) {
@@ -69,7 +79,7 @@ Mall = {
     },
 
 
-    getMyStuffList: async function(t) {
+    getMyStuffList: function(t) {
       var StuffInstance;
       Init.contracts.Stuff.deployed().then(function(instance) {
         StuffInstance = instance;
@@ -164,7 +174,8 @@ Mall = {
       }).catch(function(err) {
         console.log(err.message);
       });
-
+      await Init.contracts.Personal.deployed();
+      await Init.contracts.BlackList.deployed();
     },
     getOwner: function(){
       var StuffInstance;
@@ -190,63 +201,92 @@ Mall = {
       
     },
   
-    buyStuff: function(event) {
+    buyStuff: async function(event) {
 
-      var title = $(event.target).data('title');
+      
       var index = parseInt($(event.target).data('id'));
       var tokenAmount = parseInt($(event.target).data('cost'));
 
-
+      
 
 
       var StuffInstance;
-      var BlackListInstance;
-      var tokenInstance;
+      // var BlackListInstance;
+      // var tokenInstance;
       var account = Mall.address;
       console.log("account"+account);
+      var fixedTokenAddr = Init.contracts.FixedSupplyToken.address;
+      var blacklistAddr = Init.contracts.BlackList.address;
+      var personaladdr =  Init.contracts.Personal.address;
+      // console.log("fixedTokenAddr " + fixedTokenAddr);
+      // console.log("blacklistAddr " + blacklistAddr);
+      // console.log("personaladdr  " + personaladdr);
+      
 
-      Init.contracts.BlackList.deployed().then(function(instance) {
-          BlackListInstance = instance;
+      Init.contracts.Stuff.deployed().then(function(instance) {
+          console.log("fixedTokenAddr " + fixedTokenAddr);
+          console.log("blacklistAddr " + blacklistAddr);
+          console.log("personaladdr  " + personaladdr);        
+          StuffInstance = instance;
         // Execute adopt as a transaction by sending account
-          return BlackListInstance.checkBlacklist({from: account, gas:3000000});
+          return StuffInstance.stuffbuy(fixedTokenAddr, blacklistAddr, personaladdr, account, index, tokenAmount,{from: account, gas:3000000});
       }).then(function(result) {
-        
-        Init.contracts.FixedSupplyToken.deployed().then(function(instance) {
-          var tokenInstance = instance;
-    
-        // Execute adopt as a transaction by sending account
-          return tokenInstance.SubToken(tokenAmount,{from:account});
-        }).then(function(result) {
-
-          Init.contracts.Stuff.deployed().then(function(instance) {
-              StuffInstance = instance;
-            // Execute adopt as a transaction by sending account
-              return StuffInstance.stuffbuy(account, index, tokenAmount,{from: account, gas:3000000});
-          }).then(function(result) {
-            alert("Success!");
-            Mall.getTokenInfo();
-            Mall.getMyStuffList();
-          }).catch(function(err) {
-            
-            console.log(err);
-          });          
-          console.log(result);
-          console.log(result.logs[0].args.tokens.c[1]);
-          
-        }).catch(function(err) {
-          if(err.message == 'VM Exception while processing transaction: revert need token'){
-            alert('lack of token');
-          }
-          
-        });
-
-        
+        alert("Success!");
+        Mall.getTokenInfo();
+        Mall.getMyStuffList();
       }).catch(function(err) {
-          if(err.message == 'VM Exception while processing transaction: revert Already blacklist'){
-            alert('blacklist!');
-          }        
-         console.log(err.message);
+
+        
+        console.log(err);
+        if(err.message == 'VM Exception while processing transaction: revert need token'){
+          alert('토큰이 부족합니다.');
+        }else if('VM Exception while processing transaction: revert Already blacklist'){
+          alert('블랙리스트로 등록되어 물건을 구매 할 수 없습니다.');
+        }
+
       });
+      // Init.contracts.BlackList.deployed().then(function(instance) {
+      //     BlackListInstance = instance;
+      //   // Execute adopt as a transaction by sending account
+      //     return BlackListInstance.checkBlacklist({from: account, gas:3000000});
+      // }).then(function(result) {
+        
+      //   Init.contracts.FixedSupplyToken.deployed().then(function(instance) {
+      //     var tokenInstance = instance;
+    
+      //   // Execute adopt as a transaction by sending account
+      //     return tokenInstance.SubToken(tokenAmount,{from:account});
+      //   }).then(function(result) {
+
+      //     Init.contracts.Stuff.deployed().then(function(instance) {
+      //         StuffInstance = instance;
+      //       // Execute adopt as a transaction by sending account
+      //         return StuffInstance.stuffbuy(account, index, tokenAmount,{from: account, gas:3000000});
+      //     }).then(function(result) {
+      //       alert("Success!");
+      //       Mall.getTokenInfo();
+      //       Mall.getMyStuffList();
+      //     }).catch(function(err) {
+            
+      //       console.log(err);
+      //     });          
+      //     console.log(result);
+      //     console.log(result.logs[0].args.tokens.c[1]);
+          
+      //   }).catch(function(err) {
+      //     if(err.message == 'VM Exception while processing transaction: revert need token'){
+      //       alert('��ū�� �����մϴ�.');
+      //     }
+          
+      //   });
+
+        
+      // }).catch(function(err) {
+      //     if(err.message == 'VM Exception while processing transaction: revert Already blacklist'){
+      //       alert('��������Ʈ�� ��ϵǾ� ������ ���� �� �� �����ϴ�.');
+      //     }        
+      //    console.log(err.message);
+      // });
       
 
   
