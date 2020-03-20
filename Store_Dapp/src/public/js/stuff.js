@@ -214,22 +214,14 @@ Mall = {
       // var BlackListInstance;
       // var tokenInstance;
       var account = Mall.address;
-      console.log("account"+account);
-      var fixedTokenAddr = Init.contracts.FixedSupplyToken.address;
-      var blacklistAddr = Init.contracts.BlackList.address;
-      var personaladdr =  Init.contracts.Personal.address;
-      // console.log("fixedTokenAddr " + fixedTokenAddr);
-      // console.log("blacklistAddr " + blacklistAddr);
-      // console.log("personaladdr  " + personaladdr);
+
       
 
       Init.contracts.Stuff.deployed().then(function(instance) {
-          console.log("fixedTokenAddr " + fixedTokenAddr);
-          console.log("blacklistAddr " + blacklistAddr);
-          console.log("personaladdr  " + personaladdr);        
+      
           StuffInstance = instance;
         // Execute adopt as a transaction by sending account
-          return StuffInstance.stuffbuy(fixedTokenAddr, blacklistAddr, personaladdr, account, index, tokenAmount,{from: account, gas:3000000});
+          return StuffInstance.stuffbuy(account, index, tokenAmount,{from: account, gas:3000000});
       }).then(function(result) {
         alert("Success!");
         Mall.getTokenInfo();
@@ -237,7 +229,7 @@ Mall = {
       }).catch(function(err) {
 
         
-        console.log(err);
+        console.log(err.message);
         if(err.message == 'VM Exception while processing transaction: revert need token'){
           alert('토큰이 부족합니다.');
         }else if('VM Exception while processing transaction: revert Already blacklist'){

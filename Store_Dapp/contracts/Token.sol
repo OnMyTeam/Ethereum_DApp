@@ -1,5 +1,5 @@
 pragma solidity ^0.4.24;
-
+import './Personal.sol';
 // ----------------------------------------------------------------------------
 // 'FIXED' 'Example Fixed Supply Token' token contract
 //
@@ -101,7 +101,8 @@ contract Owned {
 // ----------------------------------------------------------------------------
 contract FixedSupplyToken is ERC20Interface, Owned {
     using SafeMath for uint;
-
+    
+    Personal personal;
     string public symbol;
     string public  name;
     uint8 public decimals;
@@ -112,16 +113,20 @@ contract FixedSupplyToken is ERC20Interface, Owned {
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
+    event eSubToken(address buyer, uint token);
 
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
-    constructor() public {
+    constructor(address _personalAddr) public {
+        personal = Personal(_personalAddr);
         symbol = "osdc";
         name = "Example Fixed Supply Token";
-        decimals = 10;
-        _totalSupply = 10000000000 * 10**uint(decimals);
+        // decimals = 10;
+        // _totalSupply = 10000000000 * 10**uint(decimals);
+        _totalSupply = 10000000000 ;
         balances[owner] = _totalSupply;
+
         
         fundsWallet = msg.sender;
         unitsOneEthCanBuy = 10;
@@ -239,10 +244,14 @@ contract FixedSupplyToken is ERC20Interface, Owned {
         return ERC20Interface(tokenAddress).transfer(owner, tokens);
     }
 
-    function SubToken(uint tokens) public returns(uint){
-        require (tokens <= balances[msg.sender], "need token");
-        balances[msg.sender] -=tokens;
+    function SubToken(address buyer, uint tokens) public {
         
-        emit Balance(balances[msg.sender]);
+        require (tokens <= balances[buyer], "need token");
+        personal.updateHistory(buyer, tokens);
+        uint8 rate = uint8(personal.getCashbackRate(buyer));
+        uint cashBack = tokens / 100 * rate;
+        uint ntokens = tokens - cashBack;
+        balances[buyer] -= ntokens;
+        emit Balance(cashBack);
     }
 }

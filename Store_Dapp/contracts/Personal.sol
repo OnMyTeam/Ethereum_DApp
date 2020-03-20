@@ -25,6 +25,9 @@ contract Personal is Owned{
 
     constructor() public{
         People[msg.sender].account=msg.sender;
+        pushStatus("Bronze", 0, 0, 0);
+        pushStatus("Silver", 5, 500, 5);
+        pushStatus("Gold", 10, 1500, 10);
     }
 
     function register() public returns(string success) {

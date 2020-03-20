@@ -8,6 +8,7 @@ contract BlackList {
     // 이벤트 알림
     event Blacklisted(address indexed target);
     event DeleteFromBlacklist(address indexed target);
+    event eventcheckBlacklist(int8 sender);
     // BlackList register
     function setBlacklist(address _addr) public  {
         require(blackList[_addr] == 0, "already blacklist");
@@ -28,10 +29,11 @@ contract BlackList {
         return blackListKey;
     }
     // 블랙리스트 체크
-    function checkBlacklist() view public returns (bool){
+    function checkBlacklist(address _buyer) view public returns (bool){
         bool check = true;
-        require(blackList[msg.sender] == 0, "Already blacklist");
-
+        emit eventcheckBlacklist(blackList[_buyer]);
+        // require(blackList[_buyer] == 0, "Already blacklist");
+        
         return check;
     }
 }

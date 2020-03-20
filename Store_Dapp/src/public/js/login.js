@@ -65,10 +65,11 @@ LogIn = {
         var tokenInstance = instance;
         return tokenInstance.balanceOf(list[i],{from:list[i]});
       }).then(function(result) {
-        if(result.c[1] == undefined){
+        console.log(result);
+        if(result.c[0] == undefined){
           token = 0;
         }else {
-          token = result.c[1];
+          token = result.c[0];
         }
         input += "<tr>";
         input += "<td>" + list[i] + "</td>";

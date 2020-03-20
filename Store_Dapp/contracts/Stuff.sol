@@ -22,19 +22,20 @@ contract Stuff is Owned{
     uint public stuffCode;
 
     event  StuffInfo(uint code, string name,string imgsrc, uint cost);
-    constructor() public {
+    event  makeStuff(address __fixedTokenAddr, address _blacklistAddr, address _personaladdr);
+    constructor(address __fixedTokenAddr, address _blacklistAddr, address _personaladdr) public {
         index = 0;
         stuffCode = 0;
+        fixedsupplytoken = FixedSupplyToken(__fixedTokenAddr);
+        blacklist = BlackList(_blacklistAddr);
+        personal = Personal(_personaladdr);
+        emit makeStuff(__fixedTokenAddr, _blacklistAddr, _personaladdr);
     }
 
 // Adopting a items
-    function stuffbuy(address _fixedTokenAddr, address _blacklistAddr, address _personaladdr, address _buyer, uint _index, uint _cost) public returns(bool) {
-        personal = Personal(_personaladdr);
-        blacklist = BlackList(_blacklistAddr);
-        fixedsupplytoken = FixedSupplyToken(_fixedTokenAddr);
-        blacklist.checkBlacklist();
-        fixedsupplytoken.SubToken(_cost);
-        
+    function stuffbuy(address _buyer, uint _index, uint _cost) public returns(bool) {
+        blacklist.checkBlacklist(_buyer);
+        fixedsupplytoken.SubToken(_buyer, _cost);
         personalitems[_buyer].push(stuffArray[_index]);
         
         emit StuffInfo(stuffArray[_index].code, stuffArray[_index].name,stuffArray[_index].imgsrc, stuffArray[_index].cost);
