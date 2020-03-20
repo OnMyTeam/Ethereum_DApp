@@ -48,9 +48,13 @@ Join = {
         var address = $('#selectAccount').val();
         console.log(address);
         $('#address').text(address);
-        var ether = parseFloat(web3.fromWei(web3.eth.getBalance(address),"ether"))+"ETH";
-        $('#etherValue').text(ether);
+        var ether;
+        web3.eth.getBalance(address, (err, balance) => {
+          ether = web3.fromWei(balance, "ether");
+          $('#etherValue').text(ether + " ETH");
+        }); 
 
+        console.log(address);
         Init.contracts.Personal.deployed().then(function (instance) {
           return instance.getMemberInfo({ from: address });
         }).then(function (result) {

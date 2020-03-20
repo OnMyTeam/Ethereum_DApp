@@ -59,7 +59,12 @@ LogIn = {
     var input = "";
 
     for (var i = 0; i < list.length; i++) {
-      var tempB = parseFloat(web3.fromWei(web3.eth.getBalance(list[i]), "ether"));
+      // var tempB = parseFloat(web3.fromWei(web3.eth.getBalance(list[i]), "ether"));
+      // var tempB = parseFloat(web3.fromWei(web3.eth.getBalance(list[i]), "ether"));
+      var ether;
+      web3.eth.getBalance(list[i], (err, balance) => {
+        ether = web3.fromWei(balance, "ether");
+      });       
       await Init.contracts.FixedSupplyToken.deployed().then(function(instance){
         
         var tokenInstance = instance;
@@ -73,10 +78,10 @@ LogIn = {
         }
         input += "<tr>";
         input += "<td>" + list[i] + "</td>";
-        input += "<td>" + tempB.toFixed(2) + " ETH</td>";
+        input += "<td>" + ether + " ETH</td>";
         input += "<td> " + token + " </td>";
         input += "</tr>";
-        total += tempB;    
+        total += ether;    
   
         
       });      
