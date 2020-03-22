@@ -58,7 +58,7 @@ Mall = {
     },
     
 
-    
+     
     getAccountInfo: function() {
 
         document.getElementById('accountAddr').innerHTML=Mall.address;

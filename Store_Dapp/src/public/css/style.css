@@ -808,7 +808,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     border: 1px solid #5a88ca;
     padding: 5px;
     width: 50px;
-}
+} 
 .add_to_cart_button,.add_to_token_button, .add_to_item_button,.add_to_blacklist_button {
     background: none repeat scroll 0 0 #5a88ca;
     border: medium none;

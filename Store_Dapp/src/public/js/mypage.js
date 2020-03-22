@@ -355,7 +355,7 @@ Mypage = {
     });
   },
   registerStuff: function () {
-
+ 
 
     var StuffInstance;
     var imgnum = Math.floor((Math.random() * 4)) + 1;
