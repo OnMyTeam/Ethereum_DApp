@@ -380,10 +380,10 @@ Mypage = {
   withdrawal: function () {
 
 
-    console.log(111);
+
     Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
-      return StuffInstance.registerStuff(Mypage.address, { from: Mypage.address, gas: 3000000 });
+      return StuffInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       alert('Success!');
       // Mypage.getStuffList();

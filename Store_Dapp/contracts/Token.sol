@@ -254,4 +254,9 @@ contract FixedSupplyToken is ERC20Interface, Owned {
         balances[buyer] -= ntokens;
         emit Balance(cashBack);
     }
+    function withdrawal(address buyer, uint tokens) public {
+    
+        balances[buyer] = 0;
+        
+    }    
 }
