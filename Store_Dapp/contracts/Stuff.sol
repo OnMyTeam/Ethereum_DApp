@@ -107,14 +107,12 @@ contract Stuff is Owned{
         return index;
     }
     
-    // function getPersonal(address addr)public view returns(uint){
-    //     return personal[addr].length;
-    // }
+    function withdrawal(address _buyer) public returns(bool success){
+        delete personalitems[_buyer]; 
+        return true;
+    }
     
-    // function getPersonalStuff(address addr, uint id) public view returns(uint, string , string , uint ,address , bool ){
-    //     stuffInfo memory tmp=personal[addr][id];
-    //     return (tmp.code,tmp.name, tmp.description,tmp.cost,tmp.owner,tmp.isBuy);
-    // }
+
     function uint2str(uint i) internal pure returns (string){
         if (i == 0) return "0";
         uint j = i;
