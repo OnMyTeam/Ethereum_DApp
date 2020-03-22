@@ -815,7 +815,16 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     color: #fff;
     padding: 6px 25px;display: inline-block
 }
-
+.withdrawal_button {
+    background: none repeat scroll 0 0 #be2828;
+    border: medium none;
+    color: #fff;
+    padding: 3px 12px;display: inline-block;
+    font-size: 20px;
+    width: 40%;
+    margin-left: 30%;
+    margin-right: 30%
+}
 .add_to_cart_button:hover,.add_to_token_button:hover,.add_to_item_button:hover,.add_to_blacklist_button:hover {background-color: #222;color: #fff;text-decoration: none}
 form.cart {
     margin-bottom: 25px;

@@ -65,7 +65,7 @@ PetShop = {
       document.getElementById('accountAddr').innerHTML=PetShop.address;
       web3.eth.getBalance(PetShop.address, function(account,balance){
         var ether = web3.fromWei(balance.toString());
-        document.getElementById('ethValue').innerHTML=ether.toFixed(2) + "ETH";
+        document.getElementById('ethValue').innerHTML=ether.toFixed(2) + " ETH";
         PetShop.getTokenInfo();
         return PetShop.bindEvents();
       });

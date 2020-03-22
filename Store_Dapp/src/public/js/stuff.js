@@ -62,8 +62,8 @@ Mall = {
     getAccountInfo: function() {
 
         document.getElementById('accountAddr').innerHTML=Mall.address;
-        web3.eth.getBalance(Mall.address, function(account,balance){
-            document.getElementById('ethValue').innerHTML=web3.fromWei(balance.toString()) + "ETH";
+        web3.eth.getBalance(Mall.address, function(account, balance){
+            document.getElementById('ethValue').innerHTML = web3.fromWei(balance, "ether").toFixed(2) + " ETH";
             return Mall.bindEvents();
         });
     },

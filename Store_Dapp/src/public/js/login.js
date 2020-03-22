@@ -54,8 +54,8 @@ LogIn = {
 
   refreshBalance: async function (list) {
 
-    var total = 0;
-    var token = [];
+
+    var token;
     var input = "";
 
     for (var i = 0; i < list.length; i++) {
@@ -78,10 +78,9 @@ LogIn = {
         }
         input += "<tr>";
         input += "<td>" + list[i] + "</td>";
-        input += "<td>" + ether + " ETH</td>";
+        input += "<td>" + ether.toFixed(2) + " ETH</td>";
         input += "<td> " + token + " </td>";
         input += "</tr>";
-        total += ether;    
   
         
       });      

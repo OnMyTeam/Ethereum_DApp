@@ -71,8 +71,8 @@ Mypage = {
 
     document.getElementById('accountAddr').innerHTML = Mypage.address;
     web3.eth.getBalance(Mypage.address, function (error, balance) {
-      var ether = web3.fromWei(balance.toString());
-      document.getElementById('ethValue').innerHTML = ether + " ETH";
+      var ether = web3.fromWei(balance, "ether");
+      document.getElementById('ethValue').innerHTML = ether.toFixed(2) + " ETH";
 
     });
 
@@ -126,7 +126,7 @@ Mypage = {
     $(document).on('click', '.removeblacklist', Mypage.deleteBlackList);
     $(document).on('click', '.add_to_item_button', Mypage.registerStuff);
     $(document).on('click', '.add_to_blacklist_button', Mypage.registerBlackList);
-
+    $(document).on('click', '.withdrawal_button', Mypage.withdrawal);
   },
 
   logIn: function (event) {
@@ -377,7 +377,11 @@ Mypage = {
       console.log(error);
     });
   },
+  withdrawal: function () {
 
+
+    console.log(111);
+  },
 
 };
 
