@@ -103,7 +103,7 @@ Mypage = {
         $("#accountAddrAdmin").text('Account Address(admin)');
         $("#stuffRegister").css("display", "block");
         $("#stuffRegisterList").css("display", "block");
-        $("#blacklistRegister").css("display", "block");
+        $("#memberList").css("display", "block");
         $("#blackList").css("display", "block");
       }
       else{ 
