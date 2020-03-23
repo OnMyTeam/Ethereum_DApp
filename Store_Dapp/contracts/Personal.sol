@@ -21,7 +21,7 @@ contract Personal is Owned{
     }
     PersonalStatus[] public status;
     mapping(address => History) public tradingHistory;
-    mapping(address=>Person) People;
+    mapping(address=>Person) public People;
 
     constructor() public{
         People[msg.sender].account=msg.sender;
@@ -65,4 +65,10 @@ contract Personal is Owned{
     function getCashbackRate(address _member) constant returns (int8 rate){
         rate = status[tradingHistory[_member].statusIndex].rate;
     }
+    // withdrawal
+    function withdrawal(address _buyer) public {
+        delete tradingHistory[_buyer];
+        delete People[_buyer]; 
+
+    }    
 }

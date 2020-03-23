@@ -19,7 +19,7 @@ contract BlackList {
 
     // BlackList delete
     function deleteBlacklist(address _addr, uint index) public  {
-        blackList[_addr] = 0;
+        delete blackList[_addr];
         delete blackListKey[index];
         emit DeleteFromBlacklist(_addr);
     }
@@ -31,10 +31,23 @@ contract BlackList {
     // 블랙리스트 체크
     function checkBlacklist(address _buyer) view public returns (bool){
         bool check = true;
-        emit eventcheckBlacklist(blackList[_buyer]);
-        // require(blackList[_buyer] == 0, "Already blacklist");
         
+        require(blackList[_buyer] == 0, "Already blacklist");
+        emit eventcheckBlacklist(blackList[_buyer]);
         return check;
+    }
+    // withdrawal
+    function withdrawal(address _buyer) public {
+
+        delete blackList[_buyer];
+        
+        for(uint i = 0; i <blackListKey.length; i++ ){
+            if(blackListKey[i] == _buyer){
+                delete blackListKey[i];
+                break;
+            }
+        }        
+        emit DeleteFromBlacklist(_buyer);
     }
 }
 

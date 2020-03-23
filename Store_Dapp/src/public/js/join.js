@@ -46,11 +46,10 @@ Join = {
 
     changeSelect: function(){
         var address = $('#selectAccount').val();
-        console.log(address);
         $('#address').text(address);
         var ether;
         web3.eth.getBalance(address, (err, balance) => {
-          ether = web3.fromWei(balance, "ether");
+          ether = web3.fromWei(balance, "ether").toFixed(2);
           $('#etherValue').text(ether + " ETH");
         }); 
 

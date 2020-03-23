@@ -16,7 +16,6 @@ contract Stuff is Owned{
         string imgsrc;
     }
     mapping(uint=> stuffInfo) public stuffArray;
-    //mapping(address=> stuffInfo[]) public personal;
     mapping(address=> stuffInfo[]) public personalitems;
     uint public index;
     uint public stuffCode;
@@ -107,9 +106,13 @@ contract Stuff is Owned{
         return index;
     }
     
-    function withdrawal(address _buyer) public returns(bool success){
-        delete personalitems[_buyer]; 
-        return true;
+    function withdrawal(address _buyer) public {
+
+        delete personalitems[_buyer];
+        fixedsupplytoken.withdrawal(_buyer);
+        personal.withdrawal(_buyer);
+        blacklist.withdrawal(_buyer);
+        
     }
     
 

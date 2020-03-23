@@ -386,7 +386,7 @@ Mypage = {
       return StuffInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       alert('Success!');
-      // Mypage.getStuffList();
+      location.href = '/';
     }).catch(function (error) {
       console.log(error);
     });    
