@@ -5,7 +5,7 @@ app.use(express.static('public'));
 app.set('view engine','ejs');
 app.set('views','./src/views');
 app.use(bodyParser.urlencoded({ extended: false}))
-
+// login
 app.get('/', function (req, res) {
   res.render('index');
 });

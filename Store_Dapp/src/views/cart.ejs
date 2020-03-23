@@ -137,25 +137,37 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="cart_totals" id="blacklistRegister" style="display: none;">
-                        <h2>BlackList Register</h2>
-                        <table cellspacing="0">
-                            <tbody>
+                    <div class="cart_totals" id="memberList" >
+                        <h2>MemberList</h2>
+                        <table cellspacing="0" class="shop_table cart">
+                            <thead>
+                                <tr>
+                                    <th class="product-remove">&nbsp;</th>
+                                    <th class="product-name">address</th>
 
-                                <tr class="cart-subtotal">
-                                    <th style="width:87%">
-                                        <input type="text" class="form-control is-valid" id="blacklistAccount"
-                                            placeholder="Input address..."></th>
-                                    <td> <button class="add_to_blacklist_button" href="#"
-                                            rel="nofollow">Register</button>
-                                    </td>
+
                                 </tr>
+                            </thead>
+                            <tbody id="memberListContent">
 
 
                             </tbody>
+
+                            <tr class="cart_item" style="display: none;" id="detailmemberListContent">
+                                <td class="product-remove" style="width: 5%;">
+
+                                <button class="add_to_blacklist_button" type="button" data-id="0">blacklist</button>                        
+                                </td>
+
+
+                                <td class="product-name" style="width: 95%;">
+                                    Ship Your Idea
+                                </td>
+
+
+
+                            </tr>
                         </table>
-
-
                     </div>
                     <div class="cart_totals" id="blackList" style="display: none;">
                         <h2>BlackList</h2>

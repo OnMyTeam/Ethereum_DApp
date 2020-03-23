@@ -134,11 +134,11 @@ LogIn = {
     });
   },
 
-  changeSelect: function () {
-    var address = document.getElementById('accounts').value;
-    document.getElementById('accountAddr').innerHTML = address;
-    document.getElementById('ethValue').innerHTML = parseFloat(web3.fromWei(web3.eth.getBalance(address), "ether")) + "ETHER";
-  },
+  // changeSelect: function () {
+  //   var address = document.getElementById('accounts').value;
+  //   document.getElementById('accountAddr').innerHTML = address;
+  //   document.getElementById('ethValue').innerHTML = parseFloat(web3.fromWei(web3.eth.getBalance(address), "ether")) + "ETHER";
+  // },
 
 };
 

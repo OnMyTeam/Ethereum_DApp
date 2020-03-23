@@ -19,25 +19,31 @@ contract Personal is Owned{
         uint statusIndex;
     
     }
+    
     PersonalStatus[] public status;
     mapping(address => History) public tradingHistory;
-    mapping(address=>Person) public People;
+    mapping(address => bool) public People;
+    address[] public PeopleList;
 
     constructor() public{
-        People[msg.sender].account=msg.sender;
+        People[msg.sender] = true;
+        PeopleList.push(msg.sender);
+        
         pushStatus("Bronze", 0, 0, 0);
         pushStatus("Silver", 5, 500, 5);
         pushStatus("Gold", 10, 1500, 10);
     }
 
     function register() public returns(string success) {
-        require(People[msg.sender].account == address(0), "Already Register");
-        People[msg.sender].account= msg.sender;
+        require(People[msg.sender] == false, "Already Register");
+        People[msg.sender] = true;
+        PeopleList.push(msg.sender);
+        
         return "success";
         
     }
-    function getMemberInfo() public view returns(address addr){
-        return People[msg.sender].account;
+    function getMemberInfo() public view returns(bool){
+        return People[msg.sender];
     }
     // add PersonalStatus
     function pushStatus(string _name, uint _times, uint _sum, int8 _rate) onlyOwner{
@@ -65,10 +71,17 @@ contract Personal is Owned{
     function getCashbackRate(address _member) constant returns (int8 rate){
         rate = status[tradingHistory[_member].statusIndex].rate;
     }
+    function getMemberList() public view returns (address[] memory){
+
+        return PeopleList;
+    }   
+        
+        
     // withdrawal
     function withdrawal(address _buyer) public {
         delete tradingHistory[_buyer];
         delete People[_buyer]; 
+        
 
     }    
 }

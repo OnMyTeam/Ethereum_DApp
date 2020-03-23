@@ -30,6 +30,8 @@ Mypage = {
 
       // Set the provider for our contract
       Init.contracts.Personal.setProvider(Init.web3Provider);
+      return Mypage.getMemberlist();
+      
     });
     $.getJSON('BlackList.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -170,9 +172,10 @@ Mypage = {
         Mypage.getTokenInfo();
       });
   },
-  registerBlackList: function () {
+  registerBlackList: function (event) {
  
-    var account = $("#blacklistAccount").val();
+    
+    var account = $(event.target).data('address');
     console.log(account);
     
     var BlackListInstance;
@@ -181,7 +184,7 @@ Mypage = {
       return BlackListInstance.setBlacklist(account, { from: Mypage.address });
     }).then(function (result) {
       console.log("result, " + result);
-      $("#blacklistAccount").val('');
+      
       Mypage.getBlacklist();
     }).catch(function (error) {
       if(error.message == 'VM Exception while processing transaction: revert D'){
@@ -190,7 +193,33 @@ Mypage = {
       console.log(error.message);
     })
   },
-  getBlacklist: function (list) {
+  getMemberlist: function () {
+    var itemrow = $('#memberListContent');
+    var itemTemplate = $('#detailmemberListContent');
+    var html = '';
+    var Personal;
+
+    Init.contracts.Personal.deployed().then(function (instance) {
+      Personal = instance;
+      return Personal.getMemberList();
+    }).then(function (list) {
+
+      for (var i = 0; i < list.length; i++) {
+        if (list[i] != 0x0){
+ 
+          itemTemplate.find('.add_to_blacklist_button').attr('data-id', i);
+          itemTemplate.find('.add_to_blacklist_button').attr('data-address', list[i]);
+          itemTemplate.find('.product-name').text(list[i]);
+
+          html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
+        }
+      }
+      itemrow.html(html);
+      
+    });
+
+  },  
+  getBlacklist: function () {
     var itemrow = $('#blacklistContent');
     var itemTemplate = $('#detailblacklistContent');
     var html = '';

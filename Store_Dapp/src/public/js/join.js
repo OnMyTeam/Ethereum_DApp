@@ -57,7 +57,8 @@ Join = {
         Init.contracts.Personal.deployed().then(function (instance) {
           return instance.getMemberInfo({ from: address });
         }).then(function (result) {
-          if (result != 0x0) {
+          console.log(result);
+          if (result) {
 
             $('#register').html("<font color='green'><b>YES</b></font>");
           }
