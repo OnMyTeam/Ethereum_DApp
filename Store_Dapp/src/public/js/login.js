@@ -15,7 +15,7 @@ LogIn = {
     
       // Set the provider for our contract
       Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
-      // PetShop.getTokenInfo();
+      
     });    
     $.getJSON('Personal.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -26,9 +26,8 @@ LogIn = {
       Init.contracts.Personal.setProvider(Init.web3Provider);
 
       // Use our contract to retrieve and mark the adopted pets
-      // LogIn.getAccountInfo();
       LogIn.bindEvents();
-      return LogIn.getAccountList();
+      LogIn.getAccountList();
     });
   },
 
@@ -36,7 +35,7 @@ LogIn = {
   getAccountList: function () {
     web3.eth.getAccounts(function (e, r) {
       LogIn.refreshBalance(r);
-      LogIn.makeSelect(r);
+      LogIn.makeSelectAddress(r);
     });
   },
 
@@ -44,12 +43,11 @@ LogIn = {
 
 
     var token;
-    var input = "";
-
+    var html;
+    var ether;
     for (var i = 0; i < list.length; i++) {
-      // var tempB = parseFloat(web3.fromWei(web3.eth.getBalance(list[i]), "ether"));
-      // var tempB = parseFloat(web3.fromWei(web3.eth.getBalance(list[i]), "ether"));
-      var ether;
+
+      
       web3.eth.getBalance(list[i], (err, balance) => {
         ether = web3.fromWei(balance, "ether");
       });       
@@ -58,32 +56,29 @@ LogIn = {
         var tokenInstance = instance;
         return tokenInstance.balanceOf(list[i],{from:list[i]});
       }).then(function(result) {
-        console.log(result);
+        
         if(result.c[0] == undefined){
           token = 0;
         }else {
           token = result.c[0];
         }
-        input += "<tr>";
-        input += "<td>" + list[i] + "</td>";
-        input += "<td>" + ether.toFixed(2) + " ETH</td>";
-        input += "<td> " + token + " </td>";
-        input += "</tr>";
-  
-        
+        html += "<tr>";
+        html += "<td>" + list[i] + "</td>";
+        html += "<td>" + ether.toFixed(2) + " ETH</td>";
+        html += "<td> " + token + " </td>";
+        html += "</tr>";
+
       });      
 
-
     }
-    console.log(input);
-    $('#tableContent').html(input);
+    $('#tableContent').html(html);
 
   },
 
 
-  makeSelect: function (list) {
+  makeSelectAddress: function (list) {
 
-    var html = '';
+    var html;
     html += '<option value=""> Select </a>';
     for (var i = 0; i < list.length; i++) {
       html += '<option value="' + list[i] + '">' + list[i] + '</a>';
@@ -97,7 +92,7 @@ LogIn = {
   },
 
 
-  logIn: function (event) {
+  logIn: function () {
 
     var address = $('#selectAccount').val();
     if (address == ''){ alert('Please select address'); return;}

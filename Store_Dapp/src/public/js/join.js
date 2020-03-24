@@ -17,7 +17,7 @@ Join = {
             Init.contracts.Personal.setProvider(Init.web3Provider);
           
             // Use our contract to retrieve and mark the adopted pets
-            return Join.getAccountInfo();
+            Join.getAccountInfo();
           });
     },
 
@@ -39,47 +39,39 @@ Join = {
       },
   
     bindEvents: function() {
-        $(document).on('click', '.btn_goBack', Join.goBack);
+
         $(document).on('click', '.btn-facebook', Join.join);
         $(document).on('change', '#selectAccount', Join.changeSelect);
     },
 
     changeSelect: function(){
-        var address = $('#selectAccount').val();
-        $('#address').text(address);
-        var ether;
-        web3.eth.getBalance(address, (err, balance) => {
-          ether = web3.fromWei(balance, "ether").toFixed(2);
-          $('#etherValue').text(ether + " ETH");
-        }); 
+      var ether;
+      var address = $('#selectAccount').val();
+      $('#address').text(address);
+      
+      web3.eth.getBalance(address, (err, balance) => {
+        ether = web3.fromWei(balance, "ether").toFixed(2);
+        $('#etherValue').text(ether + " ETH");
+      }); 
 
-        console.log(address);
-        Init.contracts.Personal.deployed().then(function (instance) {
-          return instance.getMemberInfo({ from: address });
-        }).then(function (result) {
-          console.log(result);
-          if (result) {
-
-            $('#register').html("<font color='green'><b>YES</b></font>");
-          }
-          else {
-            $('#register').html("<font color='red'>NO</font>");
-          }
-        });        
+      Init.contracts.Personal.deployed().then(function (instance) {
+        return instance.getMemberInfo({ from: address });
+      }).then(function (result) {
+        
+        if (result) {
+          $('#register').html("<font color='green'><b>YES</b></font>");
+        }
+        else {
+          $('#register').html("<font color='red'>NO</font>");
+        }
+      });        
         
     },
-  
-    goBack: function(event) {
-        location.href="./index.html";
-    },
 
-    join: function(event){
-      
+    join: function(){
+      var address = $('#address').text();        
       Init.contracts.Personal.deployed().then(function(instance){
           let PersonalInstance = instance;
-          var address = $('#address').text();
-          
-          console.log(address);
           return PersonalInstance.register({from:address})
       }).then(function(result){
           console.log(result);

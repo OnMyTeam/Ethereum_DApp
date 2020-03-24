@@ -1,1 +1,0 @@
-const imgsrc = 'public/img/';

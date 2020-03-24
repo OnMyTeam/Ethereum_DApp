@@ -51,8 +51,7 @@ Mall = {
         // Set the provider for our contract
         Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
           return Mall.getAccountList();
-          Mall.getTokenInfo();
-          Mall.getAccountInfo();
+
           
       });
      
@@ -73,7 +72,7 @@ Mall = {
         personalInstance = instance;
         return personalInstance.getGrade(Mall.address, { from: Mall.address });
       }).then(function (result) {
-        console.log(result);
+        
         if (result == 'Bronze') {
           $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
         } else if (result == 'Silver') {
@@ -85,10 +84,13 @@ Mall = {
 
     },     
     getAccountInfo: function() {
-
-        document.getElementById('accountAddr').innerHTML=Mall.address;
+        var ether;
+        $('#accountAddr').text(Mall.address);
+        
         web3.eth.getBalance(Mall.address, function(account, balance){
-            document.getElementById('ethValue').innerHTML = web3.fromWei(balance, "ether").toFixed(2) + " ETH";
+          
+          ether = web3.fromWei(balance, "ether").toFixed(2) + " ETH";
+          $('#ethValue').text(ether);
 
         });
     },
@@ -99,32 +101,32 @@ Mall = {
 
         return tokenInstance.balanceOf(Mall.address,{from:Mall.address});
       }).then(function(result) {
-        document.getElementById('tokenValue').innerText=result.c;
+        var token = result.c[0];
+        $('#tokenValue').text(token);
       });
     },
 
 
-    getMyStuffList: function(t) {
+    getMyStuffList: function() {
       var StuffInstance;
+      var stuffcode;
       Init.contracts.Stuff.deployed().then(function(instance) {
         StuffInstance = instance;
 
         return StuffInstance.getMyStuff(Mall.address,{from: Mall.address, gas:6000000});
-      }).then(function(adopters) {
-        var myitemlist = adopters.split('//');
-        console.log("mylist");
-        console.log(myitemlist);
-        for (var i = 0; i < myitemlist.length; i++) {
-          if(myitemlist[i] == ''){
+      }).then(function(result) {
+        var myItemList = result.split('//');
+
+        for (var i = 0; i < myItemList.length; i++) {
+          if(myItemList[i] == ''){
             continue;
           }
-          var itemInfos = myitemlist[i].split(',');
+          var itemInfos = myItemList[i].split(',');
           var itemid = itemInfos[0];
-          
 
           $('.single-shop-product').each(function (index, item){
-            var stuffcode = $(item).data('stuffcode');
-            console.log("code" + stuffcode + "itemed" + itemid);
+            stuffcode = $(item).data('stuffcode');
+            
             if(stuffcode == itemid){
               $(item).find('button').text('Success').attr('disabled', true);
               $(item).find('.add_to_cart_button').css('background-color', 'green');             
@@ -153,8 +155,9 @@ Mall = {
         var result = result.split('//');
 
         if(result == ''){
-          html = "<center><img src='public/img/no_product.png'/></center>";
+          html = "<center><img src='public/images/no_product.png'/></center>";
           itemrow.html(html);
+          return;
         }
         for (i = 0; i < result.length; i++) {
           if(result[i] == ''){
@@ -168,14 +171,14 @@ Mall = {
           var imgfile = itemInfos[2];
           
           itemTemplate.find('.item-title').text(itemtitle);
-          itemTemplate.find('img').attr('src', 'public/img/' + imgfile);
+          itemTemplate.find('img').attr('src', 'public/images/' + imgfile);
           itemTemplate.find('.product-carousel-price-sub').text(itemcost+' osdc');
           itemTemplate.find('.single-shop-product').attr('data-stuffcode', itemid);          
           itemTemplate.find('.add_to_cart_button').attr('data-title', itemtitle);
           itemTemplate.find('.add_to_cart_button').attr('data-id', index);
           itemTemplate.find('.add_to_cart_button').attr('data-stuffcode', itemid);
           itemTemplate.find('.add_to_cart_button').attr('data-cost', itemcost);
-          itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/img/' +imgfile);
+          itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' +imgfile);
 
           itemrow.append(itemTemplate.html());
           

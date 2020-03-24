@@ -7,6 +7,7 @@ Mypage = {
 
   init: async function () {
     Init.init();
+    Mypage.address = address;
     return Mypage.initContract();
   },
 
@@ -57,7 +58,7 @@ Mypage = {
 
       // Set the provider for our contract
       Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
-      Mypage.address = address;
+      
       return Mypage.getAccountList();
     });
   },
@@ -89,7 +90,6 @@ Mypage = {
 
   },
   getAccountInfo: function () {
-    // web3.eth.getAccounts(function(error,accounts){
 
     document.getElementById('accountAddr').innerHTML = Mypage.address;
     web3.eth.getBalance(Mypage.address, function (error, balance) {
@@ -106,7 +106,6 @@ Mypage = {
 
       return tokenInstance.balanceOf(account, { from: account });
     }).then(function (result) {
-      console.log(result.c);
       document.getElementById('tokenValue').innerText = result.c;
     });
   },
@@ -297,7 +296,7 @@ Mypage = {
     }).then(function (result) {
       if (result == '') {
         html += "<tr class='cart_item'>";
-        html += "<td colspan='4'><center><img src='public/img/no_product.png'/></center> </td>";
+        html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
       }
       var itemlist = result.split('//');
@@ -317,7 +316,7 @@ Mypage = {
 
 
 
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/img/' + imgfile);
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgfile);
         itemTemplate.find('.removestuff').attr('data-id', itemid);
         itemTemplate.find('.removestuff').attr('data-index', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
@@ -346,7 +345,7 @@ Mypage = {
     }).then(function (result) {
       if (result == '') {
         html += "<tr class='cart_item'>";
-        html += "<td colspan='4'><center><img src='public/img/no_product.png'/></center> </td>";
+        html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
       }
       var itemlist = result.split('//');
@@ -364,7 +363,7 @@ Mypage = {
         var itemIndex = itemInfos[4];
 
 
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/img/' + imgfile);
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgfile);
         itemTemplate.find('.removehistory').attr('data-id', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost + ' osdc');
