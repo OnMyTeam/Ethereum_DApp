@@ -4,10 +4,7 @@
             <div class="col-md-8">
                 <div class="user-menu">
                     <ul>
-                        <!-- <li><a href="/myaccount"><i class="fa fa-user"></i> My Account</a></li>
-                             <li><a href="#"><i class="fa fa-heart"></i> Wishlist</a></li> 
-                            <li><a href="/myaccount?address=<%=address%>"><i class="fa fa-user"></i> My Cart</a></li> 
-                          <li><a href="checkout.html"><i class="fa fa-user"></i> Checkout</a></li> -->
+
                         <li><a href="/"><i class="fa fa-user"></i> Logout</a></li>
                     </ul>
                 </div>
@@ -26,20 +23,7 @@
                 </div>
             </div>
 
-            <div class="col-sm-6">
-                <!-- <div class="shopping-item">
-                        <a href="#">
-                            Account Address:<span class="cart-amunt"> </span> 
-                            <span id="accountAddr" ></span><br>
-                            Holding ETH Count:<span class="cart-amunt"> </span> 
-                            <span id="ethValue"></span><br>
-                            Holding Token Count:<span class="cart-amunt"> </span>
-                            <span id="tokenValue"></span><br>
-                        
-                        </a>
-                    </div> -->
 
-            </div>
         </div>
     </div>
 </div>
@@ -58,8 +42,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    
-                    <!-- <li><a href="index.html">Home</a></li> -->
+
                     <% if (menu == 'shop') {%>
                         <li class="active">
                     <%} else {%>
@@ -69,19 +52,14 @@
                         <a href="/shop?address=<%=address%>">Shop page</a>
                     </li>
 
-                    <% if (menu == 'myaccount') {%>
+                    <% if (menu == 'mypage') {%>
                         <li class="active">
                     <%} else {%>
                         <li>
                     <%}%>
-                        <a href="/myaccount?address=<%=address%>">My Page</a>
+                        <a href="/mypage?address=<%=address%>">My Page</a>
                     </li>
-                    <!-- <li><a href="single-product.html">Single product</a></li>
-                        
-                        <li><a href="checkout.html">Checkout</a></li>
-                        <li><a href="#">Category</a></li>
-                        <li><a href="#">Others</a></li>
-                        <li><a href="#">Contact</a></li> -->
+
                 </ul>
             </div>
         </div>

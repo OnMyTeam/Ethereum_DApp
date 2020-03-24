@@ -1,7 +1,6 @@
 LogIn = {
   web3Provider: null,
   contracts: {},
-  accountlist : null,
 
   init: async function () {
     Init.init();
@@ -33,20 +32,9 @@ LogIn = {
     });
   },
 
-  getAccountInfo: function () {
-    // web3.eth.getAccounts(function(error,accounts){
-    //   let account=accounts[0];
-    //     document.getElementById('accountAddr').innerHTML=account;
-    //     web3.eth.getBalance(account, function(error,balance){
-    //         document.getElementById('ethValue').innerHTML=web3.fromWei(balance.toString()) + "ETH";
-    //         return LogIn.bindEvents();
-    //     });
-    // });
 
-  },
   getAccountList: function () {
     web3.eth.getAccounts(function (e, r) {
-      LogIn.accountlist = r;
       LogIn.refreshBalance(r);
       LogIn.makeSelect(r);
     });
@@ -96,7 +84,7 @@ LogIn = {
   makeSelect: function (list) {
 
     var html = '';
-    html += '<option value="">Select</a>';
+    html += '<option value=""> Select </a>';
     for (var i = 0; i < list.length; i++) {
       html += '<option value="' + list[i] + '">' + list[i] + '</a>';
     }
@@ -104,10 +92,8 @@ LogIn = {
   },
 
   bindEvents: function () {
-
     $(document).on('click', '.btn-primary', LogIn.logIn);
-    // $(document).on('change', 'custom-select', LogIn.changeAddress);
-
+    
   },
 
 
@@ -134,18 +120,12 @@ LogIn = {
     });
   },
 
-  // changeSelect: function () {
-  //   var address = document.getElementById('accounts').value;
-  //   document.getElementById('accountAddr').innerHTML = address;
-  //   document.getElementById('ethValue').innerHTML = parseFloat(web3.fromWei(web3.eth.getBalance(address), "ether")) + "ETHER";
-  // },
 
 };
 
 $(function () {
    
   $(window).load(function () {
-   
     LogIn.init();
   });
 

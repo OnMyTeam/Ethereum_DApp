@@ -50,6 +50,7 @@ Mall = {
       
         // Set the provider for our contract
         Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
+          return Mall.getAccountList();
           Mall.getTokenInfo();
           Mall.getAccountInfo();
           
@@ -57,14 +58,38 @@ Mall = {
      
     },
     
+    getAccountList: function () {
+      Mall.getGradeInfo();
+      Mall.getTokenInfo();
+      Mall.getAccountInfo();
+      Mall.bindEvents();
+    },
+    getGradeInfo: function () {
 
-     
+
+      var personalInstance;
+
+      Init.contracts.Personal.deployed().then(function (instance) {
+        personalInstance = instance;
+        return personalInstance.getGrade(Mall.address, { from: Mall.address });
+      }).then(function (result) {
+        console.log(result);
+        if (result == 'Bronze') {
+          $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
+        } else if (result == 'Silver') {
+          $('#accountGrade').html("<font color='silver'><b>Silver</b></font>");
+        } else if (result == 'Gold') {
+          $('#accountGrade').html("<font color='gold'><b>Gold</b></font>");
+        }
+      });
+
+    },     
     getAccountInfo: function() {
 
         document.getElementById('accountAddr').innerHTML=Mall.address;
         web3.eth.getBalance(Mall.address, function(account, balance){
             document.getElementById('ethValue').innerHTML = web3.fromWei(balance, "ether").toFixed(2) + " ETH";
-            return Mall.bindEvents();
+
         });
     },
   
@@ -94,17 +119,9 @@ Mall = {
             continue;
           }
           var itemInfos = myitemlist[i].split(',');
-          var itemtitle = itemInfos[3];
           var itemid = itemInfos[0];
-          //var imgsrc = itemInfos[2];
-          var itemindex = itemInfos[4];
-          // var precode = itemInfos[5];
-          console.log(itemtitle);
-          console.log("itemid " + itemid);
-          console.log("itemindex "+ itemindex);
-          // console.log(precode);
-     
-          console.log('------------');
+          
+
           $('.single-shop-product').each(function (index, item){
             var stuffcode = $(item).data('stuffcode');
             console.log("code" + stuffcode + "itemed" + itemid);
@@ -134,8 +151,7 @@ Mall = {
       }).then(function(result) {
 
         var result = result.split('//');
-        // console.log("===== result ======");
-        // console.log(result);
+
         if(result == ''){
           html = "<center><img src='public/img/no_product.png'/></center>";
           itemrow.html(html);
@@ -150,21 +166,16 @@ Mall = {
           var index = itemInfos[4];
           var itemcost = itemInfos[1];
           var imgfile = itemInfos[2];
-          console.log(itemtitle);
-          console.log(itemid);
-          console.log(itemcost);
-          console.log(imgfile);
-          console.log('------------');
           
           itemTemplate.find('.item-title').text(itemtitle);
-          itemTemplate.find('img').attr('src', imgsrc + imgfile);
+          itemTemplate.find('img').attr('src', 'public/img/' + imgfile);
           itemTemplate.find('.product-carousel-price-sub').text(itemcost+' osdc');
           itemTemplate.find('.single-shop-product').attr('data-stuffcode', itemid);          
           itemTemplate.find('.add_to_cart_button').attr('data-title', itemtitle);
           itemTemplate.find('.add_to_cart_button').attr('data-id', index);
           itemTemplate.find('.add_to_cart_button').attr('data-stuffcode', itemid);
           itemTemplate.find('.add_to_cart_button').attr('data-cost', itemcost);
-          itemTemplate.find('.add_to_cart_button').attr('data-src', imgsrc+imgfile);
+          itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/img/' +imgfile);
 
           itemrow.append(itemTemplate.html());
           
@@ -174,8 +185,7 @@ Mall = {
       }).catch(function(err) {
         console.log(err.message);
       });
-      await Init.contracts.Personal.deployed();
-      await Init.contracts.BlackList.deployed();
+
     },
     getOwner: function(){
       var StuffInstance;
@@ -206,26 +216,17 @@ Mall = {
       
       var index = parseInt($(event.target).data('id'));
       var tokenAmount = parseInt($(event.target).data('cost'));
-
-      
-
-
       var StuffInstance;
-      // var BlackListInstance;
-      // var tokenInstance;
-      var account = Mall.address;
-
-      
-
       Init.contracts.Stuff.deployed().then(function(instance) {
       
           StuffInstance = instance;
         // Execute adopt as a transaction by sending account
-          return StuffInstance.stuffbuy(account, index, tokenAmount,{from: account, gas:3000000});
+          return StuffInstance.stuffbuy(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000});
       }).then(function(result) {
         alert("Success!");
         Mall.getTokenInfo();
         Mall.getMyStuffList();
+        Mall.getGradeInfo();
       }).catch(function(err) {
 
         
@@ -237,51 +238,7 @@ Mall = {
         }
 
       });
-      // Init.contracts.BlackList.deployed().then(function(instance) {
-      //     BlackListInstance = instance;
-      //   // Execute adopt as a transaction by sending account
-      //     return BlackListInstance.checkBlacklist({from: account, gas:3000000});
-      // }).then(function(result) {
-        
-      //   Init.contracts.FixedSupplyToken.deployed().then(function(instance) {
-      //     var tokenInstance = instance;
-    
-      //   // Execute adopt as a transaction by sending account
-      //     return tokenInstance.SubToken(tokenAmount,{from:account});
-      //   }).then(function(result) {
 
-      //     Init.contracts.Stuff.deployed().then(function(instance) {
-      //         StuffInstance = instance;
-      //       // Execute adopt as a transaction by sending account
-      //         return StuffInstance.stuffbuy(account, index, tokenAmount,{from: account, gas:3000000});
-      //     }).then(function(result) {
-      //       alert("Success!");
-      //       Mall.getTokenInfo();
-      //       Mall.getMyStuffList();
-      //     }).catch(function(err) {
-            
-      //       console.log(err);
-      //     });          
-      //     console.log(result);
-      //     console.log(result.logs[0].args.tokens.c[1]);
-          
-      //   }).catch(function(err) {
-      //     if(err.message == 'VM Exception while processing transaction: revert need token'){
-      //       alert('��ū�� �����մϴ�.');
-      //     }
-          
-      //   });
-
-        
-      // }).catch(function(err) {
-      //     if(err.message == 'VM Exception while processing transaction: revert Already blacklist'){
-      //       alert('��������Ʈ�� ��ϵǾ� ������ ���� �� �� �����ϴ�.');
-      //     }        
-      //    console.log(err.message);
-      // });
-      
-
-  
     }
 
   

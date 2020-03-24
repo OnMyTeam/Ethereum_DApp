@@ -21,9 +21,9 @@ app.get('/shop', function (req, res) {
   res.render('item-shop', {address: address, menu:'shop'});
 });
 
-app.get('/myaccount', function (req, res) {
+app.get('/mypage', function (req, res) {
   var address = req.query.address;
-  res.render('cart', {address: address, menu:'myaccount'});
+  res.render('mypage', {address: address, menu:'mypage'});
   
 });
 

@@ -1,4 +1,4 @@
-pragma solidity 0.4.24;
+pragma solidity ^0.4.24;
 
 import './Token.sol';
 
@@ -71,6 +71,9 @@ contract Personal is Owned{
     function getCashbackRate(address _member) constant returns (int8 rate){
         rate = status[tradingHistory[_member].statusIndex].rate;
     }
+    function getGrade(address _member) constant returns (string grade){
+        grade = status[tradingHistory[_member].statusIndex].name;
+    }    
     function getMemberList() public view returns (address[] memory){
 
         return PeopleList;

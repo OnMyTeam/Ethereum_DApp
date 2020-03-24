@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-	ustora by freshdesignweb.com
-	Twitter: https://twitter.com/freshdesignweb
-	URL: https://www.freshdesignweb.com/ustora/
--->
+
 <html lang="en">
 
 <head>
@@ -37,7 +33,10 @@
 
                         <table cellspacing="0">
                             <tbody>
-
+                                <tr class="cart-subtotal">
+                                <th > Account Grade</th>
+                                <td><span class="amount" id="accountGrade"></span></td>
+                                </tr>
                                 <tr class="cart-subtotal">
                                     <th id="accountAddrAdmin">Account Address</th>
                                     <td><span class="amount" id="accountAddr"></span></td>
@@ -73,9 +72,9 @@
                             </tbody>
                         </table>
 
-
+                    <hr>
                     </div>
-
+                    
                     <div class="cart_totals" id="stuffRegister" style="display: none;">
                         <h2>Stuff Register</h2>
 
@@ -97,7 +96,9 @@
 
                             </tbody>
                         </table>
+                        
                     </div>
+                    
                     <div class="cart_totals" id="stuffRegisterList" style="display: none;">
                         <h2>Register Stuff List</h2>
                         <table cellspacing="0" class="shop_table cart">
@@ -110,12 +111,12 @@
 
                                 </tr>
                             </thead>
-                            <tbody id="regContent">
+                            <tbody id="stuffCotent">
 
 
                             </tbody>
 
-                            <tr class="cart_item" style="display: none;" id="detailregContent">
+                            <tr class="cart_item" style="display: none;" id="detailStuffContent">
                                 <td class="product-remove" style="width: 5%;">
                                     <a title="Remove this item" class="removestuff" href="javascript:;" data-id="">×</a>
                                 </td>

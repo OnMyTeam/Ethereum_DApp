@@ -31,7 +31,7 @@ Mypage = {
       // Set the provider for our contract
       Init.contracts.Personal.setProvider(Init.web3Provider);
       return Mypage.getMemberlist();
-      
+
     });
     $.getJSON('BlackList.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -63,11 +63,31 @@ Mypage = {
   },
 
   getAccountList: function () {
+    Mypage.getGradeInfo();
     Mypage.getAccountInfo();
     Mypage.getTokenInfo();
     Mypage.bindEvents();
   },
+  getGradeInfo: function () {
 
+
+    var personalInstance;
+
+    Init.contracts.Personal.deployed().then(function (instance) {
+      personalInstance = instance;
+      return personalInstance.getGrade(Mypage.address, { from: Mypage.address });
+    }).then(function (result) {
+      console.log(result);
+      if (result == 'Bronze') {
+        $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
+      } else if (result == 'Silver') {
+        $('#accountGrade').html("<font color='silver'><b>Silver</b></font>");
+      } else if (result == 'Gold') {
+        $('#accountGrade').html("<font color='gold'><b>Gold</b></font>");
+      }
+    });
+
+  },
   getAccountInfo: function () {
     // web3.eth.getAccounts(function(error,accounts){
 
@@ -97,7 +117,7 @@ Mypage = {
 
       return StuffInstance.owner.call();
     }).then(function (result) {
-      
+
       if (result == Mypage.address) {
         Mypage.ownerYN = 'Y';
         $("#accountAddrAdmin").text('Account Address(admin)');
@@ -106,7 +126,7 @@ Mypage = {
         $("#memberList").css("display", "block");
         $("#blackList").css("display", "block");
       }
-      else{ 
+      else {
         $("#accountAddrAdmin").text('Account Address(member)');
       }
 
@@ -119,10 +139,8 @@ Mypage = {
 
 
   bindEvents: function () {
-    // $(document).on('click', '.btn_goBack', Mypage.goBack);
+
     $(document).on('click', '.add_to_token_button', Mypage.buyToken);
-    // $(document).on('click', '.btn_registerBL', Mypage.registerBlackList);
-    // $(document).on('click', '.btn_deleteBL', Mypage.deleteBlackList);
     $(document).on('click', '.removehistory', Mypage.deleteMyStuff);
     $(document).on('click', '.removestuff', Mypage.deleteStuff);
     $(document).on('click', '.removeblacklist', Mypage.deleteBlackList);
@@ -131,31 +149,6 @@ Mypage = {
     $(document).on('click', '.withdrawal_button', Mypage.withdrawal);
   },
 
-  logIn: function (event) {
-    let account = document.getElementById('accountAddr').innerText;
-    Init.contracts.Personal.deployed().then(function (instance) {
-      return instance.getMemberInfo({ from: account });
-    }).then(function (result) {
-      if (result != 0x0) {
-        alert("Log-in success!");
-        location.href = "../pet-shop.html?addr=" + result;
-      }
-      else {
-        alert("Please join first!");
-      }
-    });
-  },
-
-
-  changeSelect: function () {
-    var address = document.getElementById('accounts').value;
-    document.getElementById('accountAddr').innerHTML = address;
-    document.getElementById('ethValue').innerHTML = parseFloat(web3.fromWei(web3.eth.getBalance(address), "ether")) + "ETHER";
-  },
-
-  goBack: function (event) {
-    location.href = "../pet-shop.html?addr=" + Mypage.address;
-  },
 
   buyToken: function () {
     var token_amount = $('#tokenAmount').val();
@@ -164,7 +157,7 @@ Mypage = {
 
     $('#tokenAmount').val(0);
     var contractAddress = Init.contracts.FixedSupplyToken.address;
-    
+
     web3.eth.sendTransaction({ from: Mypage.address, to: contractAddress, value: token_amount },
       function (e, r) {
 
@@ -173,25 +166,26 @@ Mypage = {
       });
   },
   registerBlackList: function (event) {
- 
-    
+
+
     var account = $(event.target).data('address');
     console.log(account);
-    
+
     var BlackListInstance;
     Init.contracts.BlackList.deployed().then(function (instance) {
       BlackListInstance = instance;
       return BlackListInstance.setBlacklist(account, { from: Mypage.address });
     }).then(function (result) {
       console.log("result, " + result);
-      
+
       Mypage.getBlacklist();
     }).catch(function (error) {
-      if(error.message == 'VM Exception while processing transaction: revert D'){
+      if (error.message == 'VM Exception while processing transaction: revert already blacklist') {
         alert('Already register blacklist');
       }
       console.log(error.message);
-    })
+    });
+
   },
   getMemberlist: function () {
     var itemrow = $('#memberListContent');
@@ -205,8 +199,8 @@ Mypage = {
     }).then(function (list) {
 
       for (var i = 0; i < list.length; i++) {
-        if (list[i] != 0x0){
- 
+        if (list[i] != 0x0) {
+
           itemTemplate.find('.add_to_blacklist_button').attr('data-id', i);
           itemTemplate.find('.add_to_blacklist_button').attr('data-address', list[i]);
           itemTemplate.find('.product-name').text(list[i]);
@@ -215,10 +209,10 @@ Mypage = {
         }
       }
       itemrow.html(html);
-      
+
     });
 
-  },  
+  },
   getBlacklist: function () {
     var itemrow = $('#blacklistContent');
     var itemTemplate = $('#detailblacklistContent');
@@ -231,8 +225,8 @@ Mypage = {
     }).then(function (list) {
 
       for (var i = 0; i < list.length; i++) {
-        if (list[i] != 0x0){
- 
+        if (list[i] != 0x0) {
+
           itemTemplate.find('.removeblacklist').attr('data-id', i);
           itemTemplate.find('.removeblacklist').attr('data-address', list[i]);
           itemTemplate.find('.product-name').text(list[i]);
@@ -241,7 +235,7 @@ Mypage = {
         }
       }
       itemrow.html(html);
-      
+
     });
 
   },
@@ -291,8 +285,8 @@ Mypage = {
     })
   },
   getStuffList: function (t) {
-    var itemrow = $('#regContent');
-    var itemTemplate = $('#detailregContent');
+    var itemrow = $('#stuffCotent');
+    var itemTemplate = $('#detailStuffContent');
 
     var html = '';
     var StuffInstance;
@@ -300,9 +294,13 @@ Mypage = {
       StuffInstance = instance;
       console.log(Mypage.address);
       return StuffInstance.getStuff({ from: Mypage.address, gas: 3000000 });
-    }).then(function (adopters) {
-
-      var itemlist = adopters.split('//');
+    }).then(function (result) {
+      if (result == '') {
+        html += "<tr class='cart_item'>";
+        html += "<td colspan='4'><center><img src='public/img/no_product.png'/></center> </td>";
+        html += "</tr>";
+      }
+      var itemlist = result.split('//');
       console.log(itemlist)
       for (i = 0; i < itemlist.length; i++) {
         if (itemlist[i] == '') {
@@ -316,13 +314,10 @@ Mypage = {
         var imgfile = itemInfos[2];
 
         var itemIndex = itemInfos[4];
-        console.log(itemtitle);
-        console.log(itemid);
-        console.log(itemIndex);
-        // console.log(imgsrc);
-        console.log('------------');
 
-        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc + imgfile);
+
+
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/img/' + imgfile);
         itemTemplate.find('.removestuff').attr('data-id', itemid);
         itemTemplate.find('.removestuff').attr('data-index', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
@@ -348,9 +343,13 @@ Mypage = {
       StuffInstance = instance;
       console.log(Mypage.address);
       return StuffInstance.getMyStuff(Mypage.address, { from: Mypage.address, gas: 3000000 });
-    }).then(function (adopters) {
-
-      var itemlist = adopters.split('//');
+    }).then(function (result) {
+      if (result == '') {
+        html += "<tr class='cart_item'>";
+        html += "<td colspan='4'><center><img src='public/img/no_product.png'/></center> </td>";
+        html += "</tr>";
+      }
+      var itemlist = result.split('//');
       console.log(itemlist)
       for (i = 0; i < itemlist.length; i++) {
         if (itemlist[i] == '') {
@@ -363,13 +362,9 @@ Mypage = {
         var itemcost = itemInfos[1];
         var imgfile = itemInfos[2];
         var itemIndex = itemInfos[4];
-        // console.log(itemtitle);
-        // console.log(itemid);
-        // console.log(itemcost);
-        // console.log(imgsrc);
-        // console.log('------------');
 
-        itemTemplate.find('.shop_thumbnail').attr('src', imgsrc + imgfile);
+
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/img/' + imgfile);
         itemTemplate.find('.removehistory').attr('data-id', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost + ' osdc');
@@ -384,21 +379,19 @@ Mypage = {
     });
   },
   registerStuff: function () {
- 
+
 
     var StuffInstance;
     var imgnum = Math.floor((Math.random() * 4)) + 1;
     var name = $('#stuffName').val();
     var cost = $('#stuffCost').val();
-    var imgsrc = 'product-' + imgnum + '.jpg';
+    var imgfile = 'product-' + imgnum + '.jpg';
 
-    console.log(name);
-    console.log(cost);
-    console.log(imgsrc);
+
 
     Init.contracts.Stuff.deployed().then(function (instance) {
       StuffInstance = instance;
-      return StuffInstance.registerStuff(name, imgsrc, cost, { from: Mypage.address, gas: 3000000 });
+      return StuffInstance.registerStuff(name, imgfile, cost, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       alert('Success!');
       Mypage.getStuffList();
@@ -418,7 +411,7 @@ Mypage = {
       location.href = '/';
     }).catch(function (error) {
       console.log(error);
-    });    
+    });
   },
 
 };
