@@ -34,12 +34,12 @@ contract Personal is Owned{
         pushStatus("Gold", 10, 1500, 10);
     }
 
-    function register() public returns(string success) {
+    function register() public returns(bool succes) {
         require(People[msg.sender] == false, "Already Register");
         People[msg.sender] = true;
         PeopleList.push(msg.sender);
         
-        return "success";
+        return true;
         
     }
     function getMemberInfo() public view returns(bool){

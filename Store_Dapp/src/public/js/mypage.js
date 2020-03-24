@@ -12,17 +12,17 @@ Mypage = {
   },
 
   initContract: function () {
-    $.getJSON('Stuff.json', function (data) {
+    $.getJSON('Item.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var StuffArtifact = data;
-      Init.contracts.Stuff = TruffleContract(StuffArtifact);
+      var ItemArtifact = data;
+      Init.contracts.Item = TruffleContract(ItemArtifact);
 
       // Set the provider for our contract
-      Init.contracts.Stuff.setProvider(Init.web3Provider);
+      Init.contracts.Item.setProvider(Init.web3Provider);
 
       // Use our contract to retrieve and mark the adopted pets
       Mypage.getOwner();
-      return Mypage.getStuffList();
+      return Mypage.getItemList();
     });
     $.getJSON('Personal.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -110,18 +110,18 @@ Mypage = {
     });
   },
   getOwner: function () {
-    var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function (instance) {
-      StuffInstance = instance;
+    var ItemInstance;
+    Init.contracts.Item.deployed().then(function (instance) {
+      ItemInstance = instance;
 
-      return StuffInstance.owner.call();
+      return ItemInstance.owner.call();
     }).then(function (result) {
 
       if (result == Mypage.address) {
         Mypage.ownerYN = 'Y';
         $("#accountAddrAdmin").text('Account Address(admin)');
-        $("#stuffRegister").css("display", "block");
-        $("#stuffRegisterList").css("display", "block");
+        $("#itemRegister").css("display", "block");
+        $("#itemRegisterList").css("display", "block");
         $("#memberList").css("display", "block");
         $("#blackList").css("display", "block");
       }
@@ -140,10 +140,10 @@ Mypage = {
   bindEvents: function () {
 
     $(document).on('click', '.add_to_token_button', Mypage.buyToken);
-    $(document).on('click', '.removehistory', Mypage.deleteMyStuff);
-    $(document).on('click', '.removestuff', Mypage.deleteStuff);
+    $(document).on('click', '.removehistory', Mypage.deleteMyItem);
+    $(document).on('click', '.removeItem', Mypage.deleteItem);
     $(document).on('click', '.removeblacklist', Mypage.deleteBlackList);
-    $(document).on('click', '.add_to_item_button', Mypage.registerStuff);
+    $(document).on('click', '.add_to_item_button', Mypage.registerItem);
     $(document).on('click', '.add_to_blacklist_button', Mypage.registerBlackList);
     $(document).on('click', '.withdrawal_button', Mypage.withdrawal);
   },
@@ -252,47 +252,47 @@ Mypage = {
       console.log(error);
     })
   },
-  deleteMyStuff: function (event) {
+  deleteMyItem: function (event) {
     var index = $(event.target).data('id');
-    var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function (instance) {
-      StuffInstance = instance;
-      return StuffInstance.deleteMyStuff(Mypage.address, index, { from: Mypage.address });
+    var ItemInstance;
+    Init.contracts.Item.deployed().then(function (instance) {
+      ItemInstance = instance;
+      return ItemInstance.deleteMyItem(Mypage.address, index, { from: Mypage.address });
     }).then(function (result) {
       console.log("result : " + result);
 
-      Mypage.getStuffMyList();
+      Mypage.getItemMyList();
 
     }).catch(function (error) {
       console.log(error);
     })
   },
-  deleteStuff: function (event) {
+  deleteItem: function (event) {
     var index = $(event.target).data('index');
     console.log(index);
-    var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function (instance) {
-      StuffInstance = instance;
-      return StuffInstance.deleteStuff(index, { from: Mypage.address, gas: 3000000 });
+    var ItemInstance;
+    Init.contracts.Item.deployed().then(function (instance) {
+      ItemInstance = instance;
+      return ItemInstance.deleteItem(index, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       console.log("result : " + result);
 
-      Mypage.getStuffList();
+      Mypage.getItemList();
 
     }).catch(function (error) {
       console.log(error);
     })
   },
-  getStuffList: function (t) {
-    var itemrow = $('#stuffCotent');
-    var itemTemplate = $('#detailStuffContent');
+  getItemList: function (t) {
+    var itemrow = $('#ItemCotent');
+    var itemTemplate = $('#detailItemContent');
 
     var html = '';
-    var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function (instance) {
-      StuffInstance = instance;
+    var ItemInstance;
+    Init.contracts.Item.deployed().then(function (instance) {
+      ItemInstance = instance;
       console.log(Mypage.address);
-      return StuffInstance.getStuff({ from: Mypage.address, gas: 3000000 });
+      return ItemInstance.getItems({ from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       if (result == '') {
         html += "<tr class='cart_item'>";
@@ -317,8 +317,8 @@ Mypage = {
 
 
         itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgfile);
-        itemTemplate.find('.removestuff').attr('data-id', itemid);
-        itemTemplate.find('.removestuff').attr('data-index', itemIndex);
+        itemTemplate.find('.removeItem').attr('data-id', itemid);
+        itemTemplate.find('.removeItem').attr('data-index', itemIndex);
         itemTemplate.find('.product-name').text(itemtitle);
         itemTemplate.find('.product-price').text(itemcost + ' osdc');
 
@@ -327,21 +327,21 @@ Mypage = {
       }
 
       itemrow.html(html);
-      Mypage.getStuffMyList();
+      Mypage.getItemMyList();
     }).catch(function (err) {
       console.log(err.message);
     });
   },
-  getStuffMyList: function (t) {
+  getItemMyList: function (t) {
     var itemrow = $('#historyContent');
     var itemTemplate = $('#historyDetailContent');
 
     var html = '';
-    var StuffInstance;
-    Init.contracts.Stuff.deployed().then(function (instance) {
-      StuffInstance = instance;
+    var ItemInstance;
+    Init.contracts.Item.deployed().then(function (instance) {
+      ItemInstance = instance;
       console.log(Mypage.address);
-      return StuffInstance.getMyStuff(Mypage.address, { from: Mypage.address, gas: 3000000 });
+      return ItemInstance.getMyItems(Mypage.address, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       if (result == '') {
         html += "<tr class='cart_item'>";
@@ -377,23 +377,23 @@ Mypage = {
       console.log(err.message);
     });
   },
-  registerStuff: function () {
+  registerItem: function () {
 
 
-    var StuffInstance;
+    var ItemInstance;
     var imgnum = Math.floor((Math.random() * 4)) + 1;
-    var name = $('#stuffName').val();
-    var cost = $('#stuffCost').val();
+    var name = $('#ItemName').val();
+    var cost = $('#ItemCost').val();
     var imgfile = 'product-' + imgnum + '.jpg';
 
 
 
-    Init.contracts.Stuff.deployed().then(function (instance) {
-      StuffInstance = instance;
-      return StuffInstance.registerStuff(name, imgfile, cost, { from: Mypage.address, gas: 3000000 });
+    Init.contracts.Item.deployed().then(function (instance) {
+      ItemInstance = instance;
+      return ItemInstance.registerItem(name, imgfile, cost, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       alert('Success!');
-      Mypage.getStuffList();
+      Mypage.getItemList();
     }).catch(function (error) {
       console.log(error);
     });
@@ -402,9 +402,9 @@ Mypage = {
 
 
 
-    Init.contracts.Stuff.deployed().then(function (instance) {
-      StuffInstance = instance;
-      return StuffInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 });
+    Init.contracts.Item.deployed().then(function (instance) {
+      ItemInstance = instance;
+      return ItemInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 });
     }).then(function (result) {
       alert('Success!');
       location.href = '/';

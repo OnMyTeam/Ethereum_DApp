@@ -33,15 +33,15 @@ Mall = {
         Init.contracts.BlackList.setProvider(Init.web3Provider);
         
       });
-      $.getJSON('Stuff.json', function(data) {
+      $.getJSON('item.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
-        var StuffArtifact = data;
-        Init.contracts.Stuff = TruffleContract(StuffArtifact);
+        var itemArtifact = data;
+        Init.contracts.item = TruffleContract(itemArtifact);
       
         // Set the provider for our contract
-        Init.contracts.Stuff.setProvider(Init.web3Provider);
+        Init.contracts.item.setProvider(Init.web3Provider);
         // Use our contract to retrieve and mark the adopted pets
-        return Mall.getStuffList();
+        return Mall.getitemList();
       });
       $.getJSON('FixedSupplyToken.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -107,13 +107,13 @@ Mall = {
     },
 
 
-    getMyStuffList: function() {
-      var StuffInstance;
-      var stuffcode;
-      Init.contracts.Stuff.deployed().then(function(instance) {
-        StuffInstance = instance;
+    getMyitemList: function() {
+      var itemInstance;
+      var itemcode;
+      Init.contracts.item.deployed().then(function(instance) {
+        itemInstance = instance;
 
-        return StuffInstance.getMyStuff(Mall.address,{from: Mall.address, gas:6000000});
+        return itemInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000});
       }).then(function(result) {
         var myItemList = result.split('//');
 
@@ -125,9 +125,9 @@ Mall = {
           var itemid = itemInfos[0];
 
           $('.single-shop-product').each(function (index, item){
-            stuffcode = $(item).data('stuffcode');
+            itemcode = $(item).data('itemcode');
             
-            if(stuffcode == itemid){
+            if(itemcode == itemid){
               $(item).find('button').text('Success').attr('disabled', true);
               $(item).find('.add_to_cart_button').css('background-color', 'green');             
             }
@@ -141,15 +141,15 @@ Mall = {
 
     },
 
-    getStuffList: async function(t) {
+    getitemList: async function(t) {
       var itemrow = $('#itemrow');
       var itemTemplate = $('#itemTemplate');
 
-      var StuffInstance;
-      Init.contracts.Stuff.deployed().then(function(instance) {
-        StuffInstance = instance;
+      var itemInstance;
+      Init.contracts.item.deployed().then(function(instance) {
+        itemInstance = instance;
 
-        return StuffInstance.getStuff({from: Mall.address, gas:6000000});
+        return itemInstance.getItems({from: Mall.address, gas:6000000});
       }).then(function(result) {
 
         var result = result.split('//');
@@ -173,17 +173,17 @@ Mall = {
           itemTemplate.find('.item-title').text(itemtitle);
           itemTemplate.find('img').attr('src', 'public/images/' + imgfile);
           itemTemplate.find('.product-carousel-price-sub').text(itemcost+' osdc');
-          itemTemplate.find('.single-shop-product').attr('data-stuffcode', itemid);          
+          itemTemplate.find('.single-shop-product').attr('data-itemcode', itemid);          
           itemTemplate.find('.add_to_cart_button').attr('data-title', itemtitle);
           itemTemplate.find('.add_to_cart_button').attr('data-id', index);
-          itemTemplate.find('.add_to_cart_button').attr('data-stuffcode', itemid);
+          itemTemplate.find('.add_to_cart_button').attr('data-itemcode', itemid);
           itemTemplate.find('.add_to_cart_button').attr('data-cost', itemcost);
           itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' +imgfile);
 
           itemrow.append(itemTemplate.html());
           
         }
-        Mall.getMyStuffList();
+        Mall.getMyitemList();
         Mall.getOwner();
       }).catch(function(err) {
         console.log(err.message);
@@ -191,11 +191,11 @@ Mall = {
 
     },
     getOwner: function(){
-      var StuffInstance;
-      Init.contracts.Stuff.deployed().then(function(instance) {
-        StuffInstance = instance;
+      var itemInstance;
+      Init.contracts.item.deployed().then(function(instance) {
+        itemInstance = instance;
 
-        return StuffInstance.owner.call();
+        return itemInstance.owner.call();
       }).then(function(result) {
         if (result == Mall.address) {
           Mall.ownerYN = 'Y';
@@ -210,25 +210,25 @@ Mall = {
 
     bindEvents: function() {
 
-      $(document).on('click', '.add_to_cart_button', Mall.buyStuff);
+      $(document).on('click', '.add_to_cart_button', Mall.buyitem);
       
     },
   
-    buyStuff: async function(event) {
+    buyitem: async function(event) {
 
       
       var index = parseInt($(event.target).data('id'));
       var tokenAmount = parseInt($(event.target).data('cost'));
-      var StuffInstance;
-      Init.contracts.Stuff.deployed().then(function(instance) {
+      var itemInstance;
+      Init.contracts.item.deployed().then(function(instance) {
       
-          StuffInstance = instance;
+          itemInstance = instance;
         // Execute adopt as a transaction by sending account
-          return StuffInstance.stuffbuy(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000});
+          return itemInstance.itemBuy(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000});
       }).then(function(result) {
         alert("Success!");
         Mall.getTokenInfo();
-        Mall.getMyStuffList();
+        Mall.getMyitemList();
         Mall.getGradeInfo();
       }).catch(function(err) {
 
