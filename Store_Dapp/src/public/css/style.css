@@ -809,7 +809,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     padding: 5px;
     width: 50px;
 } 
-.add_to_cart_button,.add_to_token_button, .add_to_item_button,.add_to_blacklist_button {
+.add_to_cart_button,.add_to_token_button, .add_to_item_button,.add_to_BlackList_button {
     background: none repeat scroll 0 0 #5a88ca;
     border: medium none;
     color: #fff;
@@ -825,7 +825,7 @@ input[type="submit"]:hover, button[type=submit]:hover {background-color: #222}
     margin-left: 30%;
     margin-right: 30%
 }
-.add_to_cart_button:hover,.add_to_token_button:hover,.add_to_item_button:hover,.add_to_blacklist_button:hover {background-color: #222;color: #fff;text-decoration: none}
+.add_to_cart_button:hover,.add_to_token_button:hover,.add_to_item_button:hover,.add_to_BlackList_button:hover {background-color: #222;color: #fff;text-decoration: none}
 form.cart {
     margin-bottom: 25px;
 }

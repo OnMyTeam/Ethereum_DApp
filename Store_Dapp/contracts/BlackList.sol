@@ -1,53 +1,53 @@
-pragma solidity  >=0.4.24 <0.7.0;
+pragma solidity  ^0.4.24;
 
 contract BlackList {
     
 
-    mapping (address => int8) public blackList; 
-    address[] internal blackListKey;
+    mapping (address => int8) public BlackList; 
+    address[] internal BlackListKey;
     // 이벤트 알림
-    event Blacklisted(address indexed target);
-    event DeleteFromBlacklist(address indexed target);
-    event eventcheckBlacklist(int8 sender);
+    event BlackListed(address indexed target);
+    event DeleteFromBlackList(address indexed target);
+    event eventcheckBlackList(int8 sender);
     // BlackList register
-    function setBlacklist(address _addr) public  {
-        require(blackList[_addr] == 0, "already blacklist");
-        blackList[_addr] = 1;
-        blackListKey.push(_addr);
-        emit Blacklisted(_addr);
+    function setBlackList(address _addr) public  {
+        require(BlackList[_addr] == 0, "already BlackList");
+        BlackList[_addr] = 1;
+        BlackListKey.push(_addr);
+        emit BlackListed(_addr);
     }
 
     // BlackList delete
-    function deleteBlacklist(address _addr, uint index) public  {
-        delete blackList[_addr];
-        delete blackListKey[index];
-        emit DeleteFromBlacklist(_addr);
+    function deleteBlackList(address _addr, uint index) public  {
+        delete BlackList[_addr];
+        delete BlackListKey[index];
+        emit DeleteFromBlackList(_addr);
     }
     // BlackList call
-    function getBlacklist() view public  returns (address[] memory) {
+    function getBlackList() view public  returns (address[] memory) {
 
-        return blackListKey;
+        return BlackListKey;
     }
     // 블랙리스트 체크
-    function checkBlacklist(address _buyer) view public returns (bool){
+    function checkBlackList(address _buyer) view public returns (bool){
         bool check = true;
         
-        require(blackList[_buyer] == 0, "Already blacklist");
-        emit eventcheckBlacklist(blackList[_buyer]);
+        require(BlackList[_buyer] == 0, "Already BlackList");
+        emit eventcheckBlackList(BlackList[_buyer]);
         return check;
     }
     // withdrawal
     function withdrawal(address _buyer) public {
 
-        delete blackList[_buyer];
+        delete BlackList[_buyer];
         
-        for(uint i = 0; i <blackListKey.length; i++ ){
-            if(blackListKey[i] == _buyer){
-                delete blackListKey[i];
+        for(uint i = 0; i <BlackListKey.length; i++ ){
+            if(BlackListKey[i] == _buyer){
+                delete BlackListKey[i];
                 break;
             }
         }        
-        emit DeleteFromBlacklist(_buyer);
+        emit DeleteFromBlackList(_buyer);
     }
 }
 

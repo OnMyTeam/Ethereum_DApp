@@ -6,7 +6,7 @@ import './BlackList.sol';
 contract Item is Owned{
     
     Personal personal;
-    BlackList blacklist;
+    BlackList blackList;
     FixedSupplyToken fixedsupplytoken;
     
     struct ItemInfo{
@@ -21,19 +21,19 @@ contract Item is Owned{
     uint public ItemCode;
 
     event  ItemInfos(uint code, string name,string imgsrc, uint cost);
-    event  makeItem(address __fixedTokenAddr, address _blacklistAddr, address _personaladdr);
-    constructor(address __fixedTokenAddr, address _blacklistAddr, address _personaladdr) public {
+    event  makeItem(address __fixedTokenAddr, address _BlackListAddr, address _personaladdr);
+    constructor(address __fixedTokenAddr, address _BlackListAddr, address _personaladdr) public {
         index = 0;
         ItemCode = 0;
         fixedsupplytoken = FixedSupplyToken(__fixedTokenAddr);
-        blacklist = BlackList(_blacklistAddr);
+        blackList = BlackList(_BlackListAddr);
         personal = Personal(_personaladdr);
-        emit makeItem(__fixedTokenAddr, _blacklistAddr, _personaladdr);
+        emit makeItem(__fixedTokenAddr, _BlackListAddr, _personaladdr);
     }
 
 // Adopting a items
     function itemBuy(address _buyer, uint _index, uint _cost) public returns(bool) {
-        blacklist.checkBlacklist(_buyer);
+        blackList.checkBlackList(_buyer);
         fixedsupplytoken.SubToken(_buyer, _cost);
         personalitems[_buyer].push(ItemArray[_index]);
         
@@ -111,7 +111,7 @@ contract Item is Owned{
         delete personalitems[_buyer];
         fixedsupplytoken.withdrawal(_buyer);
         personal.withdrawal(_buyer);
-        blacklist.withdrawal(_buyer);
+        blackList.withdrawal(_buyer);
         
     }
     

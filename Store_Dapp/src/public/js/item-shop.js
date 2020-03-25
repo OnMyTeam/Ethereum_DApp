@@ -7,7 +7,7 @@ Mall = {
     init: async function() {
       Init.init();
       Mall.address = address;
-      return await Mall.initContract();
+      Mall.initContract();
     },
   
     initContract: function() {
@@ -41,7 +41,7 @@ Mall = {
         // Set the provider for our contract
         Init.contracts.item.setProvider(Init.web3Provider);
         // Use our contract to retrieve and mark the adopted pets
-        return Mall.getitemList();
+          return Mall.getItemList();
       });
       $.getJSON('FixedSupplyToken.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -141,7 +141,7 @@ Mall = {
 
     },
 
-    getitemList: async function(t) {
+    getItemList: async function(t) {
       var itemrow = $('#itemrow');
       var itemTemplate = $('#itemTemplate');
 
@@ -236,7 +236,7 @@ Mall = {
         console.log(err.message);
         if(err.message == 'VM Exception while processing transaction: revert need token'){
           alert('토큰이 부족합니다.');
-        }else if('VM Exception while processing transaction: revert Already blacklist'){
+        }else if(err.message =  'VM Exception while processing transaction: revert Already blacklist'){
           alert('블랙리스트로 등록되어 물건을 구매 할 수 없습니다.');
         }
 

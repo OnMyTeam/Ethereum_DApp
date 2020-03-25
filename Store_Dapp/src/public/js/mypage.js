@@ -31,7 +31,7 @@ Mypage = {
 
       // Set the provider for our contract
       Init.contracts.Personal.setProvider(Init.web3Provider);
-      return Mypage.getMemberlist();
+      return Mypage.getMemberList();
 
     });
     $.getJSON('BlackList.json', function (data) {
@@ -41,7 +41,7 @@ Mypage = {
 
       // Set the provider for our contract
       Init.contracts.BlackList.setProvider(Init.web3Provider);
-      return Mypage.getBlacklist();
+      return Mypage.getBlackList();
     });
     $.getJSON('Migrations.json', function (data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
@@ -123,7 +123,7 @@ Mypage = {
         $("#itemRegister").css("display", "block");
         $("#itemRegisterList").css("display", "block");
         $("#memberList").css("display", "block");
-        $("#blackList").css("display", "block");
+        $("#BlackList").css("display", "block");
       }
       else {
         $("#accountAddrAdmin").text('Account Address(member)');
@@ -142,9 +142,9 @@ Mypage = {
     $(document).on('click', '.add_to_token_button', Mypage.buyToken);
     $(document).on('click', '.removehistory', Mypage.deleteMyItem);
     $(document).on('click', '.removeItem', Mypage.deleteItem);
-    $(document).on('click', '.removeblacklist', Mypage.deleteBlackList);
+    $(document).on('click', '.removeBlackList', Mypage.deleteBlackList);
     $(document).on('click', '.add_to_item_button', Mypage.registerItem);
-    $(document).on('click', '.add_to_blacklist_button', Mypage.registerBlackList);
+    $(document).on('click', '.add_to_BlackList_button', Mypage.registerBlackList);
     $(document).on('click', '.withdrawal_button', Mypage.withdrawal);
   },
 
@@ -173,20 +173,20 @@ Mypage = {
     var BlackListInstance;
     Init.contracts.BlackList.deployed().then(function (instance) {
       BlackListInstance = instance;
-      return BlackListInstance.setBlacklist(account, { from: Mypage.address });
+      return BlackListInstance.setBlackList(account, { from: Mypage.address });
     }).then(function (result) {
       console.log("result, " + result);
 
-      Mypage.getBlacklist();
+      Mypage.getBlackList();
     }).catch(function (error) {
-      if (error.message == 'VM Exception while processing transaction: revert already blacklist') {
-        alert('Already register blacklist');
+      if (error.message == 'VM Exception while processing transaction: revert already BlackList') {
+        alert('Already register BlackList');
       }
       console.log(error.message);
     });
 
   },
-  getMemberlist: function () {
+  getMemberList: function () {
     var itemrow = $('#memberListContent');
     var itemTemplate = $('#detailmemberListContent');
     var html = '';
@@ -200,8 +200,8 @@ Mypage = {
       for (var i = 0; i < list.length; i++) {
         if (list[i] != 0x0) {
 
-          itemTemplate.find('.add_to_blacklist_button').attr('data-id', i);
-          itemTemplate.find('.add_to_blacklist_button').attr('data-address', list[i]);
+          itemTemplate.find('.add_to_BlackList_button').attr('data-id', i);
+          itemTemplate.find('.add_to_BlackList_button').attr('data-address', list[i]);
           itemTemplate.find('.product-name').text(list[i]);
 
           html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
@@ -212,22 +212,22 @@ Mypage = {
     });
 
   },
-  getBlacklist: function () {
-    var itemrow = $('#blacklistContent');
-    var itemTemplate = $('#detailblacklistContent');
+  getBlackList: function () {
+    var itemrow = $('#BlackListContent');
+    var itemTemplate = $('#detailBlackListContent');
     var html = '';
     var BlackListInstance;
 
     Init.contracts.BlackList.deployed().then(function (instance) {
       BlackListInstance = instance;
-      return BlackListInstance.getBlacklist();
+      return BlackListInstance.getBlackList();
     }).then(function (list) {
 
       for (var i = 0; i < list.length; i++) {
         if (list[i] != 0x0) {
 
-          itemTemplate.find('.removeblacklist').attr('data-id', i);
-          itemTemplate.find('.removeblacklist').attr('data-address', list[i]);
+          itemTemplate.find('.removeBlackList').attr('data-id', i);
+          itemTemplate.find('.removeBlackList').attr('data-address', list[i]);
           itemTemplate.find('.product-name').text(list[i]);
 
           html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
@@ -244,10 +244,10 @@ Mypage = {
 
     Init.contracts.BlackList.deployed().then(function (instance) {
       BlackListInstance = instance;
-      return BlackListInstance.deleteBlacklist(address, index, { from: Mypage.address });
+      return BlackListInstance.deleteBlackList(address, index, { from: Mypage.address });
     }).then(function (result) {
       console.log(result);
-      Mypage.getBlacklist();
+      Mypage.getBlackList();
     }).catch(function (error) {
       console.log(error);
     })
