@@ -101,7 +101,7 @@ LogIn = {
     Init.contracts.Personal.deployed().then(function (instance) {
       return instance.getMemberInfo({ from: address });
     }).then(function (result) {
-      
+      console.log(result);
       if (result != 0x0) {
 
         loginForm.attr('action','/shop');
