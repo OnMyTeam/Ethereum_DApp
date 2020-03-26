@@ -43,7 +43,7 @@ Mall = {
         // Use our contract to retrieve and mark the adopted pets
           return Mall.getItemList();
       });
-      $.getJSON('FixedSupplyToken.json', function(data) {
+      $.getJSON('OSDCToken.json', function(data) {
         // Get the necessary contract artifact file and instantiate it with truffle-contract
         var TokenArtifact = data;
         Init.contracts.FixedSupplyToken = TruffleContract(TokenArtifact);

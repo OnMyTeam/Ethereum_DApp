@@ -1,13 +1,14 @@
 pragma solidity  ^0.4.24;
-
+import './Owned.sol';
 import './Personal.sol';
 import './BlackList.sol';
+import './Token4.sol';
 
-contract Item is Owned{
+contract Item is Ownable{
     
     Personal personal;
     BlackList blackList;
-    FixedSupplyToken fixedsupplytoken;
+    OSDCToken basictoken;
     
     struct ItemInfo{
         uint code;
@@ -25,7 +26,7 @@ contract Item is Owned{
     constructor(address __fixedTokenAddr, address _BlackListAddr, address _personaladdr) public {
         index = 0;
         ItemCode = 0;
-        fixedsupplytoken = FixedSupplyToken(__fixedTokenAddr);
+        basictoken = OSDCToken(__fixedTokenAddr);
         blackList = BlackList(_BlackListAddr);
         personal = Personal(_personaladdr);
         emit makeItem(__fixedTokenAddr, _BlackListAddr, _personaladdr);
@@ -34,7 +35,7 @@ contract Item is Owned{
 // Adopting a items
     function itemBuy(address _buyer, uint _index, uint _cost) public returns(bool) {
         blackList.checkBlackList(_buyer);
-        fixedsupplytoken.SubToken(_buyer, _cost);
+        basictoken.SubToken(_buyer, _cost);
         personalitems[_buyer].push(ItemArray[_index]);
         
         emit ItemInfos(ItemArray[_index].code, ItemArray[_index].name,ItemArray[_index].imgsrc, ItemArray[_index].cost);
@@ -107,10 +108,9 @@ contract Item is Owned{
     }
     
     function withdrawal(address _buyer) public {
-
-        delete personalitems[_buyer];
-        fixedsupplytoken.withdrawal(_buyer);
         personal.withdrawal(_buyer);
+        delete personalitems[_buyer];
+        basictoken.withdrawal(_buyer);
         blackList.withdrawal(_buyer);
         
     }

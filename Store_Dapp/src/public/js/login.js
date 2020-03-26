@@ -8,7 +8,7 @@ LogIn = {
   },
 
   initContract: function () {
-    $.getJSON('FixedSupplyToken.json', function(data) {
+    $.getJSON('OSDCToken.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
       var TokenArtifact = data;
       Init.contracts.FixedSupplyToken = TruffleContract(TokenArtifact);
@@ -56,7 +56,7 @@ LogIn = {
         var tokenInstance = instance;
         return tokenInstance.balanceOf(list[i],{from:list[i]});
       }).then(function(result) {
-        
+        console.log(result);
         if(result.c[0] == undefined){
           token = 0;
         }else {

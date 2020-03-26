@@ -1,8 +1,8 @@
 pragma solidity ^0.4.24;
+import './Owned.sol';
 
-import './Token.sol';
 
-contract Personal is Owned{
+contract Personal is Ownable{
     struct Person{
         address account;
         uint tokens;
