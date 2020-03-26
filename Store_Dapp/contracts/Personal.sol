@@ -1,5 +1,5 @@
 pragma solidity ^0.4.24;
-import './Owned.sol';
+import './Ownable.sol';
 
 
 contract Personal is Ownable{

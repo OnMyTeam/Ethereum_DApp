@@ -1,7 +1,7 @@
 
 pragma solidity ^0.4.24;
 import './Personal.sol';
-import './Owned.sol';
+import './Ownable.sol';
 
 contract ERC20Interface {
     function totalSupply() public constant returns (uint);

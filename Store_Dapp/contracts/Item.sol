@@ -1,8 +1,8 @@
 pragma solidity  ^0.4.24;
-import './Owned.sol';
+import './Ownable.sol';
 import './Personal.sol';
 import './BlackList.sol';
-import './Token4.sol';
+import './Token.sol';
 
 contract Item is Ownable{
     
