@@ -3,34 +3,10 @@ LogIn = {
   contracts: {},
 
   init: async function () {
-    Init.init();
-    return LogIn.initContract();
-  },
-
-  initContract: function () {
-    $.getJSON('OSDCToken.json', function(data) {
-      // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var TokenArtifact = data;
-      Init.contracts.FixedSupplyToken = TruffleContract(TokenArtifact);
-    
-      // Set the provider for our contract
-      Init.contracts.FixedSupplyToken.setProvider(Init.web3Provider);
-      
-    });    
-    $.getJSON('Personal.json', function (data) {
-      // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var PersonalArtifact = data;
-      Init.contracts.Personal = TruffleContract(PersonalArtifact);
-
-      // Set the provider for our contract
-      Init.contracts.Personal.setProvider(Init.web3Provider);
-
-      // Use our contract to retrieve and mark the adopted pets
-      LogIn.bindEvents();
+    await Init.init();
+    LogIn.bindEvents();
       LogIn.getAccountList();
-    });
   },
-
 
   getAccountList: function () {
     web3.eth.getAccounts(function (e, r) {
@@ -40,8 +16,6 @@ LogIn = {
   },
 
   refreshBalance: async function (list) {
-
-
     var token;
     var html;
     var ether;
@@ -51,11 +25,7 @@ LogIn = {
       web3.eth.getBalance(list[i], (err, balance) => {
         ether = web3.fromWei(balance, "ether");
       });       
-      await Init.contracts.FixedSupplyToken.deployed().then(function(instance){
-        
-        var tokenInstance = instance;
-        return tokenInstance.balanceOf(list[i],{from:list[i]});
-      }).then(function(result) {
+      await Init.OSDCTokenInstance.balanceOf(list[i],{from:list[i]}).then(function(result) {
         console.log(result);
         if(result.c[0] == undefined){
           token = 0;
@@ -96,11 +66,9 @@ LogIn = {
 
     var address = $('#selectAccount').val();
     if (address == ''){ alert('Please select address'); return;}
-    
     var loginForm = $('#loginform');
-    Init.contracts.Personal.deployed().then(function (instance) {
-      return instance.getMemberInfo({ from: address });
-    }).then(function (result) {
+    
+    Init.personalInstance.getMemberInfo({from:address}).then(function (result) {
       console.log(result);
       if (result != 0x0) {
 

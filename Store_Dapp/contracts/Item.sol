@@ -1,14 +1,12 @@
-pragma solidity ^0.4.24;
-// pragma experimental ABIEncoderV2;
+pragma solidity >=0.4.21 <0.7.0;
+
 import './Ownable.sol';
 import './Personal.sol';
-import './BlackList.sol';
 import './Token.sol';
 
 contract Item is Ownable{
     
     Personal personal;
-    BlackList blackList;
     OSDCToken basictoken;
     
     struct ItemInfo{
@@ -23,19 +21,18 @@ contract Item is Ownable{
     uint public ItemCode;
 
     event  ItemInfos(uint code, string name,string imgsrc, uint cost);
-    event  makeItem(address __basicTokenAddr, address _BlackListAddr, address _personaladdr);
-    constructor(address __basicTokenAddr, address _BlackListAddr, address _personaladdr) public {
+    event  makeItem(address __fixedTokenAddr, address _personaladdr);
+    constructor(address __fixedTokenAddr, address _personaladdr) public {
         index = 0;
         ItemCode = 0;
-        basictoken = OSDCToken(__basicTokenAddr);
-        blackList = BlackList(_BlackListAddr);
+        basictoken = OSDCToken(__fixedTokenAddr);
         personal = Personal(_personaladdr);
-        emit makeItem(__basicTokenAddr, _BlackListAddr, _personaladdr);
+        emit makeItem(__fixedTokenAddr, _personaladdr);
     }
 
 // Adopting a items
     function itemBuy(address _buyer, uint _index, uint _cost) public returns(bool) {
-        blackList.checkBlackList(_buyer);
+        personal.checkBlackList(_buyer);
         basictoken.SubToken(_buyer, _cost);
         personalitems[_buyer].push(ItemArray[_index]);
         
@@ -109,11 +106,9 @@ contract Item is Ownable{
     }
     
     function withdrawal(address _buyer) public {
-        personal.withdrawal(_buyer);
         delete personalitems[_buyer];
+        personal.withdrawal(_buyer);
         basictoken.withdrawal(_buyer);
-        blackList.withdrawal(_buyer);
-        
     }
     
 

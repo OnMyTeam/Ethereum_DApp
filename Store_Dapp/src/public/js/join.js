@@ -3,24 +3,10 @@ Join = {
     contracts: {},
   
     init: async function() {
-        Init.init();
-      return Join.initContract();
+      await Init.init();
+      Join.getAccountInfo();
     },
   
-    initContract: function() {
-        $.getJSON('Personal.json', function(data) {
-            // Get the necessary contract artifact file and instantiate it with truffle-contract
-            var PersonalArtifact = data;
-            Init.contracts.Personal = TruffleContract(PersonalArtifact);
-          
-            // Set the provider for our contract
-            Init.contracts.Personal.setProvider(Init.web3Provider);
-          
-            // Use our contract to retrieve and mark the adopted pets
-            Join.getAccountInfo();
-          });
-    },
-
     getAccountInfo: function() {
         web3.eth.getAccounts(function(error,accounts){
             Join.makeSelect(accounts);
@@ -53,27 +39,23 @@ Join = {
         ether = web3.fromWei(balance, "ether").toFixed(2);
         $('#etherValue').text(ether + " ETH");
       }); 
-
-      Init.contracts.Personal.deployed().then(function (instance) {
-        return instance.getMemberInfo({ from: address });
-      }).then(function (result) {
-        
+      
+      Init.personalInstance.getMemberInfo({from:address}).then(function (result) {
         if (result) {
           $('#register').html("<font color='green'><b>YES</b></font>");
         }
         else {
           $('#register').html("<font color='red'>NO</font>");
         }
+      }).catch(function(error){
+        console.log(error);
       });        
         
     },
 
     join: function(){
       var address = $('#address').text();        
-      Init.contracts.Personal.deployed().then(function(instance){
-          let PersonalInstance = instance;
-          return PersonalInstance.register({from:address})
-      }).then(function(result){
+      Init.personalInstance.register({from:address}).then(function(result){
           console.log(result);
           alert("Successfully Register!");
           $('#register').html("<font color='green'><b>YES</b></font>");

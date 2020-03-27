@@ -1,5 +1,5 @@
+pragma solidity >=0.4.21 <0.7.0;
 
-pragma solidity ^0.4.24;
 import './Personal.sol';
 import './Ownable.sol';
 
@@ -15,8 +15,6 @@ contract ERC20Interface {
     event Approval(address indexed tokenOwner, address indexed spender, uint tokens);
 }
 
-
-
 contract OSDCToken is ERC20Interface, Ownable {
     Personal personal;
     uint public totalSupply;
@@ -26,10 +24,11 @@ contract OSDCToken is ERC20Interface, Ownable {
    
     mapping(address => uint256) public balaceOf;
     mapping(address => mapping(address => uint256)) public allowence;
-    
+
     event Transfer(address indexed _from, address indexed _to, uint tokens);
     event Approval(address indexed _tokenOwner, address indexed _spender, uint tokens);
     event Burm ( address indexed from, uint256 value);
+
     constructor(address _personalAdd) public {
         personal = Personal(_personalAdd);
         symbol = "OSDC";
@@ -45,14 +44,11 @@ contract OSDCToken is ERC20Interface, Ownable {
     
     function balanceOf(address tokenOwner) public view returns (uint balance){
         return balaceOf[tokenOwner];
-        
     }
     
     function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
         return allowence[tokenOwner][spender];
     }
-    
-
     
     function _transfer (address _from, address _to, uint256 _value) internal {
         require(_to != 0x0);
@@ -93,14 +89,11 @@ contract OSDCToken is ERC20Interface, Ownable {
         balaceOf[msg.sender] -= _value;
         totalSupply -= _value;
         emit Burm(msg.sender,_value);
+
         return true;
-        
     }
 
-    // ------------------------------------------------------------------------
-    // Don't accept ETH
-    // ------------------------------------------------------------------------
-    function () public payable {
+    function() public payable {
         
         uint256 amount = msg.value;
         require(balaceOf[owner] >= amount);
@@ -110,29 +103,24 @@ contract OSDCToken is ERC20Interface, Ownable {
 
         emit Transfer(owner, msg.sender, amount); // Broadcast a message to the blockchain
 
-        //Transfer ether to fundsWallet
         owner.transfer(msg.value);
     }
-    // ------------------------------------------------------------------------
-    // Owner can transfer out any accidentally sent ERC20 tokens
-    // ------------------------------------------------------------------------
+    
     function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
         return ERC20Interface(tokenAddress).transfer(owner, tokens);
     }
 
     function SubToken(address buyer, uint tokens) public {
-        
         require (tokens <= balaceOf[buyer], "need token");
         personal.updateHistory(buyer, tokens);
         uint8 rate = uint8(personal.getCashbackRate(buyer));
         uint cashBack = tokens / 100 * rate;
         uint ntokens = tokens - cashBack;
         balaceOf[buyer] -= ntokens;
-        
     }
+
     function withdrawal(address buyer) public {
         balaceOf[buyer] = 0;
-    }    
-    
-    
+    }
+
 }
