@@ -3,10 +3,12 @@ pragma solidity  ^0.4.24;
 contract BlackList {
     mapping (address => int8) public BlackList;
     address[] internal BlackListKey;
+    
     // 이벤트 알림
     event BlackListed(address indexed target);
     event DeleteFromBlackList(address indexed target);
     event eventcheckBlackList(int8 sender);
+
     // BlackList register
     function setBlackList(address _addr) public  {
         require(BlackList[_addr] == 0, "already BlackList");

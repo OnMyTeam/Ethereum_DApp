@@ -1,4 +1,5 @@
-pragma solidity  ^0.4.24;
+pragma solidity ^0.4.24;
+// pragma experimental ABIEncoderV2;
 import './Ownable.sol';
 import './Personal.sol';
 import './BlackList.sol';
@@ -22,14 +23,14 @@ contract Item is Ownable{
     uint public ItemCode;
 
     event  ItemInfos(uint code, string name,string imgsrc, uint cost);
-    event  makeItem(address __fixedTokenAddr, address _BlackListAddr, address _personaladdr);
-    constructor(address __fixedTokenAddr, address _BlackListAddr, address _personaladdr) public {
+    event  makeItem(address __basicTokenAddr, address _BlackListAddr, address _personaladdr);
+    constructor(address __basicTokenAddr, address _BlackListAddr, address _personaladdr) public {
         index = 0;
         ItemCode = 0;
-        basictoken = OSDCToken(__fixedTokenAddr);
+        basictoken = OSDCToken(__basicTokenAddr);
         blackList = BlackList(_BlackListAddr);
         personal = Personal(_personaladdr);
-        emit makeItem(__fixedTokenAddr, _BlackListAddr, _personaladdr);
+        emit makeItem(__basicTokenAddr, _BlackListAddr, _personaladdr);
     }
 
 // Adopting a items

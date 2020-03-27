@@ -115,6 +115,7 @@ Mall = {
 
         return itemInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000});
       }).then(function(result) {
+        console.log(result);
         var myItemList = result.split('//');
 
         for (var i = 0; i < myItemList.length; i++) {
@@ -136,7 +137,7 @@ Mall = {
           
         }
       }).catch(function(err) {
-        console.log(err.message);
+        console.log(err);
       });
 
     },
