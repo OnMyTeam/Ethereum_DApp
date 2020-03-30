@@ -1,5 +1,4 @@
 pragma solidity >=0.4.21 <0.7.0;
-pragma experimental ABIEncoderV2;
 import './Ownable.sol';
 import './Personal.sol';
 import './Token.sol';
@@ -15,78 +14,89 @@ contract Item is Ownable{
         string name;
         string imgsrc;
     }
-    mapping(uint=> ItemInfo) public ItemArray;
-    mapping(address=> ItemInfo[]) public personalitems;
+    mapping(uint=> ItemInfo) public itemArray;
+    mapping(address=> ItemInfo[]) public personalItems;
     uint public index;
-    uint public ItemCode;
+    uint public itemCode;
 
     event  ItemInfos(uint code, string name,string imgsrc, uint cost);
-    event  makeItem(address __basictokenAddr, address _personaladdr);
-    constructor(address __basictokenAddr, address _personaladdr) public {
+    event  makeItem(address __basictokenAddr, address _personalAddr);
+    constructor(address __basictokenAddr, address _personalAddr) public {
         index = 0;
-        ItemCode = 0;
+        itemCode = 0;
         basictoken = OSDCToken(__basictokenAddr);
-        personal = Personal(_personaladdr);
-        emit makeItem(__basictokenAddr, _personaladdr);
+        personal = Personal(_personalAddr);
+        emit makeItem(__basictokenAddr, _personalAddr);
     }
 
-// Adopting a items
+    // Adopting a items
     function itemBuy(address _buyer, uint _index, uint _cost) public returns(bool) {
         personal.checkBlackList(_buyer);
         basictoken.SubToken(_buyer, _cost);
-        personalitems[_buyer].push(ItemArray[_index]);
+        personalItems[_buyer].push(itemArray[_index]);
         
-        emit ItemInfos(ItemArray[_index].code, ItemArray[_index].name,ItemArray[_index].imgsrc, ItemArray[_index].cost);
+        emit ItemInfos(itemArray[_index].code, itemArray[_index].name,itemArray[_index].imgsrc, itemArray[_index].cost);
         return true;
     }
     // owner
     function registerItem(string _name, string _imgsrc, uint _cost) public returns(bool success){
         
         
-        ItemArray[index]=ItemInfo(ItemCode,_cost, _name,_imgsrc);
+        itemArray[index]=ItemInfo(itemCode,_cost, _name,_imgsrc);
         index = index + 1;
-        ItemCode = ItemCode + 1;
+        itemCode = itemCode + 1;
 
         return true;
     }
     function deleteMyItem(address buyer, uint index) public returns(bool success) {
 
-        delete personalitems[buyer][index];
+        delete personalItems[buyer][index];
         return true;
     }
     function deleteItem(uint _code) public returns(bool success) {
 
-        delete ItemArray[_code];
+        delete itemArray[_code];
         for( uint i=_code; i < index - 1; i++){
 
-            ItemArray[i] = ItemArray[i+1];
+            itemArray[i] = itemArray[i+1];
         }
-        delete ItemArray[index - 1];
+        delete itemArray[index - 1];
         index = index - 1;
         return true;
     }
     function getItems() public view returns(string memory){
-        string memory citems;
+
+        string memory itemsJson = '[';
         for( uint i = 0; i <= index; i++){
-            string memory ItemCode = uint2str(ItemArray[i].code);
-            string memory cost = uint2str(ItemArray[i].cost);
-            string memory imgsrc = ItemArray[i].imgsrc;
-            string memory name = ItemArray[i].name;
+            string memory itemCode = uint2str(itemArray[i].code);
+            string memory cost = uint2str(itemArray[i].cost);
+            string memory imgsrc = itemArray[i].imgsrc;
+            string memory name = itemArray[i].name;
             string memory id = uint2str(i);
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
             }
-            string memory val = string(abi.encodePacked(ItemCode, ",", cost, ",", imgsrc, ",", name, ",", id));
-            citems = string(abi.encodePacked(citems, val, "//"));
+            itemsJson = string(abi.encodePacked(itemsJson, '{ "itemCode" : ',itemCode, ','));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "cost" :',cost, ','));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "imgsrc" : "',imgsrc, '",'));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "name" : "',name, '",'));
+            if(i == index - 1){
+                itemsJson = string(abi.encodePacked(itemsJson, ' "id" :',id, '}'));    
+            
+            }else{
+                itemsJson = string(abi.encodePacked(itemsJson, ' "id" :',id, '},'));    
+            }
+            
         }
-        return citems;
+        itemsJson = string(abi.encodePacked(itemsJson, ']'));
+        return itemsJson;
     } 
     function getMyItems(address buyer) public view returns(string memory){
-        ItemInfo[] storage items = personalitems[buyer];
-        string memory citems;
+        ItemInfo[] storage items = personalItems[buyer];
+        string memory itemsJson = '[';
         
         for( uint i = 0; i<items.length; i++){
-            string memory ItemCode = uint2str(items[i].code);
+            string memory itemCode = uint2str(items[i].code);
             string memory cost = uint2str(items[i].cost);
             string memory imgsrc = items[i].imgsrc;
             string memory name = items[i].name;
@@ -95,18 +105,25 @@ contract Item is Ownable{
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
             }
-            string memory val = string(abi.encodePacked(ItemCode, ",", cost, ",", imgsrc, ",", name, ",", id));
             
-            citems = string(abi.encodePacked(citems, val, "//"));
+            itemsJson = string(abi.encodePacked(itemsJson, '{ "itemCode" : ', itemCode, ','));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "cost" : ', cost, ','));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "imgsrc" : "', imgsrc, '",'));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "name" : "', name, '",'));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "id" :', id, '},'));
+
         }
-        return citems;
+        itemsJson = string(abi.encodePacked(itemsJson, '{ "itemCode" : "X"}'));
+   
+        itemsJson = string(abi.encodePacked(itemsJson, ']'));
+        return itemsJson;
     }    
     function getnum() public view returns( uint){
         return index;
     }
     
     function withdrawal(address _buyer) public {
-        delete personalitems[_buyer];
+        delete personalItems[_buyer];
         personal.withdrawal(_buyer);
         basictoken.withdrawal(_buyer);
     }

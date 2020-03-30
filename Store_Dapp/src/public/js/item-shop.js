@@ -49,20 +49,22 @@ Mall = {
     },
 
 
-    getMyitemList: function() {
-      var itemcode;
+    getMyItemList: function() {
+      var nitemCode;
 
       Init.itemInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000}).then(function(result) {
-        var myItemList = result.split('//');
-
-        for (var i = 0; i < myItemList.length; i++) {
-          if(myItemList[i] == '') continue;
-          var itemInfos = myItemList[i].split(',');
-          var itemid = itemInfos[0];
+        const JSONItemlist = JSON.parse(result);
+        if (JSONItemlist[0].itemCode == 'X') {
+          return;
+        }
+        for (var i = 0; i < JSONItemlist.length; i++) {
+          if(JSONItemlist[i] == '') continue;
+          var itemInfos = JSONItemlist[i];
+          var itemCode = itemInfos.itemCode;
 
           $('.single-shop-product').each(function (index, item){
-            itemcode = $(item).data('itemcode');
-            if(itemcode == itemid){
+            nitemCode = $(item).data('itemcode');
+            if(nitemCode == itemCode){
               $(item).find('button').text('Success').attr('disabled', true);
               $(item).find('.add_to_cart_button').css('background-color', 'green');             
             }
@@ -78,37 +80,42 @@ Mall = {
       var itemTemplate = $('#itemTemplate');
 
       Init.itemInstance.getItems({from: Mall.address, gas:6000000}).then(function(result) {
-        var result = result.split('//');
+        console.log(result);
+        const JSONItemlist = JSON.parse(result);
+        console.log(JSON.parse(result));
+        
 
-        if(result == ''){
+        if(JSONItemlist == ''){
           html = "<center><img src='public/images/no_product.png'/></center>";
           itemrow.html(html);
           return;
         }
-        for (i = 0; i < result.length; i++) {
-          if(result[i] == ''){
+        for (i = 0; i < JSONItemlist.length; i++) {
+          console.log(JSONItemlist[i]);
+          if(JSONItemlist[i] == ''){
             continue;
           }
-          var itemInfos = result[i].split(',');
-          var itemtitle = itemInfos[3];
-          var itemid = itemInfos[0];
-          var index = itemInfos[4];
-          var itemcost = itemInfos[1];
-          var imgfile = itemInfos[2];
-          
-          itemTemplate.find('.item-title').text(itemtitle);
-          itemTemplate.find('img').attr('src', 'public/images/' + imgfile);
+          var itemInfos = JSONItemlist[i];
+          var itemName = itemInfos.name;
+          var itemCode = itemInfos.itemCode;
+          var itemid = itemInfos.id;
+          var itemcost = itemInfos.cost;
+          var imgsrc = itemInfos.imgsrc;
+          // console.log(itemInfos);
+          // console.log(imgfile);
+          itemTemplate.find('.item-name').text(itemName);
+          itemTemplate.find('img').attr('src', 'public/images/' + imgsrc);
           itemTemplate.find('.product-carousel-price-sub').text(itemcost+' osdc');
-          itemTemplate.find('.single-shop-product').attr('data-itemcode', itemid);          
-          itemTemplate.find('.add_to_cart_button').attr('data-title', itemtitle);
-          itemTemplate.find('.add_to_cart_button').attr('data-id', index);
-          itemTemplate.find('.add_to_cart_button').attr('data-itemcode', itemid);
+          itemTemplate.find('.single-shop-product').attr('data-itemcode', itemCode);          
+          itemTemplate.find('.add_to_cart_button').attr('data-name', itemName);
+          itemTemplate.find('.add_to_cart_button').attr('data-id', itemid);
+          itemTemplate.find('.add_to_cart_button').attr('data-itemcode', itemCode);
           itemTemplate.find('.add_to_cart_button').attr('data-cost', itemcost);
-          itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' +imgfile);
+          itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' +imgsrc);
 
           itemrow.append(itemTemplate.html());
         }
-        Mall.getMyitemList();
+        Mall.getMyItemList();
         Mall.getOwner();
       }).catch(function(err) {
         console.log(err.message);
@@ -138,7 +145,7 @@ Mall = {
       Init.itemInstance.itemBuy(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000}).then(function(result) {
         alert("Success!");
         Mall.getTokenInfo();
-        Mall.getMyitemList();
+        Mall.getMyItemList();
         Mall.getGradeInfo();
       }).catch(function(err) {
         console.log(err.message);

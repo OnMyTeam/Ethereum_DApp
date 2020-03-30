@@ -161,7 +161,7 @@ Mypage = {
     var index = $(event.target).data('id');
 
     Init.itemInstance.deleteMyItem(Mypage.address, index, { from: Mypage.address }).then(function (result) {
-      Mypage.getItemMyList();
+      Mypage.getMyItemList();
     }).catch(function (error) {
       console.log(error);
     })
@@ -178,69 +178,75 @@ Mypage = {
   },
 
   getItemList: function (t) {
+    
     var itemrow = $('#ItemCotent');
     var itemTemplate = $('#detailItemContent');
     var html = '';
    
     Init.itemInstance.getItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
-      if (result == '') {
+      
+      const JSONItemlist = JSON.parse(result);
+
+      if (JSONItemlist == '') {
         html += "<tr class='cart_item'>";
         html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
       }
-      var itemlist = result.split('//');
-      for (i = 0; i < itemlist.length; i++) {
-        if (itemlist[i] == '') {
+      
+      for (i = 0; i < JSONItemlist.length; i++) {
+        if (JSONItemlist[i] == '') {
           continue;
         }
-        var itemInfos = itemlist[i].split(',');
-        var itemtitle = itemInfos[3];
-        var itemid = itemInfos[0];
-        var itemcost = itemInfos[1];
-        var imgfile = itemInfos[2];
-        var itemIndex = itemInfos[4];
+        var itemInfos = JSONItemlist[i];
+        var itemName = itemInfos.name;
+        var itemCode = itemInfos.itemCode;
+        var itemid = itemInfos.id;
+        var itemcost = itemInfos.cost;
+        var imgsrc = itemInfos.imgsrc;
 
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgfile);
-        itemTemplate.find('.removeItem').attr('data-id', itemid);
-        itemTemplate.find('.removeItem').attr('data-index', itemIndex);
-        itemTemplate.find('.product-name').text(itemtitle);
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgsrc);
+        itemTemplate.find('.removeItem').attr('data-itemcode', itemCode);
+        itemTemplate.find('.removeItem').attr('data-index', itemid);
+        itemTemplate.find('.product-name').text(itemName);
         itemTemplate.find('.product-price').text(itemcost + ' osdc');
 
         html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
       }
       itemrow.html(html);
-      Mypage.getItemMyList();
+      Mypage.getMyItemList();
     }).catch(function (err) {
       console.log(err.message);
     });
   },
   
-  getItemMyList: function (t) {
+  getMyItemList: function (t) {
     var itemrow = $('#historyContent');
     var itemTemplate = $('#historyDetailContent');
 
     var html = '';
     Init.itemInstance.getMyItems(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
-      if (result == '') {
+      const JSONItemlist = JSON.parse(result);
+      console.log(JSONItemlist);
+      if (JSONItemlist[0].itemCode == 'X') {
         html += "<tr class='cart_item'>";
         html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
+        
       }
-      var itemlist = result.split('//');
-      for (i = 0; i < itemlist.length; i++) {
-        if (itemlist[i] == '') {
+      
+      for (i = 0; i < JSONItemlist.length; i++) {
+        if (JSONItemlist[i].itemCode == 'X') {
           continue;
         }
-        var itemInfos = itemlist[i].split(',');
-        var itemtitle = itemInfos[3];
-        var itemid = itemInfos[0];
-        var itemcost = itemInfos[1];
-        var imgfile = itemInfos[2];
-        var itemIndex = itemInfos[4];
-
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgfile);
-        itemTemplate.find('.removehistory').attr('data-id', itemIndex);
-        itemTemplate.find('.product-name').text(itemtitle);
+        var itemInfos = JSONItemlist[i];
+        var itemName = itemInfos.name;
+        var itemCode = itemInfos.itemCode;
+        var itemcost = itemInfos.cost;
+        var imgsrc = itemInfos.imgsrc;
+        var itemid = itemInfos.id;
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgsrc);
+        itemTemplate.find('.removehistory').attr('data-id', itemid);
+        itemTemplate.find('.product-name').text(itemName);
         itemTemplate.find('.product-price').text(itemcost + ' osdc');
         html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
       }
