@@ -113,7 +113,8 @@ Mypage = {
 
     Init.personalInstance.getMemberList().then(function (list) {
       for (var i = 0; i < list.length; i++) {
-        if (list[i] != 0x0) {
+        console.log("list[i]" + Mypage.address);
+        if (list[i] != Mypage.address || list[i] != 0x0 ) {
           itemTemplate.find('.add_to_BlackList_button').attr('data-id', i);
           itemTemplate.find('.add_to_BlackList_button').attr('data-address', list[i]);
           itemTemplate.find('.product-name').text(list[i]);
