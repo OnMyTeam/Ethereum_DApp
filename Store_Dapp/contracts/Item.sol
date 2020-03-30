@@ -1,5 +1,5 @@
 pragma solidity >=0.4.21 <0.7.0;
-
+pragma experimental ABIEncoderV2;
 import './Ownable.sol';
 import './Personal.sol';
 import './Token.sol';
@@ -21,13 +21,13 @@ contract Item is Ownable{
     uint public ItemCode;
 
     event  ItemInfos(uint code, string name,string imgsrc, uint cost);
-    event  makeItem(address __fixedTokenAddr, address _personaladdr);
-    constructor(address __fixedTokenAddr, address _personaladdr) public {
+    event  makeItem(address __basictokenAddr, address _personaladdr);
+    constructor(address __basictokenAddr, address _personaladdr) public {
         index = 0;
         ItemCode = 0;
-        basictoken = OSDCToken(__fixedTokenAddr);
+        basictoken = OSDCToken(__basictokenAddr);
         personal = Personal(_personaladdr);
-        emit makeItem(__fixedTokenAddr, _personaladdr);
+        emit makeItem(__basictokenAddr, _personaladdr);
     }
 
 // Adopting a items
@@ -81,25 +81,25 @@ contract Item is Ownable{
         }
         return citems;
     } 
-    function getMyItems(address buyer) public view returns(string memory){
-        ItemInfo[] memory items = personalitems[buyer];
-        string memory citems;
+    function getMyItems(address buyer) public view returns(ItemInfo[] memory){
+        ItemInfo[] storage items = personalitems[buyer];
+        // string memory citems;
         
-        for( uint i = 0; i<items.length; i++){
-            string memory ItemCode = uint2str(items[i].code);
-            string memory cost = uint2str(items[i].cost);
-            string memory imgsrc = items[i].imgsrc;
-            string memory name = items[i].name;
-            string memory id = uint2str(i);
+        // for( uint i = 0; i<items.length; i++){
+        //     string memory ItemCode = uint2str(items[i].code);
+        //     string memory cost = uint2str(items[i].cost);
+        //     string memory imgsrc = items[i].imgsrc;
+        //     string memory name = items[i].name;
+        //     string memory id = uint2str(i);
             
-            if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
-                continue;
-            }
-            string memory val = string(abi.encodePacked(ItemCode, ",", cost, ",", imgsrc, ",", name, ",", id));
+        //     if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
+        //         continue;
+        //     }
+        //     string memory val = string(abi.encodePacked(ItemCode, ",", cost, ",", imgsrc, ",", name, ",", id));
             
-            citems = string(abi.encodePacked(citems, val, "//"));
-        }
-        return citems;
+        //     citems = string(abi.encodePacked(citems, val, "//"));
+        // }
+        return items;
     }    
     function getnum() public view returns( uint){
         return index;

@@ -3,11 +3,8 @@ pragma solidity >=0.4.21 <0.7.0;
 import './Ownable.sol';
 
 contract Personal is Ownable{
-    //회원 관련 변수
-    struct Person{
-        address account;
-        uint tokens;
-    }
+
+
     struct PersonalStatus {
         string name;
         uint times;
