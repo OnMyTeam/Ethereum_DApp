@@ -81,25 +81,25 @@ contract Item is Ownable{
         }
         return citems;
     } 
-    function getMyItems(address buyer) public view returns(ItemInfo[] memory){
+    function getMyItems(address buyer) public view returns(string memory){
         ItemInfo[] storage items = personalitems[buyer];
-        // string memory citems;
+        string memory citems;
         
-        // for( uint i = 0; i<items.length; i++){
-        //     string memory ItemCode = uint2str(items[i].code);
-        //     string memory cost = uint2str(items[i].cost);
-        //     string memory imgsrc = items[i].imgsrc;
-        //     string memory name = items[i].name;
-        //     string memory id = uint2str(i);
+        for( uint i = 0; i<items.length; i++){
+            string memory ItemCode = uint2str(items[i].code);
+            string memory cost = uint2str(items[i].cost);
+            string memory imgsrc = items[i].imgsrc;
+            string memory name = items[i].name;
+            string memory id = uint2str(i);
             
-        //     if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
-        //         continue;
-        //     }
-        //     string memory val = string(abi.encodePacked(ItemCode, ",", cost, ",", imgsrc, ",", name, ",", id));
+            if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
+                continue;
+            }
+            string memory val = string(abi.encodePacked(ItemCode, ",", cost, ",", imgsrc, ",", name, ",", id));
             
-        //     citems = string(abi.encodePacked(citems, val, "//"));
-        // }
-        return items;
+            citems = string(abi.encodePacked(citems, val, "//"));
+        }
+        return citems;
     }    
     function getnum() public view returns( uint){
         return index;
