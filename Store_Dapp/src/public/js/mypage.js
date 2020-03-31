@@ -5,24 +5,28 @@ Mypage = {
   ownAdress: 0x0,
   ownerYN: "N",
 
-  init: async function () {
+  init: async function() {
     await Init.init();
     Mypage.address = address;
-    Mypage.getOwner();
-    Mypage.getItemList();
-    Mypage.getMemberList();
-    Mypage.getBlackList();
     Mypage.getAccountList();
+    Mypage.getPersonalFunction();
   },
 
-  getAccountList: function () {
+  getAccountList: function() {
     Mypage.getGradeInfo();
     Mypage.getAccountInfo();
     Mypage.getTokenInfo();
     Mypage.bindEvents();
   },
+
+  getPersonalFunction: function() {
+    Mypage.getOwner();
+    Mypage.getItemList();
+    Mypage.getMemberList();
+    Mypage.getBlacklist();
+  },
   
-  getGradeInfo: function () {
+  getGradeInfo: function() {
     var personalInstance;
 
     Init.personalInstance.getGrade(Mypage.address, { from: Mypage.address }).then(function (result) {
@@ -36,7 +40,7 @@ Mypage = {
     });
   },
 
-  getAccountInfo: function () {
+  getAccountInfo: function() {
     document.getElementById('accountAddr').innerHTML = Mypage.address;
     web3.eth.getBalance(Mypage.address, function (error, balance) {
       var ether = web3.fromWei(balance, "ether");
@@ -44,7 +48,7 @@ Mypage = {
     });
   },
 
-  getTokenInfo: function () {
+  getTokenInfo: function() {
     var account = document.getElementById('accountAddr').innerText;
     Init.OSDCTokenInstance.balanceOf(account, { from: account }).then(function (result) {
       document.getElementById('tokenValue').innerText = result.c;
@@ -59,27 +63,27 @@ Mypage = {
         $("#itemRegister").css("display", "block");
         $("#itemRegisterList").css("display", "block");
         $("#memberList").css("display", "block");
-        $("#BlackList").css("display", "block");
+        $("#blacklist").css("display", "block");
       }
       else {
         $("#accountAddrAdmin").text('Account Address(member)');
       }
-    }).catch(function (err) {
+    }).catch(function(err) {
       console.log(err.message);
     });
   },
 
-  bindEvents: function () {
+  bindEvents: function() {
     $(document).on('click', '.add_to_token_button', Mypage.buyToken);
     $(document).on('click', '.removehistory', Mypage.deleteMyItem);
     $(document).on('click', '.removeItem', Mypage.deleteItem);
-    $(document).on('click', '.removeBlackList', Mypage.deleteBlackList);
+    $(document).on('click', '.removeBlacklist', Mypage.deleteBlacklist);
     $(document).on('click', '.add_to_item_button', Mypage.registerItem);
-    $(document).on('click', '.add_to_BlackList_button', Mypage.registerBlackList);
+    $(document).on('click', '.add_to_Blacklist_button', Mypage.registerBlacklist);
     $(document).on('click', '.withdrawal_button', Mypage.withdrawal);
   },
 
-  buyToken: function () {
+  buyToken: function() {
     var token_amount = $('#tokenAmount').val();
     if (token_amount <= 0) { alert("1 이상을 입력하시오."); return; }
     $('#tokenAmount').val(0);
@@ -93,20 +97,20 @@ Mypage = {
       });
   },
 
-  registerBlackList: function (event) {
+  registerBlacklist: function(event) {
     var account = $(event.target).data('address');
 
-    Init.personalInstance.setBlackList(account, { from: Mypage.address }).then(function (result) {
-      Mypage.getBlackList();
+    Init.personalInstance.setBlacklist(account, { from: Mypage.address }).then(function (result) {
+      Mypage.getBlacklist();
     }).catch(function (error) {
-      if (error.message == 'VM Exception while processing transaction: revert already BlackList') {
-        alert('Already register BlackList');
+      if (error.message == 'VM Exception while processing transaction: revert already blacklist') {
+        alert('Already register blacklist');
       }
       console.log(error.message);
     });
   },
   
-  getMemberList: function () {
+  getMemberList: function() {
     var itemrow = $('#memberListContent');
     var itemTemplate = $('#detailmemberListContent');
     var html = '';
@@ -115,8 +119,8 @@ Mypage = {
       for (var i = 0; i < list.length; i++) {
         console.log("list[i]" + Mypage.address);
         if (list[i] != Mypage.address || list[i] != 0x0 ) {
-          itemTemplate.find('.add_to_BlackList_button').attr('data-id', i);
-          itemTemplate.find('.add_to_BlackList_button').attr('data-address', list[i]);
+          itemTemplate.find('.add_to_Blacklist_button').attr('data-id', i);
+          itemTemplate.find('.add_to_Blacklist_button').attr('data-address', list[i]);
           itemTemplate.find('.product-name').text(list[i]);
 
           html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
@@ -126,17 +130,17 @@ Mypage = {
     });
   },
 
-  getBlackList: function () {
-    var itemrow = $('#BlackListContent');
-    var itemTemplate = $('#detailBlackListContent');
+  getBlacklist: function() {
+    var itemrow = $('#BlacklistContent');
+    var itemTemplate = $('#detailBlacklistContent');
     var html = '';
     
-    Init.personalInstance.getBlackList().then(function (list) {
+    Init.personalInstance.getBlacklist().then(function (list) {
       for (var i = 0; i < list.length; i++) {
         if (list[i] != 0x0) {
 
-          itemTemplate.find('.removeBlackList').attr('data-id', i);
-          itemTemplate.find('.removeBlackList').attr('data-address', list[i]);
+          itemTemplate.find('.removeBlacklist').attr('data-id', i);
+          itemTemplate.find('.removeBlacklist').attr('data-address', list[i]);
           itemTemplate.find('.product-name').text(list[i]);
 
           html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
@@ -146,18 +150,18 @@ Mypage = {
     });
   },
 
-  deleteBlackList: function () {
+  deleteBlacklist: function() {
     var index = $(event.target).data('id');
     var address = $(event.target).data('address');
 
-    Init.personalInstance.deleteBlackList(address, index, { from: Mypage.address }).then(function (result) {
-      Mypage.getBlackList();
+    Init.personalInstance.deleteBlacklist(address, index, { from: Mypage.address }).then(function (result) {
+      Mypage.getBlacklist();
     }).catch(function (error) {
       console.log(error);
     })
   },
 
-  deleteMyItem: function (event) {
+  deleteMyItem: function(event) {
     var index = $(event.target).data('id');
 
     Init.itemInstance.deleteMyItem(Mypage.address, index, { from: Mypage.address }).then(function (result) {
@@ -167,7 +171,7 @@ Mypage = {
     })
   },
 
-  deleteItem: function (event) {
+  deleteItem: function(event) {
     var index = $(event.target).data('index');
 
     Init.itemInstance.deleteItem(index, { from: Mypage.address, gas: 3000000 }).then(function (result) {
@@ -177,14 +181,12 @@ Mypage = {
     })
   },
 
-  getItemList: function (t) {
-    
+  getItemList: function() {
     var itemrow = $('#ItemCotent');
     var itemTemplate = $('#detailItemContent');
     var html = '';
    
     Init.itemInstance.getItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
-      
       const JSONItemlist = JSON.parse(result);
 
       if (JSONItemlist == '') {
@@ -193,22 +195,17 @@ Mypage = {
         html += "</tr>";
       }
       
-      for (i = 0; i < JSONItemlist.length; i++) {
+      for (i = 0; i<JSONItemlist.length; i++) {
         if (JSONItemlist[i] == '') {
           continue;
         }
-        var itemInfos = JSONItemlist[i];
-        var itemName = itemInfos.name;
-        var itemCode = itemInfos.itemCode;
-        var itemid = itemInfos.id;
-        var itemcost = itemInfos.cost;
-        var imgsrc = itemInfos.imgsrc;
 
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgsrc);
-        itemTemplate.find('.removeItem').attr('data-itemcode', itemCode);
-        itemTemplate.find('.removeItem').attr('data-index', itemid);
-        itemTemplate.find('.product-name').text(itemName);
-        itemTemplate.find('.product-price').text(itemcost + ' osdc');
+        var itemInfos = JSONItemlist[i];
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgsrc);
+        itemTemplate.find('.removeItem').attr('data-itemcode', itemInfos.itemCode);
+        itemTemplate.find('.removeItem').attr('data-index', itemInfos.id);
+        itemTemplate.find('.product-name').text(itemInfos.name);
+        itemTemplate.find('.product-price').text(itemInfos.cost + ' osdc');
 
         html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
       }
@@ -219,7 +216,7 @@ Mypage = {
     });
   },
   
-  getMyItemList: function (t) {
+  getMyItemList: function() {
     var itemrow = $('#historyContent');
     var itemTemplate = $('#historyDetailContent');
 
@@ -231,23 +228,16 @@ Mypage = {
         html += "<tr class='cart_item'>";
         html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
-        
       }
       
       for (i = 0; i < JSONItemlist.length; i++) {
-        if (JSONItemlist[i].itemCode == 'X') {
-          continue;
-        }
+        if (JSONItemlist[i].itemCode == 'X') { continue; }
         var itemInfos = JSONItemlist[i];
-        var itemName = itemInfos.name;
-        var itemCode = itemInfos.itemCode;
-        var itemcost = itemInfos.cost;
-        var imgsrc = itemInfos.imgsrc;
-        var itemid = itemInfos.id;
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + imgsrc);
-        itemTemplate.find('.removehistory').attr('data-id', itemid);
-        itemTemplate.find('.product-name').text(itemName);
-        itemTemplate.find('.product-price').text(itemcost + ' osdc');
+
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgsrc);
+        itemTemplate.find('.removehistory').attr('data-id', itemInfos.id);
+        itemTemplate.find('.product-name').text(itemInfos.name);
+        itemTemplate.find('.product-price').text(itemInfos.cost + ' osdc');
         html += '<tr class="cart_item">' + itemTemplate.html() + '</tr>';
       }
       itemrow.html(html);
@@ -256,7 +246,7 @@ Mypage = {
     });
   },
 
-  registerItem: function () {
+  registerItem: function() {
     var imgnum = Math.floor((Math.random() * 4)) + 1;
     var name = $('#ItemName').val();
     var cost = $('#ItemCost').val();
@@ -265,12 +255,12 @@ Mypage = {
     Init.itemInstance.registerItem(name, imgfile, cost, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       alert('Success!');
       Mypage.getItemList();
-    }).catch(function (error) {
+    }).catch(function(error) {
       console.log(error);
     });
   },
 
-  withdrawal: function () {
+  withdrawal: function() {
     Init.itemInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       alert('Success!');
       location.href = '/';
@@ -280,8 +270,8 @@ Mypage = {
   }
 };
 
-$(function () {
-  $(window).load(function () {
+$(function() {
+  $(window).load(function() {
     Mypage.init();
   });
 });

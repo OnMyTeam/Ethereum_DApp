@@ -2,26 +2,24 @@ LogIn = {
   web3Provider: null,
   contracts: {},
 
-  init: async function () {
+  init: async function() {
     await Init.init();
     LogIn.bindEvents();
-      LogIn.getAccountList();
+    LogIn.getAccountList();
   },
 
-  getAccountList: function () {
+  getAccountList: function() {
     web3.eth.getAccounts(function (e, r) {
       LogIn.refreshBalance(r);
       LogIn.makeSelectAddress(r);
     });
   },
 
-  refreshBalance: async function (list) {
+  refreshBalance: async function(list) {
     var token;
     var html;
     var ether;
     for (var i = 0; i < list.length; i++) {
-
-      
       web3.eth.getBalance(list[i], (err, balance) => {
         ether = web3.fromWei(balance, "ether");
       });       
@@ -37,17 +35,13 @@ LogIn = {
         html += "<td>" + ether.toFixed(2) + " ETH</td>";
         html += "<td> " + token + " </td>";
         html += "</tr>";
-
-      });      
-
+      });
     }
     $('#tableContent').html(html);
-
   },
 
 
-  makeSelectAddress: function (list) {
-
+  makeSelectAddress: function(list) {
     var html;
     html += '<option value=""> Select </a>';
     for (var i = 0; i < list.length; i++) {
@@ -56,39 +50,32 @@ LogIn = {
     $('.custom-select').html(html);
   },
 
-  bindEvents: function () {
+  bindEvents: function() {
     $(document).on('click', '.btn-primary', LogIn.logIn);
-    
   },
 
 
-  logIn: function () {
-
-    var address = $('#selectAccount').val();
-    if (address == ''){ alert('Please select address'); return;}
+  logIn: function() {
     var loginForm = $('#loginform');
+    var address = $('#selectAccount').val();
+    if (address == ''){ alert('Please select address'); return; } 
     
     Init.personalInstance.getMemberInfo({from:address}).then(function (result) {
       console.log(result);
       if (result != 0x0) {
-
         loginForm.attr('action','/shop');
         loginForm.attr('method','post');
         loginForm.submit();
-         
       }
       else {
         alert("Please Join First!");
       }
     });
-  },
-
-
+  }
 };
 
-$(function () {
-   
-  $(window).load(function () {
+$(function() {
+  $(window).load(function() {
     LogIn.init();
   });
 

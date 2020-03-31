@@ -4,18 +4,18 @@ contract Ownable {
   address public owner;
   event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
-  function Ownable() public {
+  constructor() public {
     owner = msg.sender;
   }
 
   modifier onlyOwner() {
-    require(msg.sender == owner);
+    require(msg.sender==owner,"not a owner");
     _;
   }
 
   function transferOwnership(address newOwner) public onlyOwner {
-    require(newOwner != address(0));
-    OwnershipTransferred(owner, newOwner);
+    require(newOwner!=address(0),"cannot transfer the ownership");
+    emit OwnershipTransferred(owner, newOwner);
     owner = newOwner;
   }
 }
