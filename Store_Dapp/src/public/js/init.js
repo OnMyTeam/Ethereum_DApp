@@ -1,7 +1,7 @@
 Init = {
   web3Provider: null,
   contracts: {},
-  personalInstance: null,
+  membershipInstance: null,
   itemInstance: null,
   OSDCTokenInstance: null,
 
@@ -17,10 +17,10 @@ Init = {
   },
 
   initContract: async function() {
-    await $.getJSON('Personal.json', function (data) {
-      var PersonalArtifact = data;
-      Init.contracts.Personal = TruffleContract(PersonalArtifact);
-      Init.contracts.Personal.setProvider(Init.web3Provider);
+    await $.getJSON('Membership.json', function (data) {
+      var MembershipArtifact = data;
+      Init.contracts.Membership = TruffleContract(MembershipArtifact);
+      Init.contracts.Membership.setProvider(Init.web3Provider);
     });      
     await $.getJSON('item.json', function(data) {
       var itemArtifact = data;
@@ -35,8 +35,8 @@ Init = {
   },
 
   getContractInstance: async function(){
-    await Init.contracts.Personal.deployed().then(function(instance){
-      Init.personalInstance=instance;
+    await Init.contracts.Membership.deployed().then(function(instance){
+      Init.membershipInstance=instance;
     });
     await Init.contracts.item.deployed().then(function(instance){
       Init.itemInstance=instance;

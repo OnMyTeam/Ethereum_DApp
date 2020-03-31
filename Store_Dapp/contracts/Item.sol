@@ -1,11 +1,12 @@
 pragma solidity >=0.4.21 <0.7.0;
+import './libray.sol';
 import './Ownable.sol';
-import './Personal.sol';
+import './Membership.sol';
 import './Token.sol';
 
 contract Item is Ownable{
-
-    Personal personal;
+    using SafeMath for uint;
+    Membership membership;
     OSDCToken basictoken;
 
     struct itemInfo{
@@ -15,86 +16,92 @@ contract Item is Ownable{
         string imgsrc;
     }
     mapping(uint=> itemInfo) public itemArray;
-    mapping(address=> itemInfo[]) public personalItems;
+    mapping(address=> itemInfo[]) public membershipItems;
     uint public index;
     uint public itemCode;
 
     event  ItemInfo(uint code, string name,string imgsrc, uint cost);
-    event  MakeItem(address __basictokenAddr, address _personalAddr);
-    constructor(address __basictokenAddr, address _personalAddr) public {
+    event  MakeItem(address __basictokenAddr, address _membershipAddr);
+    constructor(address __basictokenAddr, address _membershipAddr) public {
         index = 0;
         itemCode = 0;
         basictoken = OSDCToken(__basictokenAddr);
-        personal = Personal(_personalAddr);
-        emit MakeItem(__basictokenAddr, _personalAddr);
+        membership = Membership(_membershipAddr);
+        emit MakeItem(__basictokenAddr, _membershipAddr);
+    }
+    
+    function registerItem(string _name, string _imgsrc, uint _cost) public onlyOwner returns(bool){
+        itemArray[index] = itemInfo(index, _cost, _name, _imgsrc);
+        index = index + 1;
+        return true;
     }
 
-    // Adopting a items
+    
     function buyItem(address _buyer, uint _index, uint _cost) public returns(bool) {
-        personal.checkBlacklist(_buyer);
-        basictoken.SubToken(_buyer, _cost);
-        personalItems[_buyer].push(itemArray[_index]);
+        membership.checkBlacklist(_buyer);
+        uint8 rate = uint8(membership.getCashbackRate(_buyer));
+        uint cashBack = _cost / 100 * rate;
+        uint ntokens = _cost.sub(cashBack);
+        basictoken.transfer(owner, ntokens);
+        
+        membership.updateHistory(_buyer, _cost);
+        membershipItems[_buyer].push(itemArray[_index]);
 
         emit ItemInfo(itemArray[_index].code, itemArray[_index].name,itemArray[_index].imgsrc, itemArray[_index].cost);
         return true;
     }
 
-    // owner
-    function registerItem(string _name, string _imgsrc, uint _cost) public returns(bool success){
-        itemArray[index] = itemInfo(itemCode,_cost, _name,_imgsrc);
-        index = index + 1;
-        itemCode = itemCode + 1;
-
-        return true;
-    }
-
-    function deleteMyItem(address _buyer, uint _index) public returns(bool success) {
-
-        delete personalItems[_buyer][_index];
-        return true;
-    }
-
-    function deleteItem(uint _code) public returns(bool success) {
+    function deleteItem(uint _code) public onlyOwner returns(bool) {
         delete itemArray[_code];
+
         return true;
     }
+    
+
+    function deleteMyItem(address _buyer, uint _index) public returns(bool) {
+
+        delete membershipItems[_buyer][_index];
+        return true;
+    }
+
 
     function getItems() public view returns(string memory){
 
         string memory itemsJson = '[';
         for(uint i = 0; i <= index; i++){
-            string memory code = uint2str(itemArray[i].code);
-            string memory cost = uint2str(itemArray[i].cost);
+            string memory code = ChangeType.uint2str(itemArray[i].code);
+            string memory cost = ChangeType.uint2str(itemArray[i].cost);
             string memory imgsrc = itemArray[i].imgsrc;
             string memory name = itemArray[i].name;
-            string memory id = uint2str(i);
+            string memory id = ChangeType.uint2str(i);
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
             }
-            itemsJson = string(abi.encodePacked(itemsJson, '{ "itemCode" : ',code, ','));
-            itemsJson = string(abi.encodePacked(itemsJson, ' "cost" :',cost, ','));
-            itemsJson = string(abi.encodePacked(itemsJson, ' "imgsrc" : "',imgsrc, '",'));
-            itemsJson = string(abi.encodePacked(itemsJson, ' "name" : "',name, '",'));
+            itemsJson = string(abi.encodePacked(itemsJson, '{ "itemCode" : ', code, ','));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "cost" :', cost, ','));
+            itemsJson = string(abi.encodePacked(itemsJson, ' "imgsrc" : "', imgsrc, '",'));
             if(i == index - 1){
-                itemsJson = string(abi.encodePacked(itemsJson, ' "id" :',id, '}'));
+                
+                itemsJson = string(abi.encodePacked(itemsJson, ' "name" : "', name, '"}'));
             } else{
-                itemsJson = string(abi.encodePacked(itemsJson, ' "id" :',id, '},'));
+                
+                itemsJson = string(abi.encodePacked(itemsJson, ' "name" : "', name, '"},'));
             }
         }
         itemsJson = string(abi.encodePacked(itemsJson, ']'));
         return itemsJson;
     }
 
-    function getMyItems(address buyer) public view returns(string memory){
-        itemInfo[] storage items = personalItems[buyer];
+    function getMyItems(address buyer) public view returns(string memory) {
+        itemInfo[] storage items = membershipItems[buyer];
         string memory itemsJson = '[';
 
         for( uint i = 0; i<items.length; i++ ){
-            string memory code = uint2str(items[i].code);
-            string memory cost = uint2str(items[i].cost);
+            string memory code = ChangeType.uint2str(items[i].code);
+            string memory cost = ChangeType.uint2str(items[i].cost);
             string memory imgsrc = items[i].imgsrc;
             string memory name = items[i].name;
-            string memory id = uint2str(i);
+            string memory id = ChangeType.uint2str(i);
 
             if(keccak256(abi.encodePacked(name)) == keccak256(abi.encodePacked(""))){
                 continue;
@@ -110,31 +117,13 @@ contract Item is Ownable{
         itemsJson = string(abi.encodePacked(itemsJson, ']'));
         return itemsJson;
     }
-
-
-
+    
     function withdrawal(address _buyer) public {
-        delete personalItems[_buyer];
-        personal.withdrawal(_buyer);
+        membership.deleteMemberInfo(_buyer);
+        delete membershipItems[_buyer];
         basictoken.withdrawal(_buyer);
     }
 
-    function uint2str(uint i) internal pure returns (string){
-        if (i == 0) return "0";
-        uint j = i;
-        uint length;
-        while (j != 0){
-            length++;
-            j /= 10;
-        }
-        bytes memory bstr = new bytes(length);
-        uint k = length - 1;
-        while (i != 0){
-            bstr[k--] = byte(48 + i % 10);
-            i /= 10;
-        }
-        return string(bstr);
-    }
 
 }
 

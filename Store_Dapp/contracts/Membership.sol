@@ -2,22 +2,25 @@ pragma solidity >=0.4.21 <0.7.0;
 
 import './Ownable.sol';
 
-contract Personal is Ownable{
+contract Membership is Ownable{
 
-
-    struct PersonalStatus {
+    struct MemberInfo {
+        uint buyCount;
+        uint sum;
+        uint statusIndex;
+        
+    }
+    
+    struct GradeStatus {
         string name;
-        uint times;
+        uint buyCount;
         uint sum;
         int8 rate;
     }
-    struct History {
-        uint times;
-        uint sum;
-        uint statusIndex;
-    }
-    PersonalStatus[] public status;
-    mapping(address => History) public tradingHistory;
+
+    
+    GradeStatus[] public status;
+    mapping(address => MemberInfo) public tradingHistory;
     mapping(address => bool) public people;
     address[] public peopleList;
 
@@ -36,9 +39,10 @@ contract Personal is Ownable{
         pushStatus("Bronze", 0, 0, 0);
         pushStatus("Silver", 5, 500, 5);
         pushStatus("Gold", 10, 1500, 10);
+        
     }
 
-    function register() public returns(bool succes) {                   //personalRegister 로 이름 바꾸면 어떨까..
+    function registerMember() public returns(bool) {                   //memberRegister 로 이름 바꾸면 어떨까..
         require(people[msg.sender] == false, "Already Register");
         people[msg.sender] = true;
         peopleList.push(msg.sender);
@@ -51,9 +55,9 @@ contract Personal is Ownable{
     }
 
     function pushStatus(string memory _name, uint _times, uint _sum, int8 _rate) public onlyOwner{
-        status.push(PersonalStatus({
+        status.push(GradeStatus({
             name: _name,
-            times: _times,
+            buyCount: _times,
             sum: _sum,
             rate: _rate
         }));
@@ -62,30 +66,31 @@ contract Personal is Ownable{
     function updateHistory(address _member, uint _value) public {
         uint index;
 
-        tradingHistory[_member].times += 1;
+        tradingHistory[_member].buyCount += 1;
         tradingHistory[_member].sum += _value;
 
         for(uint i = 0; i<status.length; i++){
-            if(tradingHistory[_member].times >= status[i].times && tradingHistory[_member].sum >= status[i].sum){
+            if(tradingHistory[_member].buyCount >= status[i].buyCount && tradingHistory[_member].sum >= status[i].sum){
                 index = i;
             }
         }
         tradingHistory[_member].statusIndex = index;
     }
 
-    function getCashbackRate(address _member) public view returns (int8 rate){
-        rate = status[tradingHistory[_member].statusIndex].rate;
+    function getCashbackRate(address _member) public view returns (int8){
+        return status[tradingHistory[_member].statusIndex].rate;
+        
     }
 
-    function getGrade(address _member) public view returns (string memory grade){
-        grade = status[tradingHistory[_member].statusIndex].name;
+    function getGrade(address _member) public view returns (string memory){
+        return status[tradingHistory[_member].statusIndex].name;
     }
 
     function getMemberList() public view returns (address[] memory){
         return peopleList;
     }
 
-    function withdrawal(address _buyer) public {
+    function deleteMemberInfo(address _buyer) public {
         delete tradingHistory[_buyer];
         delete people[_buyer];
         delete mappingBlacklist[_buyer];

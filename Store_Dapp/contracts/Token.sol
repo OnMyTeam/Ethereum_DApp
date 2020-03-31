@@ -1,6 +1,6 @@
 pragma solidity >=0.4.21 <0.7.0;
-
-import './Personal.sol';
+import './libray.sol';
+import './Membership.sol';
 import './Ownable.sol';
 
 contract ERC20Interface {
@@ -16,7 +16,8 @@ contract ERC20Interface {
 }
 
 contract OSDCToken is ERC20Interface, Ownable {
-    Personal personal;
+    using SafeMath for uint;
+    Membership membership;
     uint public totalSupply;
     string public name;
     string public symbol;
@@ -29,8 +30,8 @@ contract OSDCToken is ERC20Interface, Ownable {
     event Approval(address indexed _tokenOwner, address indexed _spender, uint tokens);
     event Burm ( address indexed from, uint256 value);
 
-    constructor(address _personalAdd) public {
-        personal = Personal(_personalAdd);
+    constructor(address _membershipAdd) public {
+        membership = Membership(_membershipAdd);
         symbol = "OSDC";
         name = "osdc Token";
         // totalSupply = 1000000 *10**uint256(decimals);
@@ -38,8 +39,7 @@ contract OSDCToken is ERC20Interface, Ownable {
         balaceOf[msg.sender] = totalSupply;
     }
 
-    // 아무데서도 부르지 않음 
-    function totalSupply() public view returns (uint){      
+    function totalSupply() public view returns (uint){
         return totalSupply;
     }
 
@@ -47,82 +47,49 @@ contract OSDCToken is ERC20Interface, Ownable {
         return balaceOf[tokenOwner];
     }
 
-    // 아무데도 쓰이지 않음 
+    
     function allowance(address tokenOwner, address spender) public view returns (uint remaining) {  
         return allowence[tokenOwner][spender];
     }
     
     function _transfer (address _from, address _to, uint256 _value) internal {
         require(_to != 0x0);
-        require(balaceOf[_from]>=_value);
-        require(balaceOf[_to] + _value >= balaceOf[_to]);
-        balaceOf[_from] -= _value;
-        balaceOf[_to] += _value;
+        require(balaceOf[_from] >= _value, "need token");
+        
+        balaceOf[_from] = balaceOf[_from].sub(_value);
+        balaceOf[_to] = balaceOf[_to].add(_value);
         emit Transfer(_from, _to, _value);
     }
 
     function transfer (address _to, uint256 _value) public returns (bool success){
-        _transfer(msg.sender,_to,_value);
+        _transfer(tx.origin, _to, _value);
         return true;
     }
 
-    // 아무데서도 쓰이지 않음 
+    
     function transferFrom(address _from,address _to, uint256 _value) public returns (bool success){      
         require(_value <= allowence[_from][msg.sender]);
-        allowence[_from][msg.sender] -= _value;
-        _transfer(_from,_to,_value);
+        allowence[_from][msg.sender] = allowence[_from][msg.sender].sub(_value);
+        _transfer(_from, _to, _value);
         return true;
     }
 
-    // 아무데서도 쓰이지 않음 
-    function approve (address _spender, uint256 _value) public returns (bool success) {
+    function approve (address _spender, uint256 _value) public returns (bool success){
         allowence[msg.sender][_spender] = _value;
-        emit Approval (msg.sender,_spender,_value);
+        emit Approval (msg.sender, _spender, _value);
         return true;
     }
-
-    // 아무데서도 쓰이지 않음
-    function mintToken (address _target, uint256 _mintedAmount) public onlyOwner {
-        balaceOf[_target] += _mintedAmount;
-        totalSupply += _mintedAmount;
-        emit Transfer(0, owner, _mintedAmount);
-        emit Transfer(owner, _target, _mintedAmount);
-    }
-
-    //아무데서도 쓰이지 않음 
-    function burn(uint256 _value) public onlyOwner returns (bool success){
-        require(balaceOf[msg.sender] >= _value);
-        balaceOf[msg.sender] -= _value;
-        totalSupply -= _value;
-        emit Burm(msg.sender,_value);
-
-        return true;
-    }
-
+    
     function() public payable {
         uint256 amount = msg.value;
         require (balaceOf[owner] >= amount);
-
-        balaceOf[owner] = balaceOf[owner] - amount;
-        balaceOf[msg.sender] = balaceOf[msg.sender] + amount;
+        balaceOf[owner] = balaceOf[owner].sub(amount);
+        balaceOf[msg.sender] = balaceOf[msg.sender].add(amount);
 
         owner.transfer(msg.value);
         emit Transfer(owner, msg.sender, amount);
     }
 
-    // 아무데서도 쓰이지 않음 
-    function transferAnyERC20Token(address tokenAddress, uint tokens) public onlyOwner returns (bool success) {
-        return ERC20Interface(tokenAddress).transfer(owner, tokens);
-    }
-
-    function SubToken(address buyer, uint tokens) public {
-        require (tokens <= balaceOf[buyer], "need token");
-        personal.updateHistory(buyer, tokens);
-        uint8 rate = uint8(personal.getCashbackRate(buyer));
-        uint cashBack = tokens / 100 * rate;
-        uint ntokens = tokens - cashBack;
-        balaceOf[buyer] -= ntokens;
-    }
 
     function withdrawal(address buyer) public {
         balaceOf[buyer] = 0;

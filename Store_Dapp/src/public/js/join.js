@@ -39,7 +39,7 @@ Join = {
       $('#etherValue').text(ether + " ETH");
     }); 
     
-    Init.personalInstance.getMemberInfo({from:address}).then(function (result) {
+    Init.membershipInstance.getMemberInfo({from:address}).then(function (result) {
       if (result) {
         $('#register').html("<font color='green'><b>YES</b></font>");
       }
@@ -54,7 +54,7 @@ Join = {
 
   join: function(){
     var address = $('#address').text();        
-    Init.personalInstance.register({from:address}).then(function(result){
+    Init.membershipInstance.registerMember({from:address}).then(function(result){
         console.log(result);
         alert("Successfully Register!");
         $('#register').html("<font color='green'><b>YES</b></font>");

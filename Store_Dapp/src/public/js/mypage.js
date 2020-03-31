@@ -27,9 +27,9 @@ Mypage = {
   },
   
   getGradeInfo: function() {
-    var personalInstance;
+    var membershipInstance;
 
-    Init.personalInstance.getGrade(Mypage.address, { from: Mypage.address }).then(function (result) {
+    Init.membershipInstance.getGrade(Mypage.address, { from: Mypage.address }).then(function (result) {
       if (result == 'Bronze') {
         $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
       } else if (result == 'Silver') {
@@ -100,7 +100,7 @@ Mypage = {
   registerBlacklist: function(event) {
     var account = $(event.target).data('address');
 
-    Init.personalInstance.setBlacklist(account, { from: Mypage.address }).then(function (result) {
+    Init.membershipInstance.setBlacklist(account, { from: Mypage.address }).then(function (result) {
       Mypage.getBlacklist();
     }).catch(function (error) {
       if (error.message == 'VM Exception while processing transaction: revert already blacklist') {
@@ -115,7 +115,7 @@ Mypage = {
     var itemTemplate = $('#detailmemberListContent');
     var html = '';
 
-    Init.personalInstance.getMemberList().then(function (list) {
+    Init.membershipInstance.getMemberList().then(function (list) {
       for (var i = 0; i < list.length; i++) {
         console.log("list[i]" + Mypage.address);
         if (list[i] != Mypage.address || list[i] != 0x0 ) {
@@ -135,7 +135,7 @@ Mypage = {
     var itemTemplate = $('#detailBlacklistContent');
     var html = '';
     
-    Init.personalInstance.getBlacklist().then(function (list) {
+    Init.membershipInstance.getBlacklist().then(function (list) {
       for (var i = 0; i < list.length; i++) {
         if (list[i] != 0x0) {
 
@@ -154,7 +154,7 @@ Mypage = {
     var index = $(event.target).data('id');
     var address = $(event.target).data('address');
 
-    Init.personalInstance.deleteBlacklist(address, index, { from: Mypage.address }).then(function (result) {
+    Init.membershipInstance.deleteBlacklist(address, index, { from: Mypage.address }).then(function (result) {
       Mypage.getBlacklist();
     }).catch(function (error) {
       console.log(error);
@@ -172,9 +172,9 @@ Mypage = {
   },
 
   deleteItem: function(event) {
-    var index = $(event.target).data('index');
-
-    Init.itemInstance.deleteItem(index, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+    var itemcode = $(event.target).data('itemcode');
+  
+    Init.itemInstance.deleteItem(itemcode, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       Mypage.getItemList();
     }).catch(function (error) {
       console.log(error);
@@ -203,7 +203,7 @@ Mypage = {
         var itemInfos = JSONItemlist[i];
         itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgsrc);
         itemTemplate.find('.removeItem').attr('data-itemcode', itemInfos.itemCode);
-        itemTemplate.find('.removeItem').attr('data-index', itemInfos.id);
+        // itemTemplate.find('.removeItem').attr('data-index', itemInfos.id);
         itemTemplate.find('.product-name').text(itemInfos.name);
         itemTemplate.find('.product-price').text(itemInfos.cost + ' osdc');
 

@@ -26,14 +26,13 @@ Mall = {
 
   getGradeInfo: function() {
     var html;
-    Init.personalInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
-      html = "<font color='bronze'><b>" + result + "</b></font>"
+    Init.membershipInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
       if (result == 'Bronze') {
-        $('#accountGrade').html(html);
+        $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
       } else if (result == 'Silver') {
-        $('#accountGrade').html(html);
+        $('#accountGrade').html("<font color='silver'><b>Silver</b></font>");
       } else if (result == 'Gold') {
-        $('#accountGrade').html(html);
+        $('#accountGrade').html("<font color='gold'><b>Gold</b></font>");
       }
     });
   },
@@ -60,6 +59,7 @@ Mall = {
 
     Init.itemInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000}).then(function(result) {
       const JSONItemlist = JSON.parse(result);
+      console.log(JSONItemlist);
       if (JSONItemlist[0].itemCode == 'X') { return; }
       for (var i = 0; i < JSONItemlist.length; i++) {
         if(JSONItemlist[i] == '') continue;
@@ -104,7 +104,7 @@ Mall = {
         itemTemplate.find('.product-carousel-price-sub').text(itemInfos.cost+' osdc');
         itemTemplate.find('.single-shop-product').attr('data-itemcode', itemInfos.itemCode);          
         itemTemplate.find('.add_to_cart_button').attr('data-name', itemInfos.name);
-        itemTemplate.find('.add_to_cart_button').attr('data-id', itemInfos.id);
+        // itemTemplate.find('.add_to_cart_button').attr('data-id', itemInfos.id);
         itemTemplate.find('.add_to_cart_button').attr('data-itemcode', itemInfos.itemCode);
         itemTemplate.find('.add_to_cart_button').attr('data-cost', itemInfos.cost);
         itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' + itemInfos.imgsrc);
@@ -130,11 +130,11 @@ Mall = {
   },
 
   bindEvents: function() {
-    $(document).on('click', '.add_to_cart_button', Mall.buyitem);
+    $(document).on('click', '.add_to_cart_button', Mall.buyItem);
   },
 
   buyItem: async function(event) {
-    var index = parseInt($(event.target).data('id'));
+    var index = parseInt($(event.target).data('itemcode'));
     var tokenAmount = parseInt($(event.target).data('cost'));
     Init.itemInstance.buyItem(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000}).then(function(result) {
       alert("Success!");
