@@ -30,7 +30,7 @@ contract Item is Ownable{
     }
 
     // Adopting a items
-    function itemBuy(address _buyer, uint _index, uint _cost) public returns(bool) {
+    function buyItem(address _buyer, uint _index, uint _cost) public returns(bool) {
         personal.checkBlacklist(_buyer);
         basictoken.SubToken(_buyer, _cost);
         personalItems[_buyer].push(itemArray[_index]);

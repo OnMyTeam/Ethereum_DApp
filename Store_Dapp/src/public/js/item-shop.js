@@ -25,14 +25,15 @@ Mall = {
   },
 
   getGradeInfo: function() {
+    var html;
     Init.personalInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
-      console.log(result);
+      html = "<font color='bronze'><b>" + result + "</b></font>"
       if (result == 'Bronze') {
-        $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
+        $('#accountGrade').html(html);
       } else if (result == 'Silver') {
-        $('#accountGrade').html("<font color='silver'><b>Silver</b></font>");
+        $('#accountGrade').html(html);
       } else if (result == 'Gold') {
-        $('#accountGrade').html("<font color='gold'><b>Gold</b></font>");
+        $('#accountGrade').html(html);
       }
     });
   },
@@ -132,10 +133,10 @@ Mall = {
     $(document).on('click', '.add_to_cart_button', Mall.buyitem);
   },
 
-  buyitem: async function(event) {
+  buyItem: async function(event) {
     var index = parseInt($(event.target).data('id'));
     var tokenAmount = parseInt($(event.target).data('cost'));
-    Init.itemInstance.itemBuy(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000}).then(function(result) {
+    Init.itemInstance.buyItem(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000}).then(function(result) {
       alert("Success!");
       Mall.getTokenInfo();
       Mall.getMyItemList();

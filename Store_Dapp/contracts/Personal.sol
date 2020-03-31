@@ -22,8 +22,8 @@ contract Personal is Ownable{
     address[] public peopleList;
 
     //블랙리스트 관련 변수
-    mapping (address => int8) public blacklist;
-    address[] internal blacklistKey;
+    mapping (address => int8) public mappingBlacklist;
+    address[] internal arrayBlacklist;
     event Blacklisted(address indexed target);
     event DeleteFromBlacklist(address indexed target);
     event EventcheckBlacklist(int8 sender);
@@ -88,10 +88,10 @@ contract Personal is Ownable{
     function withdrawal(address _buyer) public {
         delete tradingHistory[_buyer];
         delete people[_buyer];
-        delete blacklist[_buyer];
-        for(uint i = 0; i<blacklistKey.length; i++){
-            if(blacklistKey[i] == _buyer){
-                delete blacklistKey[i];
+        delete mappingBlacklist[_buyer];
+        for(uint i = 0; i<arrayBlacklist.length; i++){
+            if(arrayBlacklist[i] == _buyer){
+                delete arrayBlacklist[i];
                 break;
             }
         }
@@ -100,26 +100,26 @@ contract Personal is Ownable{
 
     /*블랙 리스트 관련 함수*/
     function setBlacklist(address _addr) public  {
-        require(blacklist[_addr] == 0, "already blacklist");
-        blacklist[_addr] = 1;
-        blacklistKey.push(_addr);
+        require(mappingBlacklist[_addr] == 0, "already blacklist");
+        mappingBlacklist[_addr] = 1;
+        arrayBlacklist.push(_addr);
         emit Blacklisted(_addr);
     }
 
     function deleteBlacklist(address _addr, uint index) public {
-        delete blacklist[_addr];
-        delete blacklistKey[index];
+        delete mappingBlacklist[_addr];
+        delete arrayBlacklist[index];
         emit DeleteFromBlacklist(_addr);
     }
 
     function getBlacklist() public view returns(address[] memory) {
-        return blacklistKey;
+        return arrayBlacklist;
     }
 
     function checkBlacklist(address _buyer) public returns(bool) {
         bool check = true;
-        require(blacklist[_buyer] == 0, "Already blacklist");
-        emit EventcheckBlacklist(blacklist[_buyer]);
+        require(mappingBlacklist[_buyer] == 0, "Already blacklist");
+        emit EventcheckBlacklist(mappingBlacklist[_buyer]);
         return check;
     }
 
