@@ -189,18 +189,19 @@ Mypage = {
     Init.itemInstance.getItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
       const JSONItemlist = JSON.parse(result);
 
-      if (JSONItemlist == '') {
+      if (JSONItemlist[0].itemCode == 'X') {
         html += "<tr class='cart_item'>";
         html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
+        itemrow.html(html);
+        return;
       }
       
       for (i = 0; i<JSONItemlist.length; i++) {
-        if (JSONItemlist[i] == '') {
-          continue;
-        }
-
+        
         var itemInfos = JSONItemlist[i];
+        
+        if(itemInfos.itemCode == 'X'){ break;}
         itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgsrc);
         itemTemplate.find('.removeItem').attr('data-itemcode', itemInfos.itemCode);
         // itemTemplate.find('.removeItem').attr('data-index', itemInfos.id);

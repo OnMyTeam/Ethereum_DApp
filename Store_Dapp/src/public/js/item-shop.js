@@ -62,10 +62,10 @@ Mall = {
       console.log(JSONItemlist);
       if (JSONItemlist[0].itemCode == 'X') { return; }
       for (var i = 0; i < JSONItemlist.length; i++) {
-        if(JSONItemlist[i] == '') continue;
+        
         var itemInfos = JSONItemlist[i];
         var itemCode = itemInfos.itemCode;
-
+        if(itemCode == 'X') continue;
         $('.single-shop-product').each(function (index, item){
           nitemCode = $(item).data('itemcode');
           if(nitemCode == itemCode){
@@ -88,7 +88,7 @@ Mall = {
       const JSONItemlist = JSON.parse(result);
       console.log(JSON.parse(result));
 
-      if(JSONItemlist == ''){
+      if(JSONItemlist[0].itemCode == 'X'){
         html = "<center><img src='public/images/no_product.png'/></center>";
         itemrow.html(html);
         return;
@@ -96,9 +96,10 @@ Mall = {
 
       for (i = 0; i < JSONItemlist.length; i++) {
         console.log(JSONItemlist[i]);
-        if(JSONItemlist[i] == '') { continue };
-
+        
+        
         var itemInfos = JSONItemlist[i];
+        if(itemInfos.itemCode == 'X'){ break;}
         itemTemplate.find('.item-name').text(itemInfos.name);
         itemTemplate.find('img').attr('src', 'public/images/' + itemInfos.imgsrc);
         itemTemplate.find('.product-carousel-price-sub').text(itemInfos.cost+' osdc');
@@ -135,8 +136,8 @@ Mall = {
 
   buyItem: async function(event) {
     var index = parseInt($(event.target).data('itemcode'));
-    var tokenAmount = parseInt($(event.target).data('cost'));
-    Init.itemInstance.buyItem(Mall.address, index, tokenAmount,{from: Mall.address, gas:3000000}).then(function(result) {
+    
+    Init.itemInstance.buyItem(Mall.address, index,{from: Mall.address, gas:3000000}).then(function(result) {
       alert("Success!");
       Mall.getTokenInfo();
       Mall.getMyItemList();

@@ -28,7 +28,6 @@ contract OSDCToken is ERC20Interface, Ownable {
 
     event Transfer(address indexed _from, address indexed _to, uint tokens);
     event Approval(address indexed _tokenOwner, address indexed _spender, uint tokens);
-    event Burm ( address indexed from, uint256 value);
 
     constructor(address _membershipAdd) public {
         membership = Membership(_membershipAdd);
@@ -39,16 +38,15 @@ contract OSDCToken is ERC20Interface, Ownable {
         balaceOf[msg.sender] = totalSupply;
     }
 
-    function totalSupply() public view returns (uint){
+    function totalSupply() public view returns (uint) {
         return totalSupply;
     }
 
-    function balanceOf(address tokenOwner) public view returns (uint balance){
+    function balanceOf(address tokenOwner) public view returns (uint balance) {
         return balaceOf[tokenOwner];
     }
 
-    
-    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {  
+    function allowance(address tokenOwner, address spender) public view returns (uint remaining) {
         return allowence[tokenOwner][spender];
     }
     
@@ -61,25 +59,24 @@ contract OSDCToken is ERC20Interface, Ownable {
         emit Transfer(_from, _to, _value);
     }
 
-    function transfer (address _to, uint256 _value) public returns (bool success){
+    function transfer (address _to, uint256 _value) public returns (bool success) {
         _transfer(tx.origin, _to, _value);
         return true;
     }
 
-    
-    function transferFrom(address _from,address _to, uint256 _value) public returns (bool success){      
+    function transferFrom(address _from,address _to, uint256 _value) public returns (bool success) {
         require(_value <= allowence[_from][msg.sender]);
         allowence[_from][msg.sender] = allowence[_from][msg.sender].sub(_value);
         _transfer(_from, _to, _value);
         return true;
     }
 
-    function approve (address _spender, uint256 _value) public returns (bool success){
+    function approve (address _spender, uint256 _value) public returns (bool success) {
         allowence[msg.sender][_spender] = _value;
         emit Approval (msg.sender, _spender, _value);
         return true;
     }
-    
+
     function() public payable {
         uint256 amount = msg.value;
         require (balaceOf[owner] >= amount);

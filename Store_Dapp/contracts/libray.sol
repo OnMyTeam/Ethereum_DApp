@@ -1,22 +1,5 @@
-pragma solidity ^0.4.24;
+pragma solidity >=0.4.21 <0.7.0;
 
-// ----------------------------------------------------------------------------
-// 'FIXED' 'Example Fixed Supply Token' token contract
-//
-// Symbol      : FIXED
-// Name        : Example Fixed Supply Token
-// Total supply: 1,000,000.000000000000000000
-// Decimals    : 18
-//
-// Enjoy.
-//
-// (c) BokkyPooBah / Bok Consulting Pty Ltd 2018. The MIT Licence.
-// ----------------------------------------------------------------------------
-
-
-// ----------------------------------------------------------------------------
-// Safe maths
-// ----------------------------------------------------------------------------
 library SafeMath {
     function add(uint a, uint b) internal pure returns (uint c) {
         c = a + b;
@@ -36,10 +19,8 @@ library SafeMath {
     }
 }
 
-
 library ChangeType {
-
-    function uint2str(uint i) internal pure returns (string){
+    function uint2str(uint i) internal pure returns (string) {
         if (i == 0) return "0";
         uint j = i;
         uint length;
@@ -54,6 +35,6 @@ library ChangeType {
             i /= 10;
         }
         return string(bstr);
-    }    
+    }
 }
 
