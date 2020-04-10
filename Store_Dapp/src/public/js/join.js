@@ -55,7 +55,7 @@ Join = {
   join: function(){
     var address = $('#address').text();        
     Init.membershipInstance.registerMember({from:address}).then(function(result){
-        console.log(result);
+        // console.log(result);
         alert("Successfully Register!");
         $('#register').html("<font color='green'><b>YES</b></font>");
         

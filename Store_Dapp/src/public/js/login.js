@@ -24,7 +24,7 @@ LogIn = {
         ether = web3.fromWei(balance, "ether");
       });       
       await Init.OSDCTokenInstance.balanceOf(list[i],{from:list[i]}).then(function(result) {
-        console.log(result);
+        // console.log(result);
         if(result.c[0] == undefined){
           token = 0;
         }else {
@@ -61,7 +61,7 @@ LogIn = {
     if (address == ''){ alert('Please select address'); return; } 
     
     Init.membershipInstance.getMemberInfo({from:address}).then(function (result) {
-      console.log(result);
+      // console.log(result);
       if (result != 0x0) {
         loginForm.attr('action','/shop');
         loginForm.attr('method','post');

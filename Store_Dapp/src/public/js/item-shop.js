@@ -2,7 +2,8 @@ Mall = {
   web3Provider: null,
   contracts: {},
   address: 0x00,
-  ownerYN : 'N',  
+  ownerYN : 'N',
+  grade: null,
   
   init: async function() {
     await Init.init();
@@ -19,14 +20,15 @@ Mall = {
   },
 
   getMyItems: function() {
-    Mall.getGradeInfo();
+    Mall.getGradeInfo()
     Mall.getTokenInfo();
     Mall.getMyItemList();
   },
 
   getGradeInfo: function() {
-    var html;
+    
     Init.membershipInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
+      Mall.grade = result;
       if (result == 'Bronze') {
         $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
       } else if (result == 'Silver') {
@@ -59,7 +61,7 @@ Mall = {
 
     Init.itemInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000}).then(function(result) {
       const JSONItemlist = JSON.parse(result);
-      console.log(JSONItemlist);
+      // console.log(JSONItemlist);
       if (JSONItemlist[0].itemCode == 'X') { return; }
       for (var i = 0; i < JSONItemlist.length; i++) {
         
@@ -81,37 +83,45 @@ Mall = {
 
   getItemList: function() {
     var itemrow = $('#itemrow');
-    var itemTemplate = $('#itemTemplate');
-
+    var itemTemplate = $('#itemTemplate');       
     Init.itemInstance.getItems({from: Mall.address, gas:6000000}).then(function(result) {
-      console.log(result);
+      // console.log(result);
       const JSONItemlist = JSON.parse(result);
-      console.log(JSON.parse(result));
+      // console.log(JSON.parse(result));
 
       if(JSONItemlist[0].itemCode == 'X'){
-        html = "<center><img src='public/images/no_product.png'/></center>";
+  
+        var html = "<center><img src='public/images/no_product.png'/></center>";
         itemrow.html(html);
         return;
       }
 
       for (i = 0; i < JSONItemlist.length; i++) {
-        console.log(JSONItemlist[i]);
-        
-        
+        // console.log(JSONItemlist[i]);
+     
         var itemInfos = JSONItemlist[i];
         if(itemInfos.itemCode == 'X'){ break;}
         itemTemplate.find('.item-name').text(itemInfos.name);
         itemTemplate.find('img').attr('src', 'public/images/' + itemInfos.imgsrc);
         itemTemplate.find('.product-carousel-price-sub').text(itemInfos.cost+' osdc');
+        if(itemInfos.buy == 1){
+            console.log(itemInfos.buy);
+            itemTemplate.find('button').text('Sold out').attr('disabled', true);
+            itemTemplate.find('.add_to_cart_button').css('background-color', '#930000');          
+        }else{
+            itemTemplate.find('button').text('BUY').attr('disabled', false);
+            itemTemplate.find('.add_to_cart_button').css('background-color', '#5a88ca');                    
+        }
         itemTemplate.find('.single-shop-product').attr('data-itemcode', itemInfos.itemCode);          
         itemTemplate.find('.add_to_cart_button').attr('data-name', itemInfos.name);
         // itemTemplate.find('.add_to_cart_button').attr('data-id', itemInfos.id);
         itemTemplate.find('.add_to_cart_button').attr('data-itemcode', itemInfos.itemCode);
         itemTemplate.find('.add_to_cart_button').attr('data-cost', itemInfos.cost);
         itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' + itemInfos.imgsrc);
-
         itemrow.append(itemTemplate.html());
+        
       }
+      
     }).catch(function(err) {
       console.log(err.message);
     });
@@ -121,9 +131,9 @@ Mall = {
     Init.itemInstance.owner.call().then(function(result) {
       if (result == Mall.address) {
         Mall.ownerYN = 'Y';
-        $("#accountAddrAdmin").text('Account Address(admin)');
+        $("#accountAddrAdmin").text('Account Address(Seller)');
       }else{
-        $("#accountAddrAdmin").text('Account Address(member)');
+        $("#accountAddrAdmin").text('Account Address(Buyer)');
       }
     }).catch(function(err) {
       console.log(err.message);

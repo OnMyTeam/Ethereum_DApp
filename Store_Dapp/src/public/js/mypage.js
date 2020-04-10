@@ -59,14 +59,14 @@ Mypage = {
     Init.itemInstance.owner.call().then(function (result) {
       if (result == Mypage.address) {
         Mypage.ownerYN = 'Y';
-        $("#accountAddrAdmin").text('Account Address(admin)');
+        $("#accountAddrAdmin").text('Account Address(Seller)');
         $("#itemRegister").css("display", "block");
         $("#itemRegisterList").css("display", "block");
         $("#memberList").css("display", "block");
         $("#blacklist").css("display", "block");
       }
       else {
-        $("#accountAddrAdmin").text('Account Address(member)');
+        $("#accountAddrAdmin").text('Account Address(Buyer)');
       }
     }).catch(function(err) {
       console.log(err.message);
@@ -91,6 +91,11 @@ Mypage = {
 
     web3.eth.sendTransaction({ from: Mypage.address, to: contractAddress, value: token_amount },
       function (e, r) {
+        if(e) {
+          console.log(e);
+          alert("토큰 구매에 실패하셨습니다.");
+          return;
+        }
         alert("토큰 구매에 성공하셨습니다.");
         Mypage.getAccountInfo();
         Mypage.getTokenInfo();
@@ -117,7 +122,7 @@ Mypage = {
 
     Init.membershipInstance.getMemberList().then(function (list) {
       for (var i = 0; i < list.length; i++) {
-        console.log("list[i]" + Mypage.address);
+        // console.log("list[i]" + Mypage.address);
         if (list[i] != Mypage.address || list[i] != 0x0 ) {
           itemTemplate.find('.add_to_Blacklist_button').attr('data-id', i);
           itemTemplate.find('.add_to_Blacklist_button').attr('data-address', list[i]);
@@ -173,8 +178,11 @@ Mypage = {
 
   deleteItem: function(event) {
     var itemcode = $(event.target).data('itemcode');
-  
+    console.log(event.target) ;
+    console.log(itemcode);
+    
     Init.itemInstance.deleteItem(itemcode, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+      alert('Success!');
       Mypage.getItemList();
     }).catch(function (error) {
       console.log(error);
@@ -224,7 +232,6 @@ Mypage = {
     var html = '';
     Init.itemInstance.getMyItems(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       const JSONItemlist = JSON.parse(result);
-      console.log(JSONItemlist);
       if (JSONItemlist[0].itemCode == 'X') {
         html += "<tr class='cart_item'>";
         html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
