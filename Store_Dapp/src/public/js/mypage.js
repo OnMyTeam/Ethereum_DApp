@@ -29,7 +29,7 @@ Mypage = {
   getGradeInfo: function() {
     var membershipInstance;
 
-    Init.membershipInstance.getGrade(Mypage.address, { from: Mypage.address }).then(function (result) {
+    Init.shoppingInstance.getGrade(Mypage.address, { from: Mypage.address }).then(function (result) {
       if (result == 'Bronze') {
         $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
       } else if (result == 'Silver') {
@@ -56,7 +56,7 @@ Mypage = {
   },
 
   getOwner: function() {
-    Init.itemInstance.owner.call().then(function (result) {
+    Init.shoppingInstance.owner.call().then(function (result) {
       if (result == Mypage.address) {
         Mypage.ownerYN = 'Y';
         $("#accountAddrAdmin").text('Account Address(Seller)');
@@ -105,7 +105,7 @@ Mypage = {
   registerBlacklist: function(event) {
     var account = $(event.target).data('address');
 
-    Init.membershipInstance.setBlacklist(account, { from: Mypage.address }).then(function (result) {
+    Init.shoppingInstance.setBlacklist(account, { from: Mypage.address }).then(function (result) {
       Mypage.getBlacklist();
     }).catch(function (error) {
       if (error.message == 'VM Exception while processing transaction: revert already blacklist') {
@@ -120,7 +120,7 @@ Mypage = {
     var itemTemplate = $('#detailmemberListContent');
     var html = '';
 
-    Init.membershipInstance.getMemberList().then(function (list) {
+    Init.shoppingInstance.getMemberList().then(function (list) {
       for (var i = 0; i < list.length; i++) {
         // console.log("list[i]" + Mypage.address);
         if (list[i] != Mypage.address || list[i] != 0x0 ) {
@@ -140,7 +140,7 @@ Mypage = {
     var itemTemplate = $('#detailBlacklistContent');
     var html = '';
     
-    Init.membershipInstance.getBlacklist().then(function (list) {
+    Init.shoppingInstance.getBlacklist().then(function (list) {
       for (var i = 0; i < list.length; i++) {
         if (list[i] != 0x0) {
 
@@ -159,7 +159,7 @@ Mypage = {
     var index = $(event.target).data('id');
     var address = $(event.target).data('address');
 
-    Init.membershipInstance.deleteBlacklist(address, index, { from: Mypage.address }).then(function (result) {
+    Init.shoppingInstance.deleteBlacklist(address, index, { from: Mypage.address }).then(function (result) {
       Mypage.getBlacklist();
     }).catch(function (error) {
       console.log(error);
@@ -169,7 +169,7 @@ Mypage = {
   deleteMyItem: function(event) {
     var index = $(event.target).data('id');
 
-    Init.itemInstance.deleteMyItem(Mypage.address, index, { from: Mypage.address }).then(function (result) {
+    Init.shoppingInstance.deleteMyItem(Mypage.address, index, { from: Mypage.address }).then(function (result) {
       Mypage.getMyItemList();
     }).catch(function (error) {
       console.log(error);
@@ -181,7 +181,7 @@ Mypage = {
     console.log(event.target) ;
     console.log(itemcode);
     
-    Init.itemInstance.deleteItem(itemcode, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.shoppingInstance.deleteItem(itemcode, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       alert('Success!');
       Mypage.getItemList();
     }).catch(function (error) {
@@ -194,10 +194,10 @@ Mypage = {
     var itemTemplate = $('#detailItemContent');
     var html = '';
    
-    Init.itemInstance.getItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.shoppingInstance.getItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
       const JSONItemlist = JSON.parse(result);
 
-      if (JSONItemlist[0].itemCode == 'X') {
+      if (JSONItemlist[0].itemCode == 9999) {
         html += "<tr class='cart_item'>";
         html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
@@ -209,8 +209,8 @@ Mypage = {
         
         var itemInfos = JSONItemlist[i];
         
-        if(itemInfos.itemCode == 'X'){ break;}
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgsrc);
+        if(itemInfos.itemCode == 9999){ break;}
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgpath);
         itemTemplate.find('.removeItem').attr('data-itemcode', itemInfos.itemCode);
         // itemTemplate.find('.removeItem').attr('data-index', itemInfos.id);
         itemTemplate.find('.product-name').text(itemInfos.name);
@@ -230,19 +230,19 @@ Mypage = {
     var itemTemplate = $('#historyDetailContent');
 
     var html = '';
-    Init.itemInstance.getMyItems(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.shoppingInstance.getMyItems(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       const JSONItemlist = JSON.parse(result);
-      if (JSONItemlist[0].itemCode == 'X') {
+      if (JSONItemlist[0].itemCode == 9999) {
         html += "<tr class='cart_item'>";
         html += "<td colspan='4'><center><img src='public/images/no_product.png'/></center> </td>";
         html += "</tr>";
       }
       
       for (i = 0; i < JSONItemlist.length; i++) {
-        if (JSONItemlist[i].itemCode == 'X') { continue; }
+        if (JSONItemlist[i].itemCode == 9999) { continue; }
         var itemInfos = JSONItemlist[i];
 
-        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgsrc);
+        itemTemplate.find('.shop_thumbnail').attr('src', 'public/images/' + itemInfos.imgpath);
         itemTemplate.find('.removehistory').attr('data-id', itemInfos.id);
         itemTemplate.find('.product-name').text(itemInfos.name);
         itemTemplate.find('.product-price').text(itemInfos.cost + ' osdc');
@@ -260,7 +260,7 @@ Mypage = {
     var cost = $('#ItemCost').val();
     var imgfile = 'product-' + imgnum + '.jpg';
 
-    Init.itemInstance.registerItem(name, imgfile, cost, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.shoppingInstance.registerItem(name, imgfile, cost, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       alert('Success!');
       Mypage.getItemList();
     }).catch(function(error) {
@@ -269,7 +269,7 @@ Mypage = {
   },
 
   withdrawal: function() {
-    Init.itemInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.shoppingInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
       alert('Success!');
       location.href = '/';
     }).catch(function (error) {

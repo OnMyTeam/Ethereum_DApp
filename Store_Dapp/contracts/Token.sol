@@ -1,6 +1,5 @@
 pragma solidity 0.6.4;
 import './libray.sol';
-import './Membership.sol';
 import './Ownable.sol';
 
 interface IERC20 {
@@ -16,7 +15,6 @@ interface IERC20 {
 
 contract OSDCToken is IERC20, Ownable {
     using SafeMath for uint;
-    Membership membership;
     uint _totalSupply;
     uint CABalance;
     string public name;
@@ -29,8 +27,8 @@ contract OSDCToken is IERC20, Ownable {
     event Transfer(address indexed _from, address indexed _to, uint tokens);
     event Approval(address indexed _tokenOwner, address indexed _spender, uint tokens);
 
-    constructor(address _membershipAdd) public {
-        membership = Membership(_membershipAdd);
+    constructor() public {
+        
         symbol = "OSDC";
         name = "osdc Token";
         // totalSupply = 1000000 *10**uint256(decimals);

@@ -27,7 +27,7 @@ Mall = {
 
   getGradeInfo: function() {
     
-    Init.membershipInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
+    Init.shoppingInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
       Mall.grade = result;
       if (result == 'Bronze') {
         $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
@@ -59,15 +59,15 @@ Mall = {
   getMyItemList: function() {
     var nitemCode;
 
-    Init.itemInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000}).then(function(result) {
+    Init.shoppingInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000}).then(function(result) {
       const JSONItemlist = JSON.parse(result);
       // console.log(JSONItemlist);
-      if (JSONItemlist[0].itemCode == 'X') { return; }
+      if (JSONItemlist[0].itemCode == 9999) { return; }
       for (var i = 0; i < JSONItemlist.length; i++) {
         
         var itemInfos = JSONItemlist[i];
         var itemCode = itemInfos.itemCode;
-        if(itemCode == 'X') continue;
+        if(itemCode == 9999) continue;
         $('.single-shop-product').each(function (index, item){
           nitemCode = $(item).data('itemcode');
           if(nitemCode == itemCode){
@@ -84,12 +84,12 @@ Mall = {
   getItemList: function() {
     var itemrow = $('#itemrow');
     var itemTemplate = $('#itemTemplate');       
-    Init.itemInstance.getItems({from: Mall.address, gas:6000000}).then(function(result) {
+    Init.shoppingInstance.getItems({from: Mall.address, gas:6000000}).then(function(result) {
       // console.log(result);
       const JSONItemlist = JSON.parse(result);
       // console.log(JSON.parse(result));
 
-      if(JSONItemlist[0].itemCode == 'X'){
+      if(JSONItemlist[0].itemCode == 9999){
   
         var html = "<center><img src='public/images/no_product.png'/></center>";
         itemrow.html(html);
@@ -100,12 +100,11 @@ Mall = {
         // console.log(JSONItemlist[i]);
      
         var itemInfos = JSONItemlist[i];
-        if(itemInfos.itemCode == 'X'){ break;}
+        if(itemInfos.itemCode == 9999){ break;}
         itemTemplate.find('.item-name').text(itemInfos.name);
-        itemTemplate.find('img').attr('src', 'public/images/' + itemInfos.imgsrc);
+        itemTemplate.find('img').attr('src', 'public/images/' + itemInfos.imgpath);
         itemTemplate.find('.product-carousel-price-sub').text(itemInfos.cost+' osdc');
         if(itemInfos.buy == 1){
-            console.log(itemInfos.buy);
             itemTemplate.find('button').text('Sold out').attr('disabled', true);
             itemTemplate.find('.add_to_cart_button').css('background-color', '#930000');          
         }else{
@@ -117,7 +116,7 @@ Mall = {
         // itemTemplate.find('.add_to_cart_button').attr('data-id', itemInfos.id);
         itemTemplate.find('.add_to_cart_button').attr('data-itemcode', itemInfos.itemCode);
         itemTemplate.find('.add_to_cart_button').attr('data-cost', itemInfos.cost);
-        itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' + itemInfos.imgsrc);
+        itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' + itemInfos.imgpath);
         itemrow.append(itemTemplate.html());
         
       }
@@ -128,7 +127,7 @@ Mall = {
   },
 
   getOwner: function() {
-    Init.itemInstance.owner.call().then(function(result) {
+    Init.shoppingInstance.owner.call().then(function(result) {
       if (result == Mall.address) {
         Mall.ownerYN = 'Y';
         $("#accountAddrAdmin").text('Account Address(Seller)');
@@ -147,7 +146,7 @@ Mall = {
   buyItem: async function(event) {
     var index = parseInt($(event.target).data('itemcode'));
     
-    Init.itemInstance.buyItem(Mall.address, index,{from: Mall.address, gas:3000000}).then(function(result) {
+    Init.shoppingInstance.buyItem(Mall.address, index,{from: Mall.address, gas:3000000}).then(function(result) {
       alert("Success!");
       Mall.getTokenInfo();
       Mall.getMyItemList();

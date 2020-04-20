@@ -60,7 +60,7 @@ LogIn = {
     var address = $('#selectAccount').val();
     if (address == ''){ alert('Please select address'); return; } 
     
-    Init.membershipInstance.getMemberInfo({from:address}).then(function (result) {
+    Init.shoppingInstance.getMemberInfo({from:address}).then(function (result) {
       // console.log(result);
       if (result != 0x0) {
         loginForm.attr('action','/shop');

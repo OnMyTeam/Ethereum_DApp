@@ -1,8 +1,10 @@
 pragma solidity 0.6.4;
 import './Ownable.sol';
+import './Token.sol';
 
 contract Membership is Ownable{
 
+    OSDCToken public basicToken;                   //물건 구입시 토큰 차감을 위한 토큰 컨트랙트 객체 생성
     //회원 등급을 결정 하기 위한 구매 정보 포함
     struct MemberInfo {
         uint buyCount;
@@ -27,19 +29,19 @@ contract Membership is Ownable{
     mapping (address => int8) public mappingBlacklist;          //조회환 회원이 블랙리스트를 체크하기 위한 매핑 배열
     address[] internal arrayBlacklist;                          //블랙리스트로 등록된 어카운트 리스트
 
-    event Blacklisted(address indexed target);                  // 블랙리스트로 지정된 후 출력하는 이벤트
-    event DeleteFromBlacklist(address indexed target);          // 블랙리스트를 해제하고 나서 출력
-    event EventcheckBlacklist(int8 sender);                     //입력받은 사용자가 블랙리스트일때, 출력하는 이벤트
+    event blacklisted(address indexed target);                  // 블랙리스트로 지정된 후 출력하는 이벤트
+    event deletedBlacklist(address indexed target);          // 블랙리스트를 해제하고 나서 출력
 
-    constructor() public{
+    constructor(address payable _basicTokenAddr) public{
+        basicToken = OSDCToken(_basicTokenAddr);
         //관리자 회원 가입
         members[msg.sender] = true;
         memberlist.push(msg.sender);
 
         //등급 설정
-        pushStatus("Bronze", 0, 0, 0);
-        pushStatus("Silver", 5, 500, 5);
-        pushStatus("Gold", 10, 1500, 10);
+        setGrade("Bronze", 0, 0, 0);
+        setGrade("Silver", 3, 1500, 5);
+        setGrade("Gold", 5, 2500, 10);
     }
 
     function registerMember() public returns(bool success) {
@@ -57,7 +59,7 @@ contract Membership is Ownable{
         return members[msg.sender];
     }
 
-    function pushStatus(string memory _name, uint _times, uint _sum, int8 _rate) public onlyOwner{  //등급 설정
+    function setGrade(string memory _name, uint _times, uint _sum, int8 _rate) public onlyOwner{  //등급 설정
         status.push(GradeStatus({
             name: _name,
             buyCount: _times,
@@ -100,7 +102,7 @@ contract Membership is Ownable{
     function deleteMemberInfo(address _buyer) public {
         delete purchaseHistory[_buyer];                     //회원의 물건 구매 히스토리 삭제
         delete members[_buyer];                             //가입한 회원의 매핑 배열에서 삭제
-        emit DeleteFromBlacklist(_buyer);
+        emit deletedBlacklist(_buyer);
     }
 
     /*블랙 리스트 관련 함수*/
@@ -109,14 +111,14 @@ contract Membership is Ownable{
         require(mappingBlacklist[_addr] == 0, "already blacklist");
         mappingBlacklist[_addr] = 1;
         arrayBlacklist.push(_addr);
-        emit Blacklisted(_addr);
+        emit blacklisted(_addr);
     }
 
     //블랙리스트 삭제
     function deleteBlacklist(address _addr, uint index) public {
         delete mappingBlacklist[_addr];
         delete arrayBlacklist[index];
-        emit DeleteFromBlacklist(_addr);
+        emit deletedBlacklist(_addr);
     }
 
     //모든 블랙리스트 회원의 리스트 출력
@@ -125,10 +127,9 @@ contract Membership is Ownable{
     }
 
     //입력받은 사용자가 블랙리스트로 등록되어 있는지 확인
-    function checkBlacklist(address _buyer) public returns(bool success) {
+    function checkBlacklist(address _buyer) public view returns(bool success) {
         bool check = true;
         require(mappingBlacklist[_buyer] == 0, "Already blacklist");
-        emit EventcheckBlacklist(mappingBlacklist[_buyer]);
         return check;
     }
 
