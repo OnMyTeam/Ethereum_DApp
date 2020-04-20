@@ -44,14 +44,14 @@ Mall = {
     $('#accountAddr').text(Mall.address);
     
     web3.eth.getBalance(Mall.address, function(account, balance) {  
-      ether = web3.fromWei(balance, "ether").toFixed(2) + " ETH";
+      ether = parseInt(web3.utils.fromWei(balance, "ether")).toFixed(2) + " ETH";
       $('#ethValue').text(ether);
     });
   },
 
   getTokenInfo: function() {
     Init.OSDCTokenInstance.balanceOf(Mall.address,{from:Mall.address}).then(function(result) {
-      var token = result.c[0];
+      var token = result.words[0];
       $('#tokenValue').text(token);
     });
   },

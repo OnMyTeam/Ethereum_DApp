@@ -21,14 +21,13 @@ LogIn = {
     var ether;
     for (var i = 0; i < list.length; i++) {
       web3.eth.getBalance(list[i], (err, balance) => {
-        ether = web3.fromWei(balance, "ether");
+        ether = parseInt(web3.utils.fromWei(balance, "ether"));
       });       
       await Init.OSDCTokenInstance.balanceOf(list[i],{from:list[i]}).then(function(result) {
-        // console.log(result);
-        if(result.c[0] == undefined){
+        if(result.words[0] == undefined){
           token = 0;
         }else {
-          token = result.c[0];
+          token = result.words[0];
         }
         html += "<tr>";
         html += "<td>" + list[i] + "</td>";

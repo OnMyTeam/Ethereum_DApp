@@ -27,7 +27,6 @@ Mypage = {
   },
   
   getGradeInfo: function() {
-    var membershipInstance;
 
     Init.shoppingInstance.getGrade(Mypage.address, { from: Mypage.address }).then(function (result) {
       if (result == 'Bronze') {
@@ -43,7 +42,7 @@ Mypage = {
   getAccountInfo: function() {
     document.getElementById('accountAddr').innerHTML = Mypage.address;
     web3.eth.getBalance(Mypage.address, function (error, balance) {
-      var ether = web3.fromWei(balance, "ether");
+      var ether = parseInt(web3.utils.fromWei(balance, "ether"));
       document.getElementById('ethValue').innerHTML = ether.toFixed(2) + " ETH";
     });
   },
@@ -51,7 +50,8 @@ Mypage = {
   getTokenInfo: function() {
     var account = document.getElementById('accountAddr').innerText;
     Init.OSDCTokenInstance.balanceOf(account, { from: account }).then(function (result) {
-      document.getElementById('tokenValue').innerText = result.c;
+      var token = result.words[0]
+      document.getElementById('tokenValue').innerText = token;
     });
   },
 

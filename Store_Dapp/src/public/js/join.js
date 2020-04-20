@@ -35,7 +35,7 @@ Join = {
     $('#address').text(address);
     
     web3.eth.getBalance(address, (err, balance) => {
-      ether = web3.fromWei(balance, "ether").toFixed(2);
+      ether = parseInt(web3.utils.fromWei(balance, "ether")).toFixed(2);
       $('#etherValue').text(ether + " ETH");
     }); 
     
