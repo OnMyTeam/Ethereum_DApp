@@ -1,0 +1,57 @@
+<html>
+    <title>SimpleAuction</title>
+    <body>
+        <h1>SimpleAuction</h>
+        <h2>Account Info</h2>
+        <table cellspacing="0" border="1">
+          <tbody>
+            <tr class="cart-subtotal">
+              <th id="accountAddrAdmin"> Account Address</th>
+              <td><select class="accountAddr" name="address" id="selectAccount"></select></td>
+            </tr>
+            <tr class="shipping">
+              <th>Holding ETH</th>
+              <td id="ethValue"></td>
+            </tr>
+            <tr class="shipping"  style="color:red">
+              <th> Auction ENDED </th>
+              <td id="auctionEnd"></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h2>Auction Info</h2>
+        <table class="table table-bordered" id="dataTable" cellspacing="0" border="1">
+            <thead>
+              <tr>
+                <th>HighestBidder</th>
+                <th width="50%">Highest</th>
+              </tr>
+              <tr>
+                <td><span id="highestAddress"></span></td>
+                <td><span id="highestAmount"></span></td>
+              </tr>
+            </thead>
+          </table>
+
+        <h2>Bid</h2>
+        bid amount: 
+        <input type="text" name="bid" id="bidAmount">
+        <input type="button" class="bidBtn" value="bid">
+        
+        
+        <h2>auctionEnd(HighestBidder)</h2>
+        <input type="button" class="endBtn" value="auctionEnd">
+        
+          
+        <h2>withdrawal(except HighestBidder)</h2>
+        <input type="button" class="withdrawalBtn" value="withdrawal">
+    </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/truffle-contract@4.0.31/dist/truffle-contract.min.js"></script>
+    <!-- <script src="js/truffle-contract.js"></script> -->
+    <script src="js/app.js"></script>
+
+</html>

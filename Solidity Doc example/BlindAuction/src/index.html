@@ -1,0 +1,68 @@
+<html>
+    <title>BlindAuction</title>
+    <body>
+        <h1>BlindAuction</h>
+        <h2>Account Info</h2>
+        <table cellspacing="0" border="1">
+          <tbody>
+            <tr class="cart-subtotal">
+              <th id="accountAddrAdmin"> Account Address</th>
+              <td><select class="accountAddr" name="address" id="selectAccount"></select></td>
+            </tr>
+            <tr class="shipping">
+              <th>Holding ETH</th>
+              <td id="ethValue"></td>
+            </tr>
+            <tr class="shipping"  style="color:red">
+              <th> Auction Step </th>
+              <td id="auctionStep"></td>
+            </tr>
+          </tbody>
+        </table>
+        <br><br><br><hr>
+
+        <h2>Bid</h2>
+        <table cellspacing="0">
+            <tr>
+              <td> amount(deposit value): </td>
+              <td><input type="text" name="bid" id="bidAmount"><br></td>
+              
+            </tr>
+            <tr>
+              <td> fake (true or false) :</td>
+              <td><input type="text" name="bid" id="bidFake"><br></td>
+            </tr>
+            <tr>
+              <td>secret(message): </td>
+              <td><input type="text" name="bid" id="bidSecret"></td><br>
+            </tr>
+        </table>
+        <br>
+        <input type="button" class="bidBtn" value="bid">
+        
+        <hr>
+        <h2> Reveal</h2>
+        <input type="text" name="reveal" id="RevealNo">
+        <input type="button" class="makeRevealBtn" value="Reveal"><br>
+        <br>
+        <table border=1>
+          <tbody id="revealTable">
+          </tbody>
+        </table>
+        <input type="button" class="revealBtn" id="revealBtn" value="reveal" style="display: none;"> 
+
+        <hr>
+        <h2> auctionEnd</h2>
+        <input type="button" class="endBtn" value="auctionEnd">
+        
+        <hr>
+        <h2>withdrawal(except HighestBidder)</h2>
+        <input type="button" class="withdrawalBtn" value="withdrawal">
+    </body>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/truffle-contract@4.0.31/dist/truffle-contract.min.js"></script>
+    <script src="js/app.js"></script>
+
+</html>
