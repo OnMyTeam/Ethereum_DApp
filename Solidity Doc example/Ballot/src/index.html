@@ -15,7 +15,7 @@
 
       <h3>Account Info</h3>
       <div class="table-responsive">
-        <table border="0" class="table table-bordered">
+        <table class="table table-bordered">
           <tbody>
             <tr>
               <th id="accountAddrAdmin"> Account Address</th>
@@ -60,7 +60,7 @@
 
       <hr>
       <h3>Proposals</h3>
-      <table class="table table-bordered" id="dataTable" cellspacing="0" border="1">
+      <table class="table table-bordered" id="dataTable">
         <thead>
           <tr>
             <th>No</th>
@@ -77,7 +77,7 @@
         <tbody>
           <tr>
             <th style="width: 90%;">
-              <input type="text" name="vote" class="form-control" id="voteProposal" placeholder="Input the proposal number">
+              <input type="number" name="vote" class="form-control" id="voteProposal" placeholder="Input the proposal number" min="0">
             </th>
             <td>
               <a href="#" class="btn btn-primary" id="voteBtn" style="width: 100px;">Vote</a>

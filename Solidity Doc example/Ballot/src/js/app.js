@@ -152,24 +152,28 @@ App = {
 
   validCheck: function (N) {
     var address;
+    if($('#selectAccount').val() == '' ){
+      alert('Please select the account address');
+      return false;
+    }
     // ---- empty address check ----
     if (N == 'G') {
-      address = $('#getRightAddress').val();
-      if (address == '') {
+      
+      if ($('#getRightAddress').val() == '') {
         alert('Please Input the address');
         return false;
       }
 
     } else if (N == 'D') {
-      address = $('#delegateAddress').val();
-      if (address == '') {
+      
+      if ($('#delegateAddress').val() == '') {
         alert('Please Input the address');
         return false;
       }
       
     } else if (N == 'V') {
-      var prposalNo = $('#voteProposal').val();
-      if (prposalNo == '') {
+      
+      if ($('#voteProposal').val() == '') {
         alert('Please Input the proposal number');
         return false;
       }
