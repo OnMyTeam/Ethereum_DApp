@@ -62,6 +62,22 @@ contract Item is Ownable{
         itemsJson = string(abi.encodePacked(itemsJson, '{ "itemCode" : "9999"} ]'));
         return itemsJson;
     }
+    function _getItem(uint _index) public view returns (uint itemcode, uint cost, string memory name, string memory imgpath){
+        // return itemInfos[_index];
+        itemcode = itemInfos[_index].itemcode;
+        cost = itemInfos[_index].cost;
+        name = itemInfos[_index].name;
+        imgpath = itemInfos[_index].imgpath;
+    }
+    function _setItemBuy(uint _index, string memory _code) public returns (bool success){
+
+        if(keccak256(abi.encodePacked(_code)) == keccak256(abi.encodePacked("buy"))){
+            itemInfos[_index].buy = 1;
+        }else if(keccak256(abi.encodePacked(_code)) == keccak256(abi.encodePacked("delete"))){
+            itemInfos[_index].buy = 0;
+        }
+        return true;
+    }
 
 
 }

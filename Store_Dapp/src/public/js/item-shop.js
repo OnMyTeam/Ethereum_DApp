@@ -27,7 +27,7 @@ Mall = {
 
   getGradeInfo: function() {
     
-    Init.shoppingInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
+    Init.membershipInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
       Mall.grade = result;
       if (result == 'Bronze') {
         $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
@@ -84,7 +84,7 @@ Mall = {
   getItemList: function() {
     var itemrow = $('#itemrow');
     var itemTemplate = $('#itemTemplate');       
-    Init.shoppingInstance.getItems({from: Mall.address, gas:6000000}).then(function(result) {
+    Init.itemInstance.getItems({from: Mall.address, gas:6000000}).then(function(result) {
       // console.log(result);
       const JSONItemlist = JSON.parse(result);
       // console.log(JSON.parse(result));
@@ -153,9 +153,9 @@ Mall = {
       Mall.getGradeInfo();
     }).catch(function(err) {
       console.log(err.message);
-      if(err.message == 'VM Exception while processing transaction: revert need token'){
+      if(err.message == 'Returned error: VM Exception while processing transaction: revert need token -- Reason given: need token.'){
         alert('토큰이 부족합니다.');
-      }else if(err.message =  'VM Exception while processing transaction: revert Already blacklist'){
+      }else if(err.message =  'Returned error: VM Exception while processing transaction: revert Already blacklist -- Reason given: Already blacklist.'){
         alert('블랙리스트로 등록되어 물건을 구매 할 수 없습니다.');
       }
     });

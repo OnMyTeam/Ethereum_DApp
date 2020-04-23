@@ -18,16 +18,16 @@ Init = {
   },
 
   initContract: async function() {
-    // await $.getJSON('Membership.json', function (data) {
-    //   var MembershipArtifact = data;
-    //   Init.contracts.Membership = TruffleContract(MembershipArtifact);
-    //   Init.contracts.Membership.setProvider(Init.web3Provider);
-    // });      
-    // await $.getJSON('item.json', function(data) {
-    //   var itemArtifact = data;
-    //   Init.contracts.item = TruffleContract(itemArtifact);
-    //   Init.contracts.item.setProvider(Init.web3Provider);
-    // });
+    await $.getJSON('Membership.json', function (data) {
+      var MembershipArtifact = data;
+      Init.contracts.Membership = TruffleContract(MembershipArtifact);
+      Init.contracts.Membership.setProvider(Init.web3Provider);
+    });      
+    await $.getJSON('Item.json', function(data) {
+      var itemArtifact = data;
+      Init.contracts.item = TruffleContract(itemArtifact);
+      Init.contracts.item.setProvider(Init.web3Provider);
+    });
     await $.getJSON('Shopping.json', function(data) {
       var itemArtifact = data;
       Init.contracts.shopping = TruffleContract(itemArtifact);
@@ -44,12 +44,12 @@ Init = {
     await Init.contracts.shopping.deployed().then(function(instance){
       Init.shoppingInstance=instance;
     });    
-    // await Init.contracts.Membership.deployed().then(function(instance){
-    //   Init.shoppingInstance=instance;
-    // });
-    // await Init.contracts.item.deployed().then(function(instance){
-    //   Init.shoppingInstance=instance;
-    // });
+    await Init.contracts.Membership.deployed().then(function(instance){
+      Init.membershipInstance=instance;
+    });
+    await Init.contracts.item.deployed().then(function(instance){
+      Init.itemInstance=instance;
+    });
     await Init.contracts.FixedSupplyToken.deployed().then(function(instance){
       Init.OSDCTokenInstance=instance;
     });
