@@ -1,5 +1,5 @@
 pragma solidity 0.6.4;
-import './libray.sol';
+import './Library.sol';
 import './Ownable.sol';
 
 interface IERC20 {
@@ -15,6 +15,7 @@ interface IERC20 {
 
 contract OSDCToken is IERC20, Ownable {
     using SafeMath for uint;
+    
     uint _totalSupply;
     uint CABalance;
     string public name;
@@ -34,7 +35,6 @@ contract OSDCToken is IERC20, Ownable {
         // totalSupply = 1000000 *10**uint256(decimals);
         _totalSupply = 10000000000;
         CABalance = _totalSupply;
-        // balances[msg.sender] = _totalSupply;
     }
 
     function totalSupply() public override view returns (uint) {
@@ -85,8 +85,7 @@ contract OSDCToken is IERC20, Ownable {
         require (CABalance >= amount);
         CABalance = CABalance.sub(amount);
         balances[msg.sender] = balances[msg.sender].add(amount);
-
-        // owner.transfer(msg.value);
+        
         emit Transfer(owner, msg.sender, amount);
     }
 
