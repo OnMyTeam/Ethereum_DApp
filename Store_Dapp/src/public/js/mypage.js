@@ -28,7 +28,7 @@ Mypage = {
   
   getGradeInfo: function() {
 
-    Init.membershipInstance.getGrade(Mypage.address, { from: Mypage.address }).then(function (result) {
+    Init.membershipInstance.getGrade({ from: Mypage.address }).then(function (result) {
       if (result == 'Bronze') {
         $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
       } else if (result == 'Silver') {
@@ -169,7 +169,7 @@ Mypage = {
   deleteMyItem: function(event) {
     var index = $(event.target).data('id');
 
-    Init.shoppingInstance.deleteMyItem(Mypage.address, index, { from: Mypage.address }).then(function (result) {
+    Init.shoppingInstance.deleteMyItem(index, { from: Mypage.address }).then(function (result) {
       Mypage.getMyItemList();
     }).catch(function (error) {
       console.log(error);
@@ -194,7 +194,7 @@ Mypage = {
     var itemTemplate = $('#detailItemContent');
     var html = '';
    
-    Init.itemInstance.getItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.itemInstance.getAllItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
       const JSONItemlist = JSON.parse(result);
 
       if (JSONItemlist[0].itemCode == 9999) {
@@ -230,7 +230,8 @@ Mypage = {
     var itemTemplate = $('#historyDetailContent');
 
     var html = '';
-    Init.shoppingInstance.getMyItems(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.shoppingInstance.getMyAllItems({ from: Mypage.address, gas: 3000000 }).then(function (result) {
+      console.log(JSON.parse(result));
       const JSONItemlist = JSON.parse(result);
       if (JSONItemlist[0].itemCode == 9999) {
         html += "<tr class='cart_item'>";
@@ -269,7 +270,7 @@ Mypage = {
   },
 
   withdrawal: function() {
-    Init.shoppingInstance.withdrawal(Mypage.address, { from: Mypage.address, gas: 3000000 }).then(function (result) {
+    Init.shoppingInstance.withdrawal({ from: Mypage.address, gas: 3000000 }).then(function (result) {
       alert('Success!');
       location.href = '/';
     }).catch(function (error) {

@@ -76,7 +76,7 @@ contract OSDCToken is IERC20, Ownable {
         return true;
     }
 
-     function withdrawal(address buyer) public {
+     function withdrawal(address buyer) external {
         balances[buyer] = 0;
     }
 

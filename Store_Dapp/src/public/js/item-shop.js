@@ -27,7 +27,7 @@ Mall = {
 
   getGradeInfo: function() {
     
-    Init.membershipInstance.getGrade(Mall.address,{from: Mall.address}).then(function (result) {
+    Init.membershipInstance.getGrade({from: Mall.address}).then(function (result) {
       Mall.grade = result;
       if (result == 'Bronze') {
         $('#accountGrade').html("<font color='bronze'><b>Bronze</b></font>");
@@ -59,9 +59,9 @@ Mall = {
   getMyItemList: function() {
     var nitemCode;
 
-    Init.shoppingInstance.getMyItems(Mall.address,{from: Mall.address, gas:6000000}).then(function(result) {
+    Init.shoppingInstance.getMyAllItems({from: Mall.address, gas:6000000}).then(function(result) {
       const JSONItemlist = JSON.parse(result);
-      // console.log(JSONItemlist);
+      console.log(JSONItemlist);
       if (JSONItemlist[0].itemCode == 9999) { return; }
       for (var i = 0; i < JSONItemlist.length; i++) {
         
@@ -71,7 +71,7 @@ Mall = {
         $('.single-shop-product').each(function (index, item){
           nitemCode = $(item).data('itemcode');
           if(nitemCode == itemCode){
-            $(item).find('button').text('Success').attr('disabled', true);
+            $(item).find('button').text('Sold-out').attr('disabled', true);
             $(item).find('.add_to_cart_button').css('background-color', 'green');             
           }
         });
@@ -84,8 +84,7 @@ Mall = {
   getItemList: function() {
     var itemrow = $('#itemrow');
     var itemTemplate = $('#itemTemplate');       
-    Init.itemInstance.getItems({from: Mall.address, gas:6000000}).then(function(result) {
-      // console.log(result);
+    Init.itemInstance.getAllItems({from: Mall.address, gas:6000000}).then(function(result) {
       const JSONItemlist = JSON.parse(result);
       // console.log(JSON.parse(result));
 
@@ -97,7 +96,6 @@ Mall = {
       }
 
       for (i = 0; i < JSONItemlist.length; i++) {
-        // console.log(JSONItemlist[i]);
      
         var itemInfos = JSONItemlist[i];
         if(itemInfos.itemCode == 9999){ break;}
@@ -113,7 +111,6 @@ Mall = {
         }
         itemTemplate.find('.single-shop-product').attr('data-itemcode', itemInfos.itemCode);          
         itemTemplate.find('.add_to_cart_button').attr('data-name', itemInfos.name);
-        // itemTemplate.find('.add_to_cart_button').attr('data-id', itemInfos.id);
         itemTemplate.find('.add_to_cart_button').attr('data-itemcode', itemInfos.itemCode);
         itemTemplate.find('.add_to_cart_button').attr('data-cost', itemInfos.cost);
         itemTemplate.find('.add_to_cart_button').attr('data-src', 'public/images/' + itemInfos.imgpath);
@@ -146,7 +143,7 @@ Mall = {
   buyItem: async function(event) {
     var index = parseInt($(event.target).data('itemcode'));
     
-    Init.shoppingInstance.buyItem(Mall.address, index,{from: Mall.address, gas:3000000}).then(function(result) {
+    Init.shoppingInstance.buyItem(index,{from: Mall.address, gas:3000000}).then(function(result) {
       alert("Success!");
       Mall.getTokenInfo();
       Mall.getMyItemList();
