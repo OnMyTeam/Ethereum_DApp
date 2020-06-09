@@ -21,7 +21,9 @@ LogIn = {
     var ether;
     for (var i = 0; i < list.length; i++) {
       web3.eth.getBalance(list[i], (err, balance) => {
+        console.log(balance);
         ether = parseInt(web3.utils.fromWei(balance, "ether"));
+        
       });       
       await Init.OSDCTokenInstance.balanceOf(list[i],{from:list[i]}).then(function(result) {
         if(result.words[0] == undefined){
