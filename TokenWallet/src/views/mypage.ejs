@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <%- include('./layout/top') %>
+</head>
+
+<body>
+    <%- include('./layout/menu') %>
+
+    <div class="product-big-title-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="product-bit-title text-center">
+                        <h2>MyPage</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> <!-- End Page title area -->
+    <div class="single-product-area">
+        <div class="zigzag-bottom"></div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="cart_totals" style="border: 2px;">
+                        <h2><i class="fa fa-reorder"></i> Account Info</h2>
+                        <table cellspacing="0">
+                            <tbody>
+                                <tr class="cart-subtotal">
+                                    <th> Account Grade</th>
+                                    <td><span class="amount" id="accountGrade"></span></td>
+                                </tr>
+                                <tr class="cart-subtotal">
+                                    <th id="accountAddrAdmin">Account Address</th>
+                                    <td><span class="amount" id="accountAddr"></span></td>
+                                </tr>
+                                <tr class="shipping">
+                                    <th>Holding ETH</th>
+                                    <td id="ethValue"></td>
+                                </tr>
+                                <tr class="order-total">
+                                    <th>Holding Token</th>
+                                    <td><strong><span class="amount" id="tokenValue"></span></strong> </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cart_totals">
+                        <h2><i class="fa fa-reorder"></i> Buy Tokens</h2>
+                        <table cellspacing="0">
+                            <tbody>
+                                <tr class="cart-subtotal">
+                                    <th style="width:87%">
+                                        <input type="number" class="form-control is-valid" id="tokenAmount"
+                                            placeholder="Enter tokens..." min=0></th>
+                                    <td> <button class="add_to_token_button" href="#" rel="nofollow">BUY TOKENS</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr>
+                    </div>
+                    <div class="cart_totals" id="itemRegister" style="display: none;">
+                        <h2> <i class="fa fa-reorder"></i> Register Item </h2>
+                        <table cellspacing="0">
+                            <tbody>
+                                <tr class="cart-subtotal">
+                                    <th style="width:87%"> <input type="text" class="form-control is-valid"
+                                            id="ItemName" placeholder="Enter Item Name..." min="0"></th>
+                                    <td rowspan="2"><button class="add_to_item_button" href="#" rel="nofollow"
+                                            id="register">Register<br></button></td>
+                                </tr>
+                                <tr class="shipping">
+                                    <th> <input type="number" class="form-control is-valid" id="ItemCost"
+                                            placeholder="Enter Item Cost..." min="0"></th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cart_totals" id="itemRegisterList" style="display: none;">
+                        <h2><i class="fa fa-reorder"></i> Itemlist</h2>
+                        <table cellspacing="0" class="shop_table cart">
+                            <thead>
+                                <tr>
+                                    <th class="product-remove">&nbsp;</th>
+                                    <th class="product-thumbnail">&nbsp;</th>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-price">Price</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ItemCotent">
+                            </tbody>
+                            <tr class="cart_item" style="display: none;" id="detailItemContent">
+                                <td class="product-remove" style="width: 5%;">
+                                    <a title="Remove this item" class="removeItem" href="javascript:;" data-id="" style="font-weight:bold;" >X</a>
+                                </td>
+                                <td class="product-thumbnail" style="width: 30%;">
+                                    <a href=""><img width="145" height="145" alt="poster_1_up" class="shop_thumbnail" src=""></a>
+                                </td>
+                                <td class="product-name" style="width: 30%;">
+                                </td>
+                                <td class="product-price" style="width: 30%;">
+                                    <span class="amount"></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="cart_totals" id="memberList" style="display: none;">
+                        <h2><i class="fa fa-reorder"></i> Memberlist</h2>
+                        <table cellspacing="0" class="shop_table cart">
+                            <thead>
+                                <tr>
+                                    <th class="product-remove">&nbsp;</th>
+                                    <th class="product-name">address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="memberListContent">
+                            </tbody>
+                            <tr class="cart_item" style="display: none;" id="detailmemberListContent">
+                                <td class="product-remove" style="width: 5%;">
+                                    <button class="add_to_Blacklist_button fa fa-save" type="button" data-id="0"></button>
+                                </td>
+                                <td class="product-name" style="width: 95%;">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="cart_totals" id="blacklist" style="display: none;">
+                        <h2><i class="fa fa-reorder"></i> Blacklist</h2>
+                        <table cellspacing="0" class="shop_table cart">
+                            <thead>
+                                <tr>
+                                    <th class="product-remove">&nbsp;</th>
+                                    <th class="product-name">address</th>
+                                </tr>
+                            </thead>
+                            <tbody id="BlacklistContent">
+                            </tbody>
+                            <tr class="cart_item" style="display: none;" id="detailBlacklistContent">
+                                <td class="product-remove" style="width: 5%;">
+                                    <a title="Remove this item" class="removeBlacklist" href="javascript:;"
+                                        data-id="">×</a>
+                                </td>
+                                <td class="product-name" style="width: 95%;">
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="product-content-right">
+                        <div class="woocommerce">
+                            <h2><i class="fa fa-reorder"></i> Purchase History</h2>
+                            <table cellspacing="0" class="shop_table cart">
+                                <thead>
+                                    <tr>
+                                        <th class="product-remove">&nbsp;</th>
+                                        <th class="product-thumbnail">&nbsp;</th>
+                                        <th class="product-name">Product</th>
+                                        <th class="product-price">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyContent">
+                                </tbody>
+                                <tr class="cart_item" style="display: none;" id="historyDetailContent">
+                                    <td class="product-remove" style="width: 5%;">
+                                        <a title="Remove this item" class="removehistory" href="javascript:;"
+                                            data-id="">×</a>
+                                    </td>
+                                    <td class="product-thumbnail" style="width: 30%;">
+                                        <a href="#"><img width="145" height="145" alt="poster_1_up"
+                                                class="shop_thumbnail" src=""></a>
+                                    </td>
+                                    <td class="product-name" style="width: 30%;">
+                                    </td>
+                                    <td class="product-price" style="width: 30%;">
+                                        <span class="amount"></span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <hr>
+                    <br><br><br>
+                    <div class="cart_totals">
+                        <button class="withdrawal_button" href="#" rel="nofollow"
+                            style="width:500px; height:50px;">Withdrawal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('./layout/footer') %>
+
+    <script src="public/js/mypage.js"></script>
+
+
+</body>
+
+</html>

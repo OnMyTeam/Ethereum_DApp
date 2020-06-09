@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <%- include('./layout/top') %>
+</head>
+
+<body>
+
+  <%- include('./layout/menu') %>
+  <div class="product-big-title-area">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="product-bit-title text-center">
+            <h2>Shop</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+      <div class="cart_totals">
+        <h2>Account Info</h2>
+        <table cellspacing="0">
+          <tbody>
+            <tr class="cart-subtotal">
+            <th > Account Grade</th>
+            <td><span class="amount" id="accountGrade"></span></td>
+            </tr>
+            <tr class="cart-subtotal">
+              <th id="accountAddrAdmin"> Account Address</th>
+              <td><span class="amount" id="accountAddr"></span></td>
+            </tr>
+            <tr class="shipping">
+              <th>Holding ETH</th>
+              <td id="ethValue"></td>
+            </tr>
+            <tr class="order-total">
+              <th>Holding Token</th>
+              <td><strong><span class="amount" id="tokenValue"></span></strong> </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="container">
+      <div class="row" id="itemrow">
+      </div>
+      <div id="itemTemplate" style="display: none;">
+        <div class="col-md-3 col-sm-6">
+          <div class="single-shop-product">
+            <div class="product-upper">
+              <img src="" alt="">
+            </div>
+            <h2 class="item-name">Apple new mac book 2015 March :P</h2>
+            <div class="product-carousel-price">
+              <ins class="product-carousel-price-sub">$899.00</ins>
+            </div>
+            <div class="product-option-shop">
+              <button class="add_to_cart_button" type="button" data-id="0">BUY</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="product-pagination text-center">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('./layout/footer') %>
+  <script src="public/js/item-shop.js"></script>
+
+</body>
+
+</html>
