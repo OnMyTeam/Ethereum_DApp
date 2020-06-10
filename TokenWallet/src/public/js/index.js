@@ -80,8 +80,8 @@ App = {
     
     web3.eth.sendTransaction({ from: App.address, to: toAddress, value: ether },
     function (e, r) {
-      console.log(e);
-      if(e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
+      
+      if(e && e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
         alert("Not enough ether");
         return;
       }
