@@ -1,7 +1,6 @@
 {
   "name": "tokenwallet",
   "version": "1.0.0",
-  "description": "",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -14,5 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "lite-server": "^2.5.4"
-  }
+  },
+  "devDependencies": {},
+  "description": ""
 }

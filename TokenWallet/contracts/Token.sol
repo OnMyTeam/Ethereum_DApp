@@ -1,6 +1,5 @@
 pragma solidity 0.6.4;
-import './Library.sol';
-import './Ownable.sol';
+
 
 interface IERC20 {
     function totalSupply() external view returns (uint256);
@@ -13,15 +12,14 @@ interface IERC20 {
     event Approval(address indexed owner, address indexed spender, uint256 value);
 }
 
-contract OSDCToken is IERC20, Ownable {
-    using SafeMath for uint;
+contract OSDCToken is IERC20 {
     
-    uint _totalSupply;
-    uint CABalance;
+    uint256 _totalSupply;
+    uint256 CABalance;
     string public name;
     string public symbol;
     uint8 public decimals = 18;
-
+    
     mapping(address => uint256) balances;
     mapping(address => mapping(address => uint256)) public allowence;
 
@@ -33,16 +31,16 @@ contract OSDCToken is IERC20, Ownable {
         symbol = "OSDC";
         name = "osdc Token";
         // totalSupply = 1000000 *10**uint256(decimals);
-        _totalSupply = 10000000000;
+        _totalSupply = 100000000000;
         CABalance = _totalSupply;
         balances[msg.sender] = CABalance;
     }
 
-    function totalSupply() public override view returns (uint) {
+    function totalSupply() public override view returns (uint256) {
         return _totalSupply;
     }
 
-    function balanceOf(address tokenOwner) public override view returns (uint balance) {
+    function balanceOf(address tokenOwner) public override view returns (uint256 balance) {
         return balances[tokenOwner];
     }
 
@@ -54,8 +52,8 @@ contract OSDCToken is IERC20, Ownable {
         require(_to != address(0));
         require(balances[_from] >= _value, "need token");
         
-        balances[_from] = balances[_from].sub(_value);
-        balances[_to] = balances[_to].add(_value);
+        balances[_from] = balances[_from] - _value;
+        balances[_to] = balances[_to] + _value;
         emit Transfer(_from, _to, _value);
     }
 
@@ -66,7 +64,7 @@ contract OSDCToken is IERC20, Ownable {
 
     function transferFrom(address _from,address _to, uint256 _value) public override returns (bool success) {
         require(_value <= allowence[_from][msg.sender]);
-        allowence[_from][msg.sender] = allowence[_from][msg.sender].sub(_value);
+        allowence[_from][msg.sender] = allowence[_from][msg.sender] - _value;
         _transfer(_from, _to, _value);
         return true;
     }
@@ -81,14 +79,6 @@ contract OSDCToken is IERC20, Ownable {
         balances[buyer] = 0;
     }
 
-    receive() external payable{
-        uint256 amount = msg.value;
-        require (CABalance >= amount);
-        CABalance = CABalance.sub(amount);
-        balances[msg.sender] = balances[msg.sender].add(amount);
-        
-        emit Transfer(owner, msg.sender, amount);
-    }
 
     fallback() external {
         revert();

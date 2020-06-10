@@ -36,20 +36,16 @@ App = {
     var token;
     App.address = $('#selectAccount').val();
     $('#address').text(App.address);
-    
+
+
     web3.eth.getBalance(App.address, (err, balance) => {
       console.log(balance);
       ether = parseInt(web3.utils.fromWei(balance, "wei")) / 1000000000000000000;
-      Init.OSDCTokenInstance.balanceOf(App.address,{from:App.address}).then(function(result) {
-        console.log(result);
-        if(result.words[0] == undefined){
-          token = 0;
-        }else {
-          token = result.words[0];
-        }
+      Init.OSDCTokenInstance.balanceOf.call(App.address, {from:App.address}).then(function(result) {
+        token = result.toNumber();
         var imageHtml= '<img class="balance-icon" src="public/images/eth_logo.svg" style="height: 25px; width: 25px; border-radius: 25px;">'
         $('#etherValue').html(imageHtml + ether + " ETH");
-        $('#tokenValue').text(token);
+        $('#tokenValue').text(result.toNumber());
 
       });
       
@@ -81,11 +77,14 @@ App = {
     web3.eth.sendTransaction({ from: App.address, to: toAddress, value: ether },
     function (e, r) {
       
-      if(e && e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
-        alert("Not enough ether");
-        return;
-      }
-      alert("success");
+      if(e){
+        
+        if(e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
+          alert("Not enough Ether");
+          return;
+        }
+      } 
+      alert('Ether transfer success!');
       $('#etherAddressTxt').val('');
       $('#etherValue1').val('');
 
@@ -97,6 +96,9 @@ App = {
       });       
 
 
+    }).catch(function (error){
+      
+      console.log(error);
     });
 
   },
@@ -119,17 +121,12 @@ App = {
       return;
     }
     Init.OSDCTokenInstance.transfer(toAddress, tokenValue, { from: App.address }).then(function (result) {
-      
+      alert('Token transfer success!');
       $('#tokenAddressTxt').val('');
       $('#tokenValue1').val('');
 
       Init.OSDCTokenInstance.balanceOf(App.address,{from:App.address}).then(function(result) {
-        console.log(result);
-        if(result.words[0] == undefined){
-          token = 0;
-        }else {
-          token = result.words[0];
-        }
+        token = result.toNumber();
         $('#tokenValue').text(token);
 
       });
