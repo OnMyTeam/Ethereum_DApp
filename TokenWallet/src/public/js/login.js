@@ -21,7 +21,7 @@ LogIn = {
     var ether;
     for (var i = 0; i < list.length; i++) {
       web3.eth.getBalance(list[i], (err, balance) => {
-        console.log(balance);
+        
         ether = parseInt(web3.utils.fromWei(balance, "ether"));
         
       });       

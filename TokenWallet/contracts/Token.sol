@@ -35,6 +35,7 @@ contract OSDCToken is IERC20, Ownable {
         // totalSupply = 1000000 *10**uint256(decimals);
         _totalSupply = 10000000000;
         CABalance = _totalSupply;
+        balances[msg.sender] = CABalance;
     }
 
     function totalSupply() public override view returns (uint) {
@@ -59,7 +60,7 @@ contract OSDCToken is IERC20, Ownable {
     }
 
     function transfer (address _to, uint256 _value) public override returns (bool success) {
-        _transfer(tx.origin, _to, _value);
+        _transfer(msg.sender, _to, _value);
         return true;
     }
 
