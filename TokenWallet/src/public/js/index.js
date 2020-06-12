@@ -39,7 +39,7 @@ App = {
 
 
     web3.eth.getBalance(App.address, (err, balance) => {
-      console.log(balance);
+      
       ether = parseInt(web3.utils.fromWei(balance, "wei")) / 1000000000000000000;
       Init.OSDCTokenInstance.balanceOf.call(App.address, {from:App.address}).then(function(result) {
         token = result.toNumber();
@@ -55,14 +55,14 @@ App = {
 
   sendEther: function(){
     var toAddress = $('#etherAddressTxt').val();
-    var etherValue = $('#etherValue1').val();
+    var etherValue = $('#etherValue1').val().toString();
 
     if(App.address == ''){
-      alert('Please select Address');
+      alert('Please select address');
       $('#selectAccount').focus();
       return;
     }else if(toAddress == ''){
-      alert('Please input Address');
+      alert('Please input address');
       $('#etherAddressTxt').focus();
       return;
     }else if(etherValue == ''){
@@ -71,35 +71,45 @@ App = {
       return;
     }
 
-    
-    ether = parseInt(web3.utils.toWei(etherValue, "ether"));
-    
-    web3.eth.sendTransaction({ from: App.address, to: toAddress, value: ether },
-    function (e, r) {
-      
-      if(e){
+    const tokenPrice = new web3.utils.BN('1000000000000000000').mul(new web3.utils.BN(etherValue));
+
+    try {
+      web3.eth.sendTransaction({ from: App.address, to: toAddress, value: tokenPrice },
+      function (e, r) {
         
-        if(e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
-          alert("Not enough Ether");
-          return;
-        }
-      } 
-      alert('Ether transfer success!');
-      $('#etherAddressTxt').val('');
-      $('#etherValue1').val('');
+        if(e){
 
-      web3.eth.getBalance(App.address, (err, balance) => {
-        console.log(balance);
-        ether = parseInt(web3.utils.fromWei(balance, "wei")) / 1000000000000000000;
-        var imageHtml= '<img class="balance-icon" src="public/images/eth_logo.svg" style="height: 25px; width: 25px; border-radius: 25px;">'
-        $('#etherValue').html(imageHtml + ether + " ETH");        
-      });       
+          if(e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
+            alert("Not enough Ether");
+            return;
+          }
+        } 
+        alert('Ether transfer success!');
+        $('#etherAddressTxt').val('');
+        $('#etherValue1').val('');
+
+        web3.eth.getBalance(App.address, (err, balance) => {
+          console.log(balance);
+          ether = parseInt(web3.utils.fromWei(balance, "wei")) / 1000000000000000000;
+          var imageHtml= '<img class="balance-icon" src="public/images/eth_logo.svg" style="height: 25px; width: 25px; border-radius: 25px;">'
+          $('#etherValue').html(imageHtml + ether + " ETH");        
+        });       
 
 
-    }).catch(function (error){
-      
-      console.log(error);
-    });
+      }).catch(function (error){
+        
+        console.log(error);
+
+      });
+    }catch (e){
+      console.log(e);
+      if(e.toString().indexOf('is invalid') != -1) {
+        alert("Invalid address");
+        $('#etherAddressTxt').focus();
+        return;
+      }
+    }
+
 
   },
 
@@ -108,18 +118,19 @@ App = {
     var tokenValue = $('#tokenValue1').val();
 
     if(App.address == ''){
-      alert('Please select Address');
+      alert('Please select address');
       $('#selectAccount').focus();
       return;
     }else if(toAddress == ''){
-      alert('Please input Address');
+      alert('Please input address');
       $('#tokenAddressTxt').focus();
       return;
     }else if(tokenValue == ''){
-      alert('Please input Token value');
+      alert('Please input token value');
       $('#tokenValue1').focus();
       return;
     }
+    
     Init.OSDCTokenInstance.transfer(toAddress, tokenValue, { from: App.address }).then(function (result) {
       alert('Token transfer success!');
       $('#tokenAddressTxt').val('');
@@ -136,8 +147,11 @@ App = {
     }).catch(function (error) {
       if (error.message == 'Returned error: VM Exception while processing transaction: revert need token -- Reason given: need token.') {
         alert('Not enough Token');
+      } else if(error.message.toString().indexOf('invalid') != -1){
+        alert('Invalid address');
+        $('#tokenAddressTxt').focus();
       }
-      console.log(error.message);
+      
     });    
 
     
