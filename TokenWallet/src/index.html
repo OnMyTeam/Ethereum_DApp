@@ -97,17 +97,54 @@
                         <th width="70%"><input type="text" class="form-control form-control-user" id="tokenAddressTxt"
                             placeholder="Input Address..."></th>
                         <td rowspan="2">
-                          <a href="javascript:;" class="btn btn-facebook btn-user btn-block" style="vertical-align: center"
-                            id="tokenSendBtn">
+                          <a href="javascript:;" class="btn btn-facebook btn-user btn-block"
+                            style="vertical-align: center" id="tokenSendBtn">
                             <i class="fab fa-facebook-f fa-fw"></i> Send
-                          </a> 
-                          </td>
+                          </a>
+                        </td>
                       </tr>
                       <tr>
                         <th width="70%"><input type="number" class="form-control form-control-user" id="tokenValue1"
                             placeholder="Input Token..."></th>
                       </tr>
                     </thead>
+                  </table>
+
+                </div>
+                <!-- tansaction log -->
+                <div class="p-5">
+                  <div class="text-center">
+                    <h1 class="h4 text-gray-900 mb-4">Transaction Log</h1>
+                  </div>
+                  <table class="table table-bordered" id="dataTable" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th width="70%">transactionHash</th>
+                        <td id="TransactionHash"></td>
+                      </tr>
+                      <tr>
+                        <th width="70%">blockHash</th>
+                        <td id="BlockHash"></td>
+                      </tr>
+                      <tr>
+                        <th width="70%">blockNumber</th>
+                        <td id="BlockNumber"></td>
+                      </tr>                      
+                      <tr>
+                        <th width="70%">from</th>
+                        <td id="from"></td>
+                      </tr>
+                      <tr>
+                        <th width="70%">to</th>
+                        <td id="to"></td>
+                      </tr>
+                      <tr>
+                        <th width="70%">gasUsed</th>
+                        <td id="gasUsed"></td>
+                      </tr>                                       
+                    </thead>
+                    <tbody id="tableContent">
+                    </tbody>
                   </table>
 
                 </div>

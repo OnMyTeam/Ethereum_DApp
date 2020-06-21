@@ -72,43 +72,85 @@ App = {
     }
 
     const tokenPrice = new web3.utils.BN('1000000000000000000').mul(new web3.utils.BN(etherValue));
+    web3.eth.sendTransaction({ from: App.address, to: toAddress, value: tokenPrice }).then(function(receipt){
+      console.log(receipt);
 
-    try {
-      web3.eth.sendTransaction({ from: App.address, to: toAddress, value: tokenPrice },
-      function (e, r) {
-        
-        if(e){
+      // success Ether transfer
+      alert('Ether transfer success!');
+      $('#etherAddressTxt').val('');
+      $('#etherValue1').val('');
 
-          if(e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
-            alert("Not enough Ether");
-            return;
-          }
-        } 
-        alert('Ether transfer success!');
-        $('#etherAddressTxt').val('');
-        $('#etherValue1').val('');
+      web3.eth.getBalance(App.address, (err, balance) => {
 
-        web3.eth.getBalance(App.address, (err, balance) => {
-          console.log(balance);
-          ether = parseInt(web3.utils.fromWei(balance, "wei")) / 1000000000000000000;
-          var imageHtml= '<img class="balance-icon" src="public/images/eth_logo.svg" style="height: 25px; width: 25px; border-radius: 25px;">'
-          $('#etherValue').html(imageHtml + ether + " ETH");        
-        });       
+        ether = parseInt(web3.utils.fromWei(balance, "wei")) / 1000000000000000000;
+        var imageHtml= '<img class="balance-icon" src="public/images/eth_logo.svg" style="height: 25px; width: 25px; border-radius: 25px;">'
+        $('#etherValue').html(imageHtml + ether + " ETH");        
+      });      
+      // transaction log
+      var transactionHash = receipt.transactionHash;
+      var blockHash = receipt.blockHash;
+      var blockNumber = receipt.blockNumber;
+      var from = receipt.from;
+      var to = receipt.to;
+      var gasUsed = receipt.gasUsed;
+      $('#TransactionHash').text(transactionHash);
+      $('#BlockHash').text(blockHash);
+      $('#BlockNumber').text(blockNumber);
+      $('#from').text(from);
+      $('#to').text(to);
+      $('#gasUsed').text(gasUsed);      
+    }).catch(function (error) {
+      console.log(error);
 
-
-      }).catch(function (error){
-        
-        console.log(error);
-
-      });
-    }catch (e){
-      console.log(e);
-      if(e.toString().indexOf('is invalid') != -1) {
+      if(error.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
+        alert("Not enough Ether");
+        return;
+      }
+      else if(e.toString().indexOf('is invalid') != -1) {
         alert("Invalid address");
         $('#etherAddressTxt').focus();
         return;
-      }
-    }
+      }      
+      
+    });
+    // try {
+    //   web3.eth.sendTransaction({ from: App.address, to: toAddress, value: tokenPrice },
+    //   function (e, r) {
+        
+    //     if(e){
+
+    //       if(e.toString().indexOf('sender doesn\'t have enough funds to send tx') != -1) {
+    //         alert("Not enough Ether");
+    //         return;
+    //       }
+    //     } 
+    //     alert('Ether transfer success!');
+    //     $('#etherAddressTxt').val('');
+    //     $('#etherValue1').val('');
+
+    //     console.log(r);
+
+    //     web3.eth.getBalance(App.address, (err, balance) => {
+
+    //       ether = parseInt(web3.utils.fromWei(balance, "wei")) / 1000000000000000000;
+    //       var imageHtml= '<img class="balance-icon" src="public/images/eth_logo.svg" style="height: 25px; width: 25px; border-radius: 25px;">'
+    //       $('#etherValue').html(imageHtml + ether + " ETH");        
+    //     });       
+
+
+    //   }).catch(function (error){
+        
+    //     console.log(error);
+
+    //   });
+    // }catch (e){
+    //   console.log(e);
+    //   if(e.toString().indexOf('is invalid') != -1) {
+    //     alert("Invalid address");
+    //     $('#etherAddressTxt').focus();
+    //     return;
+    //   }
+    // }
 
 
   },
@@ -132,10 +174,24 @@ App = {
     }
     
     Init.OSDCTokenInstance.transfer(toAddress, tokenValue, { from: App.address }).then(function (result) {
+
+
       alert('Token transfer success!');
       $('#tokenAddressTxt').val('');
       $('#tokenValue1').val('');
 
+      var transactionHash = result.receipt.transactionHash;
+      var blockHash = result.receipt.blockHash;
+      var blockNumber = result.receipt.blockNumber;
+      var from = result.receipt.from;
+      var to = result.receipt.to;
+      var gasUsed = result.receipt.gasUsed;
+      $('#TransactionHash').text(transactionHash);
+      $('#BlockHash').text(blockHash);
+      $('#BlockNumber').text(blockNumber);
+      $('#from').text(from);
+      $('#to').text(to);
+      $('#gasUsed').text(gasUsed);
       Init.OSDCTokenInstance.balanceOf(App.address,{from:App.address}).then(function(result) {
         token = result.toNumber();
         $('#tokenValue').text(token);
