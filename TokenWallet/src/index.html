@@ -47,15 +47,15 @@
                       <table class="table table-bordered" id="dataTable" cellspacing="0">
                         <thead>
                           <tr>
-                            <th width="70%">Account address</th>
+                            <th width="40%">Account address</th>
                             <td id="address"></td>
                           </tr>
                           <tr>
-                            <th width="70%">Ether</th>
+                            <th width="40%">Ether</th>
                             <td id="etherValue"></td>
                           </tr>
                           <tr>
-                            <th width="70%">Token</th>
+                            <th width="40%">Token</th>
                             <td id="tokenValue"></td>
                           </tr>
                         </thead>
@@ -63,11 +63,7 @@
                         </tbody>
                       </table>
                     </div>
-
-                    <!-- 
-                    <a href="/" class="btn btn-primary btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Back
-                    </a> -->
+                    <input type="hidden" id="hiddenAddress"/>
                   </form>
                   <br>
 
@@ -78,7 +74,7 @@
                         <th width="70%"><input type="text" class="form-control form-control-user" id="etherAddressTxt"
                             aria-describedby="emailHelp" placeholder="Input Address..."></th>
                         <td rowspan="2" valign="center">
-                          <a href="javascript:;" class="btn btn-facebook btn-user btn-block" style="" id="etherSendBtn">
+                          <a href="javascript:;" class="btn btn-facebook btn-user btn-block"  id="etherSendBtn">
                             Send
                           </a> </td>
                       </tr>
@@ -111,6 +107,7 @@
                   </table>
 
                 </div>
+                <hr>
                 <!-- tansaction log -->
                 <div class="p-5">
                   <div class="text-center">
@@ -129,7 +126,11 @@
                       <tr>
                         <th width="70%">blockNumber</th>
                         <td id="BlockNumber"></td>
-                      </tr>                      
+                      </tr>
+                      <tr>
+                        <th width="70%">nonce</th>
+                        <td id="nonce"></td>
+                      </tr>                                        
                       <tr>
                         <th width="70%">from</th>
                         <td id="from"></td>
@@ -139,9 +140,21 @@
                         <td id="to"></td>
                       </tr>
                       <tr>
-                        <th width="70%">gasUsed</th>
-                        <td id="gasUsed"></td>
-                      </tr>                                       
+                        <th width="70%">gas</th>
+                        <td id="gas"></td>
+                      </tr>
+                      <tr>
+                        <th width="70%">gasPrice</th>
+                        <td id="gasPrice"></td>
+                      </tr>
+                      <tr>
+                        <th width="70%">Transaction Fee</th>
+                        <td id="txFee"></td>
+                      </tr>
+                      <tr>
+                        <th width="70%">Value</th>
+                        <td id="value"></td>
+                      <tr>                                                                                 
                     </thead>
                     <tbody id="tableContent">
                     </tbody>
