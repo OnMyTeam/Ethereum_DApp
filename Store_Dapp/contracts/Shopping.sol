@@ -14,11 +14,11 @@ contract Shopping is Ownable {
     Membership membership;
     Item item;
 
-    mapping(address=> ItemStruct.itemInfo[]) public membershipItems;       //사용자가 구매한 아이템의 배열로 매핑되어 있는 배열
+    mapping(address=> ItemStruct.itemInfo[]) public membershipItems;                //사용자가 구매한 아이템의 배열로 매핑되어 있는 배열
 
-    event  ItemInfoEvent(uint code, string name, string imgpath, uint cost);       //아이템 정보를 출력하기 위한 이벤트
+    event  ItemInfoEvent(uint code, string name, string imgpath, uint cost);        //아이템 정보를 출력하기 위한 이벤트
 
-    constructor(address __membershipAddr, address _itemAddr) public {        //생성한 객체를 contract address로 인스턴스 생성
+    constructor(address __membershipAddr, address _itemAddr) public {               //생성한 객체를 contract address로 인스턴스 생성
         membership = Membership(__membershipAddr);
         item = Item(_itemAddr);
     }
@@ -34,8 +34,8 @@ contract Shopping is Ownable {
         uint discountAmount;
         uint discountCost;
 
-        membership.checkBlacklist(msg.sender);                      //사용자가 블랙리스트 인지 확인
-        (itemCode, cost, name, imgpath) = item.getItem(_itemCode);//사용자가 구매를 원하는 물건의 가격
+        membership.checkBlacklist(msg.sender);                              //사용자가 블랙리스트 인지 확인
+        (itemCode, cost, name, imgpath) = item.getItem(_itemCode);          //사용자가 구매를 원하는 물건의 가격
         discountRate = uint8(membership.getCashbackRate(msg.sender));       //사용자의 등급의 할인율 계산
         discountAmount = cost.div(100).mul(discountRate);
         discountCost = cost.sub(discountAmount);
@@ -79,7 +79,7 @@ contract Shopping is Ownable {
         return itemsJson;
     }
 
-    //회원 탈퇴 하면 가장 먼저 불림
+    //회원 탈퇴 하면 가장 먼저  호출됨
     function withdrawal() public {
         ItemStruct.itemInfo[] storage items = membershipItems[msg.sender];
         for( uint i = 0; i<items.length; i++ ){
@@ -87,7 +87,8 @@ contract Shopping is Ownable {
             item.setItemBuy(itemcode, false);
         }
         membership.withdrawal(msg.sender);
-        delete membershipItems[msg.sender];                     //사용자가 구매한 모든 아이템 정보 삭제
+        //사용자가 구매한 모든 아이템 정보 삭제
+        delete membershipItems[msg.sender];                     
 
     }
 

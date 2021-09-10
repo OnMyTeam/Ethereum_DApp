@@ -5,11 +5,12 @@ import './Library.sol';
 import './Ownable.sol';
 
 library ItemStruct{
-    struct itemInfo {                        //아이템의 정보를 나타냄
-        uint itemCode;                          //물건을 표현하기 위한 유니크한 아이템코드
+    //아이템의 정보를 나타냄
+    struct itemInfo {                        
+        uint itemCode;                      //물건을 표현하기 위한 유니크한 아이템코드
         uint cost;                          //물건 가격
         string name;                        //물건 이름
-        string imgpath;                      //물건 사진 소스
+        string imgpath;                     //물건 사진 소스
         uint availability;
     }
 }
@@ -18,10 +19,10 @@ contract Item is Ownable {
     using ItemStruct for *;
     using ConvertDataType for uint;
 
-    uint itemCode;                                       //유니크한 아이템 코드를 만들기 위한 변수
-    mapping(uint => ItemStruct.itemInfo) public itemInfos;                  //아이템 코드가 아이템 정보로 매핑되어 있는 배열
+    uint itemCode;                                                              //유니크한 아이템 코드를 만들기 위한 변수
+    mapping(uint => ItemStruct.itemInfo) public itemInfos;                      //아이템 코드가 아이템 정보로 매핑되어 있는 배열
 
-    event  ItemInfoEvent(uint code, string name, string imgpath, uint cost);       //아이템 정보를 출력하기 위한 이벤트
+    event  ItemInfoEvent(uint code, string name, string imgpath, uint cost);    //아이템 정보를 출력하기 위한 이벤트
 
     constructor() public {
         itemCode = 0;

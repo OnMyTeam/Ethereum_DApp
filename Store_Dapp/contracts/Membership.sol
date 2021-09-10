@@ -77,8 +77,8 @@ contract Membership is Ownable{
         uint index;
         Grade grade;
 
-        memberInfos[_member].buyCount += 1;         //사용자의 총 구매숫자 +1
-        memberInfos[_member].totalUsedValue += _value;         //사용자의 총 구매금액 더하기
+        memberInfos[_member].buyCount += 1;                     //사용자의 총 구매숫자 +1
+        memberInfos[_member].totalUsedValue += _value;          //사용자의 총 구매금액 더하기
 
         for(uint i = 0; i<status.length; i++){
             if(memberInfos[_member].buyCount >= status[i].buyCount && memberInfos[_member].totalUsedValue >= status[i].totalUsedValue) {
@@ -109,7 +109,7 @@ contract Membership is Ownable{
 
     //회원의 개인 정보 삭제
     function _deleteMemberInfo(address _buyer) internal {
-        delete memberInfos[_buyer];                     //회원의 물건 구매 히스토리 삭제
+        delete memberInfos[_buyer];                         //회원의 물건 구매 히스토리 삭제
         delete members[_buyer];                             //가입한 회원의 매핑 배열에서 삭제
         emit deleteBlacklistEvent(_buyer);
     }
@@ -143,13 +143,13 @@ contract Membership is Ownable{
 
     function buyItem(address _buyer, uint cost, uint discountCost ) external {
         osdcToken.transfer(owner, discountCost);                    //사용자가 가진 토큰을 물건의 가격 만큼 관리자에게 전송
-        _updateHistory(_buyer, cost);                 //사용자의 구매 정보 업데이트
+        _updateHistory(_buyer, cost);                               //사용자의 구매 정보 업데이트
 
     }
 
     function withdrawal(address _buyer) external {
-        osdcToken.withdrawal(_buyer);                      //토큰 원래대로 환수
-        _deleteMemberInfo(_buyer);                //회원 관리에서의 정보 삭제
+        osdcToken.withdrawal(_buyer);                       //토큰 원래대로 환수
+        _deleteMemberInfo(_buyer);                          //회원 관리에서의 정보 삭제
     }
 
 }
