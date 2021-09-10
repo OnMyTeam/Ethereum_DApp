@@ -30,6 +30,6 @@
 
 ### 3.4 관리자 화면
 <p align="center">
-<img src="image/image5.jpg" alt="drawing" width="900"/><br>
+<img src="image/image5.jpg" alt="drawing" width="700"/><br>
 </p>
 
